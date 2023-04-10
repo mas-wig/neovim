@@ -141,4 +141,17 @@ return {
 			opts = { pattern = "*.*" },
 		},
 	},
+
+	{
+		name = "LuaLineRerfesh",
+		{
+			"User",
+			function()
+				require("lualine").refresh()
+			end,
+			opts = {
+				pattern = "LspProgressStatusUpdated",
+			},
+		},
+	},
 }

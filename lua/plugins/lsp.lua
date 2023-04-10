@@ -96,37 +96,10 @@ return {
 				lineFoldingOnly = true,
 			}
 
-			local lsp_keymap = require("setup.utils").map
-			local telescope = require("telescope.builtin")
-
 			for name, icon in pairs(require("ui.icons").diagnostics) do
 				name = "DiagnosticSign" .. name
 				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 			end
-
-			vim.diagnostic.config({
-				underline = true,
-				update_in_insert = false,
-				virtual_text = {
-					spacing = 10,
-					underline = true,
-					update_in_insert = true,
-					prefix = "  ",
-					format = function(diagnostic)
-						if diagnostic.severity == vim.diagnostic.severity.ERROR then
-							return string.format(" %s", diagnostic.message)
-						elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-							return string.format("⚠️  %s", diagnostic.message)
-						elseif diagnostic.severity == vim.diagnostic.severity.HINT then
-							return string.format(" %s", diagnostic.message)
-						elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-							return string.format(" %s", diagnostic.message)
-						end
-						return diagnostic.message
-					end,
-				},
-				severity_sort = true,
-			})
 
 			local ensure_installed = {}
 			for server, payload in pairs(opts.server) do
@@ -134,33 +107,317 @@ return {
 					capabilities = capabilities,
 					on_attach = require("setup.utils").set_on_attach(function(client, bufnr)
 						-- KEYMAP --
-						lsp_keymap("i", "<C-k>", function()
-							vim.lsp.handlers["textDocument/signatureHelp"] =
-								vim.lsp.with(vim.lsp.handlers.signature_help, {
-									border = "rounded",
-								})
-							return vim.lsp.buf.signature_help()
-						end, { desc = "signature help", buffer = bufnr })
+						require("legendary").keymaps({
+							{
+								itemgroup = "Navigator",
+								description = "Navigate me Daddy",
+								icon = "🚀 ",
+								keymaps = {
 
-						if client.supports_method("textDocument/implementation") then
-							lsp_keymap("n", "gi", function()
-								telescope.lsp_implementations()
-							end, { desc = "goto implementation", buffer = bufnr })
-						end
-
-						if client.supports_method("workspace/symbol") then
-							lsp_keymap("n", "<leader>ws", function()
-								telescope.lsp_workspace_symbols()
-							end, { desc = "lsp workspace symbol", buffer = bufnr })
-						end
-
-						lsp_keymap("n", "<leader>wa", function()
-							vim.lsp.buf.add_workspace_folder()
-						end, { desc = "add to workspace", buffer = bufnr })
-
-						lsp_keymap("n", "<leader>wr", function()
-							vim.lsp.buf.remove_workspace_folder()
-						end, { desc = "remove workspace folder", buffer = bufnr })
+									{
+										"gr",
+										function()
+											require("navigator.reference").async_ref()
+										end,
+										opts = { buffer = bufnr },
+										description = "async_ref",
+									},
+									{
+										"<Leader>gr",
+										function()
+											require("navigator.reference").reference()
+										end,
+										opts = { buffer = bufnr },
+										description = "reference",
+									}, -- reference deprecated
+									{
+										mode = "i",
+										"<c-k>",
+										function()
+											vim.lsp.handlers["textDocument/signatureHelp"] =
+												vim.lsp.with(vim.lsp.handlers.signature_help, {
+													border = "single",
+												})
+											vim.lsp.buf.signature_help()
+										end,
+										opts = { buffer = bufnr },
+										description = "signature_help",
+									},
+									{
+										"g0",
+										function()
+											require("navigator.symbols").document_symbols()
+										end,
+										opts = { buffer = bufnr },
+										description = "document_symbols",
+									},
+									{
+										"gW",
+										function()
+											require("navigator.workspace").workspace_symbol_live()
+										end,
+										opts = { buffer = bufnr },
+										description = "workspace_symbol_live",
+									},
+									{
+										"<c-]>",
+										function()
+											require("navigator.definition").definition()
+										end,
+										opts = { buffer = bufnr },
+										description = "definition",
+									},
+									{
+										"gd",
+										function()
+											require("navigator.definition").definition()
+										end,
+										opts = { buffer = bufnr },
+										description = "definition",
+									},
+									{
+										"gD",
+										function()
+											vim.lsp.buf.declaration()
+										end,
+										opts = { buffer = bufnr },
+										description = "declaration",
+									},
+									{
+										"gp",
+										function()
+											require("navigator.definition").definition_preview()
+										end,
+										opts = { buffer = bufnr },
+										description = "definition_preview",
+									},
+									{
+										"<Leader>gt",
+										function()
+											require("navigator.treesitter").buf_ts()
+										end,
+										opts = { buffer = bufnr },
+										description = "buf_ts",
+									},
+									{
+										"<Leader>gT",
+										function()
+											require("navigator.treesitter").bufs_ts()
+										end,
+										opts = { buffer = bufnr },
+										description = "bufs_ts",
+									},
+									{
+										"<Leader>ct",
+										function()
+											require("navigator.ctags").ctags()
+										end,
+										opts = { buffer = bufnr },
+										description = "ctags",
+									},
+									{
+										"<Space>ca",
+										mode = "n",
+										function()
+											require("navigator.codeAction").code_action()
+										end,
+										opts = { buffer = bufnr },
+										description = "code_action",
+									},
+									{
+										"<Space>ca",
+										mode = "v",
+										function()
+											require("navigator.codeAction").range_code_action()
+										end,
+										opts = { buffer = bufnr },
+										description = "range_code_action",
+									},
+									{
+										"<Space>rn",
+										function()
+											require("navigator.rename").rename()
+										end,
+										opts = { buffer = bufnr },
+										description = "rename",
+									},
+									{
+										"<Leader>gi",
+										function()
+											vim.lsp.buf.incoming_calls()
+										end,
+										opts = { buffer = bufnr },
+										description = "incoming_calls",
+									},
+									{
+										"<Leader>go",
+										function()
+											vim.lsp.buf.outgoing_calls()
+										end,
+										opts = { buffer = bufnr },
+										description = "outgoing_calls",
+									},
+									{
+										"gi",
+										function()
+											vim.lsp.buf.implementation()
+										end,
+										opts = { buffer = bufnr },
+										description = "implementation",
+									},
+									{
+										"<Space>D",
+										function()
+											vim.lsp.buf.type_definition()
+										end,
+										opts = { buffer = bufnr },
+										description = "type_definition",
+									},
+									{
+										"gL",
+										function()
+											require("navigator.diagnostics").show_diagnostics()
+										end,
+										opts = { buffer = bufnr },
+										description = "show_diagnostics",
+									},
+									{
+										"gG",
+										function()
+											require("navigator.diagnostics").show_buf_diagnostics()
+										end,
+										opts = { buffer = bufnr },
+										description = "show_buf_diagnostics",
+									},
+									{
+										"<Leader>dT",
+										function()
+											require("navigator.diagnostics").toggle_diagnostics()
+										end,
+										opts = { buffer = bufnr },
+										description = "toggle_diagnostics",
+									},
+									{
+										"]d",
+										function()
+											vim.diagnostic.goto_next()
+										end,
+										opts = { buffer = bufnr },
+										description = "next diagnostics",
+									},
+									{
+										"[d",
+										function()
+											vim.diagnostic.goto_prev()
+										end,
+										opts = { buffer = bufnr },
+										description = "prev diagnostics",
+									},
+									{
+										"]O",
+										function()
+											vim.diagnostic.set_loclist()
+										end,
+										opts = { buffer = bufnr },
+										description = "diagnostics set loclist",
+									},
+									{
+										"]r",
+										function()
+											require("navigator.treesitter").goto_next_usage()
+										end,
+										opts = { buffer = bufnr },
+										description = "goto_next_usage",
+									},
+									{
+										"[r",
+										function()
+											require("navigator.treesitter").goto_previous_usage()
+										end,
+										opts = { buffer = bufnr },
+										description = "goto_previous_usage",
+									},
+									{
+										"<C-LeftMouse>",
+										function()
+											vim.lsp.buf.definition()
+										end,
+										opts = { buffer = bufnr },
+										description = "definition",
+									},
+									{
+										"K",
+										function()
+											vim.lsp.handlers["textDocument/hover"] =
+												vim.lsp.with(vim.lsp.handlers.hover, {
+													border = "rounded",
+												})
+											return vim.lsp.buf.hover()
+										end,
+										opts = { buffer = bufnr },
+										description = "hover doc",
+									},
+									{
+										"g<LeftMouse>",
+										function()
+											vim.lsp.buf.implementation()
+										end,
+										opts = { buffer = bufnr },
+										description = "implementation",
+									},
+									{
+										"<Leader>k",
+										function()
+											require("navigator.dochighlight").hi_symbol()
+										end,
+										opts = { buffer = bufnr },
+										description = "hi_symbol",
+									},
+									{
+										"<Space>wa",
+										function()
+											require("navigator.workspace").add_workspace_folder()
+										end,
+										opts = { buffer = bufnr },
+										description = "add_workspace_folder",
+									},
+									{
+										"<Space>wr",
+										function()
+											require("navigator.workspace").remove_workspace_folder()
+										end,
+										opts = { buffer = bufnr },
+										description = "remove_workspace_folder",
+									},
+									{
+										"<Space>gm",
+										function()
+											require("navigator.formatting").range_format()
+										end,
+										mode = "n",
+										opts = { buffer = bufnr },
+										description = "range format operator e.g gmip",
+									},
+									{
+										"<Space>wl",
+										function()
+											require("navigator.workspace").list_workspace_folders()
+										end,
+										opts = { buffer = bufnr },
+										description = "list_workspace_folders",
+									},
+									{
+										"<Space>la",
+										mode = "n",
+										function()
+											require("navigator.codelens").run_action()
+										end,
+										opts = { buffer = bufnr },
+										description = "run code lens action",
+									},
+								},
+							},
+						})
 
 						-- Formatter --
 
@@ -299,67 +556,52 @@ return {
 	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 
 	{
-		"glepnir/lspsaga.nvim",
-		event = "LspAttach",
-		cmd = "Lspsaga",
+		"ray-x/navigator.lua",
+		branch = "master",
+		event = { "BufReadPre", "BufNewFile" },
+		lazy = true,
+		dependencies = {
+			"ray-x/guihua.lua",
+			branch = "master",
+			lazy = true,
+			build = "cd lua/fzy && make",
+		},
 		config = function()
-			require("lspsaga").setup({
-				ui = {
-					title = true,
-					border = "rounded",
-					winblend = 0,
-					expand = "",
-					collapse = "",
-					code_action = "💡",
-					incoming = " ",
-					outgoing = " ",
-					hover = " ",
-				},
-				symbol_in_winbar = {
-					enable = false,
-				},
-			})
-		end,
-		keys = function()
-			require("legendary").keymaps({
-				{
-					itemgroup = "LspSaga",
-					description = "Inside me daddy",
-					icon = "🐯",
-					keymaps = {
-						{ "gh", "<cmd>Lspsaga lsp_finder<CR>", desc = "lsp reference" },
-						{ "<leader>ca", "<cmd>Lspsaga code_action<CR>", desc = "lsp code action", mode = { "n", "v" } },
-						{ "gr", "<cmd>Lspsaga rename<CR>", desc = "lsp rename" },
-						{ "gr", "<cmd>Lspsaga rename ++project<CR>", desc = "lsp global rename" },
-						{ "gp", "<cmd>Lspsaga peek_definition<CR>", desc = "lsp peek definition" },
-						{ "gd", "<cmd>Lspsaga goto_definition<CR>", desc = "lsp goto definition" },
-						{ "gt", "<cmd>Lspsaga peek_type_definition<CR>", desc = "lsp peek type def" },
-						{ "gT", "<cmd>Lspsaga goto_type_definition<CR>", desc = "lsp goto type def" },
-						{ "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>", desc = "lsp line diagnostics" },
-						{ "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>", desc = "lsp buf diagnostics" },
-						{ "<leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "lsp workspace diag" },
-						{ "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "lsp cursor diag" },
-						{ "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", desc = "lsp diagnostic jump prev" },
-						{ "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", desc = "lsp diagnostic jump next" },
-						{
-							"[E",
-							function()
-								require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-							end,
-							desc = "lsp goto error prev",
+			return require("navigator").setup({
+				border = "rounded",
+				ts_fold = false,
+				default_mapping = false,
+				transparency = 100,
+				lsp_signature_help = false,
+				lsp = {
+					disable_lsp = "all",
+					format_on_save = false,
+					diagnostic = {
+						underline = true,
+						update_in_insert = false,
+						virtual_text = {
+							spacing = 10,
+							underline = true,
+							update_in_insert = true,
+							prefix = "  ",
+							-- format = function(diagnostic)
+							-- 	if diagnostic.severity == vim.diagnostic.severity.ERROR then
+							-- 		return string.format(" %s", diagnostic.message)
+							-- 	elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+							-- 		return string.format("⚠️  %s", diagnostic.message)
+							-- 	elseif diagnostic.severity == vim.diagnostic.severity.HINT then
+							-- 		return string.format(" %s", diagnostic.message)
+							-- 	elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+							-- 		return string.format(" %s", diagnostic.message)
+							-- 	end
+							-- 	return diagnostic.message
+							-- end,
 						},
-						{
-							"]E",
-							function()
-								require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-							end,
-							desc = "lsp goto error next",
-						},
-						{ "<leader>o", "<cmd>Lspsaga outline<CR>", desc = "lsp outline" },
-						{ "K", "<cmd>Lspsaga hover_doc<CR>", desc = "lsp hover docs" },
-						{ "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", desc = "lsp incoming call" },
-						{ "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", desc = "lsp outcoming call " },
+						severity_sort = true,
 					},
+					diagnostic_virtual_text = true,
+					diagnostic_update_in_insert = true,
+					disply_diagnostic_qf = true,
 				},
 			})
 		end,
