@@ -142,11 +142,95 @@ return {
 
 	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
 	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+
 	{
-		"dstein64/vim-startuptime",
-		cmd = "StartupTime",
+		"akinsho/toggleterm.nvim",
+		lazy = true,
+		cmd = "ToggleTerm",
+		init = function()
+			require("legendary").keymaps({
+				{
+					itemgroup = "ToggleTerm",
+					description = "Toggle me Daddy",
+					icon = "🔭",
+					keymaps = {
+						{ "<A-i>", "<cmd>ToggleTerm direction=float<cr>", description = "Open Float Term" },
+						{ "<A-v>", "<cmd>ToggleTerm direction=vertical<cr>", description = "Open Vert Term" },
+						{ "<A-h>", "<cmd>ToggleTerm direction=horizontal<cr>", description = "Open Horz Term" },
+						{
+							"<A-i>",
+							{
+								n = "<cmd>ToggleTerm direction=float<cr>",
+								t = "<cmd>ToggleTerm direction=float<cr>",
+							},
+							description = "Open Float Term",
+						},
+						{
+							"<A-v>",
+							{
+								n = "<cmd>ToggleTerm direction=vertical<cr>",
+								t = "<cmd>ToggleTerm direction=vertical<cr>",
+							},
+							description = "Open Vert Term",
+						},
+						{
+							"<A-h>",
+							{
+								n = "<cmd>ToggleTerm direction=horizontal<cr>",
+								t = "<cmd>ToggleTerm direction=horizontal<cr>",
+							},
+							description = "Open Horz Term",
+						},
+					},
+				},
+			})
+		end,
 		config = function()
-			vim.g.startuptime_tries = 10
+			function _G.set_terminal_keymaps()
+				local opts = { buffer = 0 }
+				vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+				vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+				vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+				vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+				vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+				vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+			end
+
+			vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+			return require("toggleterm").setup({
+				size = function(term)
+					if term.direction == "horizontal" then
+						return 13
+					elseif term.direction == "vertical" then
+						return vim.o.columns * 0.35
+					end
+				end,
+				open_mapping = [[<c-\>]],
+				hide_numbers = true,
+				autochdir = true,
+				shade_terminals = true,
+				start_in_insert = true,
+				insert_mappings = true,
+				terminal_mappings = true,
+				persist_size = true,
+				persist_mode = true,
+				direction = "horizontal",
+				close_on_exit = true,
+				shell = vim.o.shell,
+				float_opts = {
+					border = "rounded",
+					width = 140,
+					height = 28,
+					winblend = 0,
+				},
+				winbar = {
+					enabled = false,
+				},
+			})
 		end,
 	},
+
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 }

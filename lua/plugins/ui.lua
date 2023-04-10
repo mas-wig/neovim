@@ -475,14 +475,18 @@ return {
 					require("statuscol").setup({
 						relculright = true,
 						segments = {
-							{ text = { builtin.foldfunc, "  " }, click = "v:lua.ScFa" },
+							{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 							{
-								sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+								sign = { name = { "GitSigns" }, maxwidth = 1, auto = true },
 								click = "v:lua.ScSa",
 							},
-							{ text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
 							{
-								sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true },
+								sign = { name = { "Diagnostic" }, maxwidth = 1, auto = true },
+								click = "v:lua.ScSa",
+							},
+							{ text = { builtin.lnumfunc, "  " }, click = "v:lua.ScLa" },
+							{
+								sign = { name = { ".*" }, maxwidth = 1, colwidth = 2, auto = true },
 								click = "v:lua.ScSa",
 							},
 						},
@@ -547,5 +551,22 @@ return {
 				return newVirtText
 			end,
 		},
+	},
+
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+	{
+		"NvChad/nvim-colorizer.lua",
+		ft = { "css", "html", "lua", "javascriptreact", "javascript", "typescript", "typescriptreact" },
+		config = function()
+			return require("colorizer").setup({
+				filetypes = { "css", "html", "lua", "javascriptreact", "javascript", "typescript", "typescriptreact" },
+				user_default_options = {
+					names = false,
+					rgb_fn = true,
+					tailwind = true,
+				},
+			})
+		end,
 	},
 }
