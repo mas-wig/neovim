@@ -15,6 +15,12 @@ return {
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			return require("go").setup({
 				goimport = "goimports",
+				lsp_on_attach = function()
+					require("setup.utils").on_attach(function(client, bufnr)
+						client.server_capabilities.documentFormattingProvider = false
+						client.server_capabilities.documentRangeFormattingProvider = false
+					end)
+				end,
 				lsp_cfg = {
 					capabilities = capabilities,
 				},
