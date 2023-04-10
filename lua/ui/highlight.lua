@@ -8,9 +8,15 @@ local theme = {
 }
 
 local c = theme.colors
+
+local cl = require("ui.colors")
+
 return {
 	DiagnosticVirtualTextError = { bg = "none", fg = c.error }, -- Used for "Error" diagnostic virtual text
 	DiagnosticVirtualTextWarn = { bg = "none", fg = c.warning }, -- Used for "Warning" diagnostic virtual text
 	DiagnosticVirtualTextInfo = { bg = "none", fg = c.info }, -- Used for "Information" diagnostic virtual text
 	DiagnosticVirtualTextHint = { bg = "none", fg = c.hint }, -- Used for "Hint" diagnostic virtual text
+
+	NeoTreeIndentMarker = { bg = "none", fg = cl.cyan },
+	NeoTreeWinSeparator = { bg = "none", fg = cl.yellow },
 }

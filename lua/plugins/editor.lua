@@ -10,7 +10,6 @@ return {
 		opts = function()
 			local actions = require("telescope.actions")
 			local actions_layout = require("telescope.actions.layout")
-			local transform_mod = require("telescope.actions.mt").transform_mod
 
 			return {
 				defaults = {
@@ -136,11 +135,6 @@ return {
 							desc = "Buffer Search",
 						},
 						{
-							"<leader>bl",
-							"<cmd>Telescope buffers<cr>",
-							desc = "Buffer List",
-						},
-						{
 							"<leader>ff",
 							t.lazy_required_fn("telescope.builtin", "find_files", { hidden = true }),
 							description = "Find files",
@@ -155,7 +149,7 @@ return {
 							description = "Find in open files",
 						},
 						{
-							"<Leader>g",
+							"<Leader>gb",
 							t.lazy_required_fn(
 								"telescope.builtin",
 								"live_grep",
@@ -164,7 +158,7 @@ return {
 							description = "Search CWD",
 						},
 						{
-							"<C-b>",
+							"<leader>bl",
 							t.lazy_required_fn(
 								"telescope.builtin",
 								"buffers",
@@ -175,6 +169,108 @@ return {
 					},
 				},
 			})
+		end,
+	},
+
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		cmd = "Neotree",
+		keys = {
+			{
+				"<leader>e",
+				function()
+					require("neo-tree.command").execute({ toggle = true, dir = require("setup.utils").get_root() })
+				end,
+				desc = "Explorer NeoTree (root dir)",
+			},
+			{
+				"<leader>E",
+				function()
+					require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+				end,
+				desc = "Explorer NeoTree (cwd)",
+			},
+		},
+		deactivate = function()
+			vim.cmd([[Neotree close]])
+		end,
+		init = function()
+			vim.g.neo_tree_remove_legacy_commands = 1
+			if vim.fn.argc() == 1 then
+				local stat = vim.loop.fs_stat(vim.fn.argv(0))
+				if stat and stat.type == "directory" then
+					require("neo-tree")
+				end
+			end
+		end,
+		opts = {
+			hide_root_node = true,
+			filesystem = {
+				bind_to_cwd = false,
+				follow_current_file = true,
+				hijack_netrw_behavior = "open_current",
+				use_libuv_file_watcher = true,
+			},
+			event_handlers = {
+				{
+					event = "neo_tree_buffer_enter",
+					handler = function(_)
+						vim.opt_local.signcolumn = "auto"
+					end,
+				},
+			},
+			window = {
+				mappings = {
+					["<space>"] = "none",
+				},
+			},
+			source_selector = {
+				winbar = true,
+				content_layout = "center",
+				tab_labels = {
+					filesystem = " " .. " Files",
+					buffers = " " .. " Buffers",
+					git_status = " " .. " Git",
+					diagnostics = "裂 " .. " Diagnostics",
+				},
+			},
+			default_component_configs = {
+				indent = {
+					with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+					expander_collapsed = "",
+					expander_expanded = "",
+					expander_highlight = "NeoTreeExpander",
+				},
+				icon = {
+					folder_closed = require("ui.icons").ui.Folder,
+					folder_open = require("ui.icons").ui.FolderOpen,
+					folder_empty = require("ui.icons").ui.EmptyFolder,
+					folder_empty_open = require("ui.icons").ui.EmptyFolderOpen,
+					git_status = {
+						symbols = require("ui.icons").git,
+					},
+				},
+			},
+			filtered_items = {
+				hide_by_name = {
+					".DS_Store",
+					"thumbs.db",
+					"node_modules",
+				},
+				hide_by_pattern = {
+					"*.meta",
+				},
+				always_show = {
+					".gitignored",
+				},
+				never_show = {
+					".DS_Store",
+					"thumbs.db",
+				},
+			},
+		},
+		config = function(_, opts)
+			require("neo-tree").setup(opts)
 		end,
 	},
 }

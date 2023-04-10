@@ -71,33 +71,73 @@ return {
 
 	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
 	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+
 	{
-		"folke/persistence.nvim",
-		event = "BufReadPre",
-		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" } },
-		keys = {
-			{
-				"<leader>qs",
-				function()
-					require("persistence").load()
-				end,
-				desc = "Restore Session",
-			},
-			{
-				"<leader>ql",
-				function()
-					require("persistence").load({ last = true })
-				end,
-				desc = "Restore Last Session",
-			},
-			{
-				"<leader>qd",
-				function()
-					require("persistence").stop()
-				end,
-				desc = "Don't Save Current Session",
-			},
+		"olimorris/persisted.nvim", -- Session management
+		priority = 100,
+		opts = {
+			save_dir = Sessiondir .. "/",
+			use_git_branch = true,
+			silent = true,
+			-- autoload = true,
+			should_autosave = function()
+				if vim.bo.filetype == "alpha" or vim.bo.filetype == "oil" or vim.bo.filetype == "lazy" then
+					return false
+				end
+				return true
+			end,
 		},
+		init = function()
+			require("legendary").keymaps({
+				{
+					itemgroup = "Persisted",
+					icon = "",
+					description = "Session management...",
+					keymaps = {
+						{
+							"<Leader>s",
+							'<cmd>lua require("persisted").toggle()<CR>',
+							description = "Toggle a session",
+							opts = { silent = true },
+						},
+					},
+				},
+			})
+			require("legendary").commands({
+				{
+					itemgroup = "Persisted",
+					commands = {
+						{
+							":Sessions",
+							function()
+								vim.cmd([[Telescope persisted]])
+							end,
+							description = "List sessions",
+						},
+						{
+							":SessionSave",
+							description = "Save the session",
+						},
+						{
+							":SessionStart",
+							description = "Start a session",
+						},
+						{
+							":SessionStop",
+							description = "Stop the current session",
+						},
+						{
+							":SessionLoad",
+							description = "Load the last session",
+						},
+						{
+							":SessionDelete",
+							description = "Delete the current session",
+						},
+					},
+				},
+			})
+		end,
 	},
 
 	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
