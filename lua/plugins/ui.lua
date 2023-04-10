@@ -181,7 +181,21 @@ return {
 		opts = {
 			-- char = "▏",
 			char = "│",
-			filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
+			filetype_exclude = {
+				"toggleterm",
+				"alpha",
+				"terminal",
+				"help",
+				"dashboard",
+				"Trouble",
+				"octo",
+				"mason",
+				"dbui",
+				"help",
+				"neo-tree",
+				"Trouble",
+				"lazy",
+			},
 			show_trailing_blankline_indent = false,
 			show_current_context = false,
 		},
@@ -200,7 +214,21 @@ return {
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+				pattern = {
+					"toggleterm",
+					"alpha",
+					"terminal",
+					"help",
+					"dashboard",
+					"Trouble",
+					"octo",
+					"mason",
+					"dbui",
+					"help",
+					"neo-tree",
+					"Trouble",
+					"lazy",
+				},
 				callback = function()
 					vim.b.miniindentscope_disable = true
 				end,
