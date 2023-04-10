@@ -55,6 +55,7 @@ local opts = {
 local global = {
 	mapleader = " ",
 	maplocalleader = " ",
+	db_ui_use_nerd_fonts = 1,
 	markdown_recommended_style = 0,
 	cmp_enabled = true,
 }
