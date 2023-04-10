@@ -74,6 +74,16 @@ return {
 
 	{
 		"olimorris/persisted.nvim", -- Session management
+		cmd = {
+			"SessionToggle",
+			"SessionStart",
+			"SessionStop",
+			"SessionSave",
+			"SessionLoad",
+			"SessionLoadLast",
+			"SessionLoadFromPath",
+			"SessionDelete",
+		},
 		priority = 100,
 		opts = {
 			save_dir = Sessiondir .. "/",

@@ -1,4 +1,5 @@
 vim.loader.enable()
+
 require("setup.options")
 require("setup.lazy")
 
