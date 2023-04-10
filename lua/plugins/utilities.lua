@@ -219,6 +219,12 @@ return {
 				open_mapping = [[<c-\>]],
 				hide_numbers = true,
 				autochdir = true,
+				highlights = {
+					FloatBorder = {
+						guifg = require("ui.colors").magenta,
+						guibg = "none",
+					},
+				},
 				shade_terminals = true,
 				start_in_insert = true,
 				insert_mappings = true,

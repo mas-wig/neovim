@@ -28,5 +28,6 @@ return {
 	TelescopePromptTitle = { fg = cl.black, bg = cl.red2 },
 	TelescopePreviewTitle = { fg = cl.black, bg = cl.cyan },
 	TelescopeResultsTitle = { fg = cl.black, bg = cl.yellow2 },
+	FloatBorder = { fg = c.border_highlight, bg = c.bg_float },
 	WinSeparator = { fg = cl.magenta, bold = false },
 }
