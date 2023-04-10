@@ -11,6 +11,79 @@ return {
 						telemetry = { enable = false },
 					},
 				},
+				phpactor = {
+					cmd = { "phpactor", "language-server" },
+					filetypes = { "php" },
+					single_file_support = true,
+				},
+
+				pyright = {
+					on_init = function(client)
+						require("navigator.lspclient.python").on_init(client)
+					end,
+					cmd = { "pyright-langserver", "--stdio" },
+					filetypes = { "python" },
+					flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+					settings = {
+						python = {
+							formatting = { provider = "black" },
+							analysis = {
+								autoSearchPaths = true,
+								useLibraryCodeForTypes = true,
+								diagnosticMode = "workspace",
+							},
+						},
+					},
+					single_file_support = true,
+				},
+
+				html = {
+					cmd = { "vscode-html-language-server", "--stdio" },
+					filetypes = { "html" },
+					init_options = {
+						configurationSection = { "html", "css", "javascript" },
+						embeddedLanguages = {
+							css = true,
+							javascript = true,
+						},
+						provideFormatter = true,
+					},
+					single_file_support = true,
+				},
+
+				cssls = {
+					cmd = { "vscode-css-language-server", "--stdio" },
+					filetypes = { "css", "scss", "less" },
+					single_file_support = true,
+					settings = {
+						css = {
+							validate = true,
+						},
+						less = {
+							validate = true,
+						},
+						scss = {
+							validate = true,
+						},
+					},
+				},
+
+				clangd = {
+					flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+					cmd = {
+						"clangd",
+						"--background-index",
+						"--suggest-missing-includes",
+						"--clang-tidy",
+						"--header-insertion=iwyu",
+						"--enable-config",
+						"--offset-encoding=utf-16",
+						"--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
+						"--cross-file-rename",
+					},
+					filetypes = { "c", "cpp", "objc", "objcpp" },
+					single_file_support = true,
+				},
 			},
 		},
 		config = function(_, opts)
@@ -41,7 +114,7 @@ return {
 					prefix = "  ",
 					format = function(diagnostic)
 						if diagnostic.severity == vim.diagnostic.severity.ERROR then
-							return string.format("❌ %s", diagnostic.message)
+							return string.format(" %s", diagnostic.message)
 						elseif diagnostic.severity == vim.diagnostic.severity.WARN then
 							return string.format("⚠️  %s", diagnostic.message)
 						elseif diagnostic.severity == vim.diagnostic.severity.HINT then

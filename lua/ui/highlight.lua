@@ -25,4 +25,8 @@ return {
 	LineNr = { fg = cl.yellow2 },
 	FoldColumn = { bg = options.transparent and c.none or c.bg, fg = cl.cyan },
 	CursorLineNr = { fg = cl.magenta2 },
+	TelescopePromptTitle = { fg = cl.black, bg = cl.red2 },
+	TelescopePreviewTitle = { fg = cl.black, bg = cl.cyan },
+	TelescopeResultsTitle = { fg = cl.black, bg = cl.yellow2 },
+	WinSeparator = { fg = cl.magenta, bold = false },
 }

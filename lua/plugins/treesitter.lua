@@ -58,7 +58,18 @@ return {
 			},
 		},
 		opts = {
-			ensure_installed = { "lua", "vim", "regex", "markdown", "markdown_inline" },
+			ensure_installed = {
+				"go",
+				"html",
+				"css",
+				"javascript",
+				"php",
+				"lua",
+				"vim",
+				"regex",
+				"markdown",
+				"markdown_inline",
+			},
 			sync_install = false,
 			ignore_install = { "phpdoc" },
 			highlight = {
