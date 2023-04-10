@@ -2,7 +2,7 @@ local utils = {}
 
 utils.root_patterns = { ".git", "lua" }
 
-utils.set_on_attach = function(on_attach)
+utils.on_attach = function(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
 			local buffer = args.buf

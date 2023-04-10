@@ -4,7 +4,8 @@ return {
 		event = "BufReadPre",
 		dependencies = { "williamboman/mason-lspconfig.nvim", lazy = true },
 		opts = {
-			server = {
+			setup = {},
+			servers = {
 				lua_ls = {
 					Lua = {
 						workspace = { checkThirdParty = false },
@@ -15,11 +16,19 @@ return {
 					cmd = { "phpactor", "language-server" },
 					filetypes = { "php" },
 					single_file_support = true,
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
+					end,
 				},
 
 				pyright = {
 					on_init = function(client)
 						require("navigator.lspclient.python").on_init(client)
+					end,
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
 					end,
 					cmd = { "pyright-langserver", "--stdio" },
 					filetypes = { "python" },
@@ -40,6 +49,10 @@ return {
 				html = {
 					cmd = { "vscode-html-language-server", "--stdio" },
 					filetypes = { "html" },
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
+					end,
 					init_options = {
 						configurationSection = { "html", "css", "javascript" },
 						embeddedLanguages = {
@@ -55,6 +68,10 @@ return {
 					cmd = { "vscode-css-language-server", "--stdio" },
 					filetypes = { "css", "scss", "less" },
 					single_file_support = true,
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
+					end,
 					settings = {
 						css = {
 							validate = true,
@@ -83,403 +100,418 @@ return {
 					},
 					filetypes = { "c", "cpp", "objc", "objcpp" },
 					single_file_support = true,
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
+					end,
 				},
 			},
 		},
 		config = function(_, opts)
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			local completion = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-			capabilities.textDocument.completion = completion.textDocument.completion
-			capabilities.textDocument.foldingRange = {
-				dynamicRegistration = false,
-				lineFoldingOnly = true,
-			}
-
 			for name, icon in pairs(require("ui.icons").diagnostics) do
 				name = "DiagnosticSign" .. name
 				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 			end
 
-			local ensure_installed = {}
-			for server, payload in pairs(opts.server) do
-				local options = {
-					capabilities = capabilities,
-					on_attach = require("setup.utils").set_on_attach(function(client, bufnr)
-						-- KEYMAP --
-						require("legendary").keymaps({
+			require("setup.utils").on_attach(function(client, bufnr)
+				require("legendary").keymaps({
+					{
+						itemgroup = "Navigator",
+						description = "Navigate me Daddy",
+						icon = "🚀 ",
+						keymaps = {
+
 							{
-								itemgroup = "Navigator",
-								description = "Navigate me Daddy",
-								icon = "🚀 ",
-								keymaps = {
-
-									{
-										"gr",
-										function()
-											require("navigator.reference").async_ref()
-										end,
-										opts = { buffer = bufnr },
-										description = "async_ref",
-									},
-									{
-										"<Leader>gr",
-										function()
-											require("navigator.reference").reference()
-										end,
-										opts = { buffer = bufnr },
-										description = "reference",
-									}, -- reference deprecated
-									{
-										mode = "i",
-										"<c-k>",
-										function()
-											vim.lsp.handlers["textDocument/signatureHelp"] =
-												vim.lsp.with(vim.lsp.handlers.signature_help, {
-													border = "single",
-												})
-											vim.lsp.buf.signature_help()
-										end,
-										opts = { buffer = bufnr },
-										description = "signature_help",
-									},
-									{
-										"g0",
-										function()
-											require("navigator.symbols").document_symbols()
-										end,
-										opts = { buffer = bufnr },
-										description = "document_symbols",
-									},
-									{
-										"gW",
-										function()
-											require("navigator.workspace").workspace_symbol_live()
-										end,
-										opts = { buffer = bufnr },
-										description = "workspace_symbol_live",
-									},
-									{
-										"<c-]>",
-										function()
-											require("navigator.definition").definition()
-										end,
-										opts = { buffer = bufnr },
-										description = "definition",
-									},
-									{
-										"gd",
-										function()
-											require("navigator.definition").definition()
-										end,
-										opts = { buffer = bufnr },
-										description = "definition",
-									},
-									{
-										"gD",
-										function()
-											vim.lsp.buf.declaration()
-										end,
-										opts = { buffer = bufnr },
-										description = "declaration",
-									},
-									{
-										"gp",
-										function()
-											require("navigator.definition").definition_preview()
-										end,
-										opts = { buffer = bufnr },
-										description = "definition_preview",
-									},
-									{
-										"<Leader>gt",
-										function()
-											require("navigator.treesitter").buf_ts()
-										end,
-										opts = { buffer = bufnr },
-										description = "buf_ts",
-									},
-									{
-										"<Leader>gT",
-										function()
-											require("navigator.treesitter").bufs_ts()
-										end,
-										opts = { buffer = bufnr },
-										description = "bufs_ts",
-									},
-									{
-										"<Leader>ct",
-										function()
-											require("navigator.ctags").ctags()
-										end,
-										opts = { buffer = bufnr },
-										description = "ctags",
-									},
-									{
-										"<Space>ca",
-										mode = "n",
-										function()
-											require("navigator.codeAction").code_action()
-										end,
-										opts = { buffer = bufnr },
-										description = "code_action",
-									},
-									{
-										"<Space>ca",
-										mode = "v",
-										function()
-											require("navigator.codeAction").range_code_action()
-										end,
-										opts = { buffer = bufnr },
-										description = "range_code_action",
-									},
-									{
-										"<Space>rn",
-										function()
-											require("navigator.rename").rename()
-										end,
-										opts = { buffer = bufnr },
-										description = "rename",
-									},
-									{
-										"<Leader>gi",
-										function()
-											vim.lsp.buf.incoming_calls()
-										end,
-										opts = { buffer = bufnr },
-										description = "incoming_calls",
-									},
-									{
-										"<Leader>go",
-										function()
-											vim.lsp.buf.outgoing_calls()
-										end,
-										opts = { buffer = bufnr },
-										description = "outgoing_calls",
-									},
-									{
-										"gi",
-										function()
-											vim.lsp.buf.implementation()
-										end,
-										opts = { buffer = bufnr },
-										description = "implementation",
-									},
-									{
-										"<Space>D",
-										function()
-											vim.lsp.buf.type_definition()
-										end,
-										opts = { buffer = bufnr },
-										description = "type_definition",
-									},
-									{
-										"gL",
-										function()
-											require("navigator.diagnostics").show_diagnostics()
-										end,
-										opts = { buffer = bufnr },
-										description = "show_diagnostics",
-									},
-									{
-										"gG",
-										function()
-											require("navigator.diagnostics").show_buf_diagnostics()
-										end,
-										opts = { buffer = bufnr },
-										description = "show_buf_diagnostics",
-									},
-									{
-										"<Leader>dT",
-										function()
-											require("navigator.diagnostics").toggle_diagnostics()
-										end,
-										opts = { buffer = bufnr },
-										description = "toggle_diagnostics",
-									},
-									{
-										"]d",
-										function()
-											vim.diagnostic.goto_next()
-										end,
-										opts = { buffer = bufnr },
-										description = "next diagnostics",
-									},
-									{
-										"[d",
-										function()
-											vim.diagnostic.goto_prev()
-										end,
-										opts = { buffer = bufnr },
-										description = "prev diagnostics",
-									},
-									{
-										"]O",
-										function()
-											vim.diagnostic.set_loclist()
-										end,
-										opts = { buffer = bufnr },
-										description = "diagnostics set loclist",
-									},
-									{
-										"]r",
-										function()
-											require("navigator.treesitter").goto_next_usage()
-										end,
-										opts = { buffer = bufnr },
-										description = "goto_next_usage",
-									},
-									{
-										"[r",
-										function()
-											require("navigator.treesitter").goto_previous_usage()
-										end,
-										opts = { buffer = bufnr },
-										description = "goto_previous_usage",
-									},
-									{
-										"<C-LeftMouse>",
-										function()
-											vim.lsp.buf.definition()
-										end,
-										opts = { buffer = bufnr },
-										description = "definition",
-									},
-									{
-										"K",
-										function()
-											vim.lsp.handlers["textDocument/hover"] =
-												vim.lsp.with(vim.lsp.handlers.hover, {
-													border = "rounded",
-												})
-											return vim.lsp.buf.hover()
-										end,
-										opts = { buffer = bufnr },
-										description = "hover doc",
-									},
-									{
-										"g<LeftMouse>",
-										function()
-											vim.lsp.buf.implementation()
-										end,
-										opts = { buffer = bufnr },
-										description = "implementation",
-									},
-									{
-										"<Leader>k",
-										function()
-											require("navigator.dochighlight").hi_symbol()
-										end,
-										opts = { buffer = bufnr },
-										description = "hi_symbol",
-									},
-									{
-										"<Space>wa",
-										function()
-											require("navigator.workspace").add_workspace_folder()
-										end,
-										opts = { buffer = bufnr },
-										description = "add_workspace_folder",
-									},
-									{
-										"<Space>wr",
-										function()
-											require("navigator.workspace").remove_workspace_folder()
-										end,
-										opts = { buffer = bufnr },
-										description = "remove_workspace_folder",
-									},
-									{
-										"<Space>gm",
-										function()
-											require("navigator.formatting").range_format()
-										end,
-										mode = "n",
-										opts = { buffer = bufnr },
-										description = "range format operator e.g gmip",
-									},
-									{
-										"<Space>wl",
-										function()
-											require("navigator.workspace").list_workspace_folders()
-										end,
-										opts = { buffer = bufnr },
-										description = "list_workspace_folders",
-									},
-									{
-										"<Space>la",
-										mode = "n",
-										function()
-											require("navigator.codelens").run_action()
-										end,
-										opts = { buffer = bufnr },
-										description = "run code lens action",
-									},
-								},
+								"gr",
+								function()
+									require("navigator.reference").async_ref()
+								end,
+								opts = { buffer = bufnr },
+								description = "async_ref",
 							},
-						})
-
-						-- Formatter --
-
-						if client.name == "gopls" then
-							client.server_capabilities.documentFormattingProvider = false
-							client.server_capabilities.documentRangeFormattingProvider = false
-						else
-							if client.supports_method("textDocument/formatting") then
-								vim.api.nvim_clear_autocmds({
-									group = vim.api.nvim_create_augroup("LspFormatting", {}),
-									buffer = bufnr,
-								})
-								vim.api.nvim_create_autocmd("BufWritePre", {
-									group = vim.api.nvim_create_augroup("LspFormatting", {}),
-									buffer = bufnr,
-									callback = function()
-										vim.lsp.buf.format({
-											filter = function(client)
-												return client.name == "null-ls"
-											end,
-											bufnr = bufnr,
-											id = client.id,
-											timeout_ms = 5000,
-											async = true,
+							{
+								"<Leader>gr",
+								function()
+									require("navigator.reference").reference()
+								end,
+								opts = { buffer = bufnr },
+								description = "reference",
+							}, -- reference deprecated
+							{
+								mode = "i",
+								"<c-k>",
+								function()
+									vim.lsp.handlers["textDocument/signatureHelp"] =
+										vim.lsp.with(vim.lsp.handlers.signature_help, {
+											border = "single",
 										})
-									end,
-								})
-							end
-							client.server_capabilities.documentFormattingProvider = true
-							client.server_capabilities.documentRangeFormattingProvider = true
-						end
-						-- Autocmd --
-						require("legendary").autocmds({
-							{
-								name = "LspOnAttachAutocmds",
-								clear = false,
-								{
-									{ "CursorHold", "CursorHoldI" },
-									":silent! lua vim.lsp.buf.document_highlight()",
-									opts = { buffer = bufnr },
-								},
-								{
-									"CursorMoved",
-									":silent! lua vim.lsp.buf.clear_references()",
-									opts = { buffer = bufnr },
-								},
+									vim.lsp.buf.signature_help()
+								end,
+								opts = { buffer = bufnr },
+								description = "signature_help",
 							},
-						})
-					end),
-					flags = {
-						debounce_text_changes = 150,
+							{
+								"g0",
+								function()
+									require("navigator.symbols").document_symbols()
+								end,
+								opts = { buffer = bufnr },
+								description = "document_symbols",
+							},
+							{
+								"gW",
+								function()
+									require("navigator.workspace").workspace_symbol_live()
+								end,
+								opts = { buffer = bufnr },
+								description = "workspace_symbol_live",
+							},
+							{
+								"<c-]>",
+								function()
+									require("navigator.definition").definition()
+								end,
+								opts = { buffer = bufnr },
+								description = "definition",
+							},
+							{
+								"gd",
+								function()
+									require("navigator.definition").definition()
+								end,
+								opts = { buffer = bufnr },
+								description = "definition",
+							},
+							{
+								"gD",
+								function()
+									vim.lsp.buf.declaration()
+								end,
+								opts = { buffer = bufnr },
+								description = "declaration",
+							},
+							{
+								"gp",
+								function()
+									require("navigator.definition").definition_preview()
+								end,
+								opts = { buffer = bufnr },
+								description = "definition_preview",
+							},
+							{
+								"<Leader>gt",
+								function()
+									require("navigator.treesitter").buf_ts()
+								end,
+								opts = { buffer = bufnr },
+								description = "buf_ts",
+							},
+							{
+								"<Leader>gT",
+								function()
+									require("navigator.treesitter").bufs_ts()
+								end,
+								opts = { buffer = bufnr },
+								description = "bufs_ts",
+							},
+							{
+								"<Leader>ct",
+								function()
+									require("navigator.ctags").ctags()
+								end,
+								opts = { buffer = bufnr },
+								description = "ctags",
+							},
+							{
+								"<Space>ca",
+								mode = "n",
+								function()
+									require("navigator.codeAction").code_action()
+								end,
+								opts = { buffer = bufnr },
+								description = "code_action",
+							},
+							{
+								"<Space>ca",
+								mode = "v",
+								function()
+									require("navigator.codeAction").range_code_action()
+								end,
+								opts = { buffer = bufnr },
+								description = "range_code_action",
+							},
+							{
+								"<Space>rn",
+								function()
+									require("navigator.rename").rename()
+								end,
+								opts = { buffer = bufnr },
+								description = "rename",
+							},
+							{
+								"<Leader>gi",
+								function()
+									vim.lsp.buf.incoming_calls()
+								end,
+								opts = { buffer = bufnr },
+								description = "incoming_calls",
+							},
+							{
+								"<Leader>go",
+								function()
+									vim.lsp.buf.outgoing_calls()
+								end,
+								opts = { buffer = bufnr },
+								description = "outgoing_calls",
+							},
+							{
+								"gi",
+								function()
+									vim.lsp.buf.implementation()
+								end,
+								opts = { buffer = bufnr },
+								description = "implementation",
+							},
+							{
+								"<Space>D",
+								function()
+									vim.lsp.buf.type_definition()
+								end,
+								opts = { buffer = bufnr },
+								description = "type_definition",
+							},
+							{
+								"gL",
+								function()
+									require("navigator.diagnostics").show_diagnostics()
+								end,
+								opts = { buffer = bufnr },
+								description = "show_diagnostics",
+							},
+							{
+								"gG",
+								function()
+									require("navigator.diagnostics").show_buf_diagnostics()
+								end,
+								opts = { buffer = bufnr },
+								description = "show_buf_diagnostics",
+							},
+							{
+								"<Leader>dT",
+								function()
+									require("navigator.diagnostics").toggle_diagnostics()
+								end,
+								opts = { buffer = bufnr },
+								description = "toggle_diagnostics",
+							},
+							{
+								"]d",
+								function()
+									vim.diagnostic.goto_next()
+								end,
+								opts = { buffer = bufnr },
+								description = "next diagnostics",
+							},
+							{
+								"[d",
+								function()
+									vim.diagnostic.goto_prev()
+								end,
+								opts = { buffer = bufnr },
+								description = "prev diagnostics",
+							},
+							{
+								"]O",
+								function()
+									vim.diagnostic.set_loclist()
+								end,
+								opts = { buffer = bufnr },
+								description = "diagnostics set loclist",
+							},
+							{
+								"]r",
+								function()
+									require("navigator.treesitter").goto_next_usage()
+								end,
+								opts = { buffer = bufnr },
+								description = "goto_next_usage",
+							},
+							{
+								"[r",
+								function()
+									require("navigator.treesitter").goto_previous_usage()
+								end,
+								opts = { buffer = bufnr },
+								description = "goto_previous_usage",
+							},
+							{
+								"<C-LeftMouse>",
+								function()
+									vim.lsp.buf.definition()
+								end,
+								opts = { buffer = bufnr },
+								description = "definition",
+							},
+							{
+								"K",
+								function()
+									vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+										border = "rounded",
+									})
+									return vim.lsp.buf.hover()
+								end,
+								opts = { buffer = bufnr },
+								description = "hover doc",
+							},
+							{
+								"g<LeftMouse>",
+								function()
+									vim.lsp.buf.implementation()
+								end,
+								opts = { buffer = bufnr },
+								description = "implementation",
+							},
+							{
+								"<Leader>k",
+								function()
+									require("navigator.dochighlight").hi_symbol()
+								end,
+								opts = { buffer = bufnr },
+								description = "hi_symbol",
+							},
+							{
+								"<Space>wa",
+								function()
+									require("navigator.workspace").add_workspace_folder()
+								end,
+								opts = { buffer = bufnr },
+								description = "add_workspace_folder",
+							},
+							{
+								"<Space>wr",
+								function()
+									require("navigator.workspace").remove_workspace_folder()
+								end,
+								opts = { buffer = bufnr },
+								description = "remove_workspace_folder",
+							},
+							{
+								"<Space>gm",
+								function()
+									require("navigator.formatting").range_format()
+								end,
+								mode = "n",
+								opts = { buffer = bufnr },
+								description = "range format operator e.g gmip",
+							},
+							{
+								"<Space>wl",
+								function()
+									require("navigator.workspace").list_workspace_folders()
+								end,
+								opts = { buffer = bufnr },
+								description = "list_workspace_folders",
+							},
+							{
+								"<Space>la",
+								mode = "n",
+								function()
+									require("navigator.codelens").run_action()
+								end,
+								opts = { buffer = bufnr },
+								description = "run code lens action",
+							},
+						},
 					},
-					root_dir = function(fname)
-						return require("lspconfig").util.root_pattern(".git")(fname)
-							or require("setup.utils").dirname(fname)
-					end,
-				}
-				payload = vim.tbl_deep_extend("force", {}, options, payload or {})
-				ensure_installed[#ensure_installed + 1] = server
-				require("lspconfig")[server].setup(payload)
+				})
+				-- Formatter --
+				if client.name == "gopls" then
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+				else
+					if client.supports_method("textDocument/formatting") then
+						vim.api.nvim_clear_autocmds({
+							group = vim.api.nvim_create_augroup("LspFormatting", {}),
+							buffer = bufnr,
+						})
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							group = vim.api.nvim_create_augroup("LspFormatting", {}),
+							buffer = bufnr,
+							callback = function()
+								vim.lsp.buf.format({
+									filter = function(client)
+										return client.name == "null-ls"
+									end,
+									bufnr = bufnr,
+									id = client.id,
+									timeout_ms = 5000,
+									async = true,
+								})
+							end,
+						})
+					end
+					client.server_capabilities.documentFormattingProvider = true
+					client.server_capabilities.documentRangeFormattingProvider = true
+				end
+				-- Autocmd --
+				require("legendary").autocmds({
+					{
+						name = "LspOnAttachAutocmds",
+						clear = false,
+						{
+							{ "CursorHold", "CursorHoldI" },
+							":silent! lua vim.lsp.buf.document_highlight()",
+							opts = { buffer = bufnr },
+						},
+						{
+							"CursorMoved",
+							":silent! lua vim.lsp.buf.clear_references()",
+							opts = { buffer = bufnr },
+						},
+					},
+				})
+			end)
+
+			local servers = opts.servers
+			local capabilities =
+				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+			local function setup(server)
+				local server_opts = vim.tbl_deep_extend("force", {
+					capabilities = vim.deepcopy(capabilities),
+				}, servers[server] or {})
+
+				if opts.setup[server] then
+					if opts.setup[server](server, server_opts) then
+						return
+					end
+				elseif opts.setup["*"] then
+					if opts.setup["*"](server, server_opts) then
+						return
+					end
+				end
+				require("lspconfig")[server].setup(server_opts)
 			end
-			require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
+
+			local have_mason, mlsp = pcall(require, "mason-lspconfig")
+			local available = have_mason and mlsp.get_available_servers() or {}
+
+			local ensure_installed = {} ---@type string[]
+			for server, server_opts in pairs(servers) do
+				if server_opts then
+					server_opts = server_opts == true and {} or server_opts
+					if server_opts.mason == false or not vim.tbl_contains(available, server) then
+						setup(server)
+					else
+						ensure_installed[#ensure_installed + 1] = server
+					end
+				end
+			end
+
+			if have_mason then
+				mlsp.setup({ ensure_installed = ensure_installed })
+				mlsp.setup_handlers({ setup })
+			end
 		end,
 	},
 
