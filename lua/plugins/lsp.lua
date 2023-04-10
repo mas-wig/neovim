@@ -632,6 +632,7 @@ return {
 						severity_sort = true,
 					},
 					diagnostic_virtual_text = true,
+					diagnostic_scrollbar_sign = false,
 					diagnostic_update_in_insert = true,
 					disply_diagnostic_qf = true,
 				},
