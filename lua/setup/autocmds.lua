@@ -1,10 +1,4 @@
-local ok, legendary = pcall(require, "legendary")
-if not ok then
-	return
-end
-
 return {
-
 	{
 		name = "FormatOpt",
 		{
@@ -40,6 +34,24 @@ return {
 			},
 		},
 	},
+
+	{
+		name = "PersistedHooks",
+		{
+			"User",
+			function(session)
+				require("persisted").save()
+
+				-- Delete all of the open buffers
+				vim.api.nvim_input("<ESC>:%bd!<CR>")
+
+				-- Don't start saving the session yet
+				require("persisted").stop()
+			end,
+			opts = { pattern = "PersistedTelescopeLoadPre" },
+		},
+	},
+
 	{
 		name = "ReturnToLastEditingPosition",
 		{
