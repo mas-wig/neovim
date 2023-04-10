@@ -143,18 +143,12 @@ return {
 			options = {
 				diagnostics = "nvim_lsp",
 				always_show_bufferline = false,
-				diagnostics_indicator = function(_, _, diag)
-					local icons = require("ui.icons").diagnostics
-					local ret = (diag.error and icons.Error .. " " .. diag.error .. " " or "")
-						.. (diag.warning and icons.Warn .. " " .. diag.warning or "")
-					return vim.trim(ret)
-				end,
 				offsets = {
 					{
 						filetype = "neo-tree",
 						text = "Neo-tree",
 						highlight = "Directory",
-						text_align = "left",
+						text_align = "center",
 					},
 				},
 				color_icons = true,
@@ -279,6 +273,8 @@ return {
 		end,
 	},
 
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
@@ -410,6 +406,18 @@ return {
 			})
 
 			ins_right({
+				"diagnostics",
+				sources = { "nvim_diagnostic" },
+				symbols = { error = " ", warn = "  ", hint = " ", info = " " },
+				diagnostics_color = {
+					color_error = { fg = colors.red },
+					color_warn = { fg = colors.yellow },
+					color_info = { fg = colors.cyan },
+					color_hint = { fg = colors.blue },
+				},
+			})
+
+			ins_right({
 				require("lsp-progress").progress,
 				color = { fg = "#ffff33" },
 			})
@@ -421,6 +429,8 @@ return {
 		end,
 	},
 
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 	{
 		"linrongbin16/lsp-progress.nvim",
 		event = { "BufAdd", "TabEnter" },
@@ -448,5 +458,94 @@ return {
 				end,
 			})
 		end,
+	},
+
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+	{
+		"kevinhwang91/nvim-ufo",
+		event = { "VeryLazy" },
+		dependencies = {
+			"kevinhwang91/promise-async",
+			{
+				"luukvbaal/statuscol.nvim",
+				event = "VeryLazy",
+				config = function()
+					local builtin = require("statuscol.builtin")
+					require("statuscol").setup({
+						relculright = true,
+						segments = {
+							{ text = { builtin.foldfunc, "  " }, click = "v:lua.ScFa" },
+							{
+								sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+								click = "v:lua.ScSa",
+							},
+							{ text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
+							{
+								sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true },
+								click = "v:lua.ScSa",
+							},
+						},
+					})
+				end,
+			},
+		},
+		opts = {
+			preview = {
+				mappings = {
+					scrollB = "<C-b>",
+					scrollF = "<C-f>",
+					scrollU = "<C-u>",
+					scrollD = "<C-d>",
+				},
+			},
+			provider_selector = function(_, filetype, buftype)
+				local function handleFallbackException(bufnr, err, providerName)
+					if type(err) == "string" and err:match("UfoFallbackException") then
+						return require("ufo").getFolds(bufnr, providerName)
+					else
+						return require("promise").reject(err)
+					end
+				end
+
+				return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
+					or function(bufnr)
+						return require("ufo")
+							.getFolds(bufnr, "lsp")
+							:catch(function(err)
+								return handleFallbackException(bufnr, err, "treesitter")
+							end)
+							:catch(function(err)
+								return handleFallbackException(bufnr, err, "indent")
+							end)
+					end
+			end,
+			fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+				local newVirtText = {}
+				local suffix = ("  📌 %d Line Folded"):format(endLnum - lnum)
+				local sufWidth = vim.fn.strdisplaywidth(suffix)
+				local targetWidth = width - sufWidth
+				local curWidth = 0
+				for _, chunk in ipairs(virtText) do
+					local chunkText = chunk[1]
+					local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+					if targetWidth > curWidth + chunkWidth then
+						table.insert(newVirtText, chunk)
+					else
+						chunkText = truncate(chunkText, targetWidth - curWidth)
+						local hlGroup = chunk[2]
+						table.insert(newVirtText, { chunkText, hlGroup })
+						chunkWidth = vim.fn.strdisplaywidth(chunkText)
+						if curWidth + chunkWidth < targetWidth then
+							suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+						end
+						break
+					end
+					curWidth = curWidth + chunkWidth
+				end
+				table.insert(newVirtText, { suffix, "MoreMsg" })
+				return newVirtText
+			end,
+		},
 	},
 }

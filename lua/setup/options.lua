@@ -49,7 +49,7 @@ local opts = {
 	foldenable = true, -- enable fold for nvim-ufo
 	foldlevel = 99, -- set high foldlevel for nvim-ufo
 	foldlevelstart = 99, -- start with all code unfolded
-	foldcolumn = vim.fn.has("nvim-0.9") == 1 and "1" or nil, -- show foldcolumn in nvim 0.9
+	foldcolumn = "1",
 }
 
 local global = {
@@ -99,5 +99,7 @@ if vim.fn.has("nvim-0.9.0") == 1 then
 	vim.opt.splitkeep = "screen"
 	vim.opt.shortmess:append({ C = true })
 end
+
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 Sessiondir = vim.fn.stdpath("data") .. "/sessions"

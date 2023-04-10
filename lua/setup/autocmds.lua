@@ -128,4 +128,17 @@ return {
 			opts = { pattern = "TelescopePreviewerLoaded" },
 		},
 	},
+	{
+		name = "SaveFold",
+		{
+			"BufWinLeave",
+			":mkview",
+			opts = { pattern = "*.*" },
+		},
+		{
+			"BufWinEnter",
+			":silent! loadview",
+			opts = { pattern = "*.*" },
+		},
+	},
 }
