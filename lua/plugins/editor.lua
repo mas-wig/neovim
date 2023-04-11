@@ -40,7 +40,7 @@ return {
 					sorting_strategy = "ascending",
 					file_ignore_patterns = {
 						"node_modules",
-						"assets",
+						-- "assets",
 						".git/*",
 						"^target",
 						"%.aux",

@@ -7,6 +7,7 @@ return {
 			setup = {},
 			servers = {
 				lua_ls = {
+					filetypes = { "lua" },
 					Lua = {
 						workspace = { checkThirdParty = false },
 						telemetry = { enable = false },
@@ -47,7 +48,6 @@ return {
 				},
 
 				html = {
-					cmd = { "vscode-html-language-server", "--stdio" },
 					filetypes = { "html" },
 					root_dir = function(fname)
 						return require("lspconfig").util.root_pattern(".git")(fname)
@@ -65,7 +65,6 @@ return {
 				},
 
 				cssls = {
-					cmd = { "vscode-css-language-server", "--stdio" },
 					filetypes = { "css", "scss", "less" },
 					single_file_support = true,
 					root_dir = function(fname)
@@ -558,10 +557,11 @@ return {
 
 	{
 		"jose-elias-alvarez/null-ls.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		event = "LspAttach",
 		config = function()
 			local null_ls = require("null-ls")
 			null_ls.setup({
+				root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
 				sources = {
 					null_ls.builtins.formatting.stylua.with({
 						extra_args = {

@@ -66,7 +66,7 @@ utils.get_root = function()
 	local root = roots[1]
 	if not root then
 		path = path and vim.fs.dirname(path) or vim.loop.cwd()
-		root = vim.fs.find(utils.root_patterns or utils.dirname(path), { path = path, upward = true })[1]
+		root = vim.fs.find(utils.root_patterns, { path = path, upward = true })[1]
 		root = root and vim.fs.dirname(root) or vim.loop.cwd()
 	end
 	return root

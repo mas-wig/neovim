@@ -57,10 +57,12 @@ function fn.ConcealHTML(bufnr)
 	local query = vim.treesitter.query.parse(
 		"html",
 		[[
-    ((attribute
-        (attribute_name) @att_name (#eq? @att_name "class")
-        (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "…")))
-    ]]
+        ((
+          attribute
+                (attribute_name) @att_name (#eq? @att_name "class")
+                (quoted_attribute_value (attribute_value) @class_value) (#set! @class_value conceal "---")
+        ))
+        ]]
 	)
 
 	for _, captures, metadata in query:iter_matches(root, bufnr, root:start(), root:end_()) do
