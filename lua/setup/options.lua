@@ -108,7 +108,6 @@ for key, value in pairs(global) do
 end
 
 vim.opt.shortmess:append({ W = true, I = true, c = true })
-vim.wo.colorcolumn = "120"
 
 if vim.fn.has("nvim-0.9.0") == 1 then
 	vim.opt.splitkeep = "screen"
