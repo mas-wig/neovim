@@ -434,6 +434,15 @@ return {
 			})
 
 			ins_right({
+				function()
+					return require("nvim-navic").get_location()
+				end,
+				cond = function()
+					return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+				end,
+			})
+
+			ins_right({
 				"diagnostics",
 				sources = { "nvim_diagnostic" },
 				symbols = { error = " ", warn = "  ", hint = " ", info = " " },
@@ -601,14 +610,25 @@ return {
 	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
 	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 
-	colors = {
-		error_fg = "#FF6363", -- diagnostic font color
-		error_bg = "#4B252C", -- diagnostic line color
-		warn_fg = "#FA973A",
-		warn_bg = "#403733",
-		info_fg = "#5B38E8",
-		info_bg = "#281478",
-		hint_fg = "#25E64B",
-		hint_bg = "#147828",
+	{
+		"SmiteshP/nvim-navic",
+		lazy = true,
+		init = function()
+			vim.g.navic_silence = true
+			require("setup.utils").on_attach(function(client, buffer)
+				if client.server_capabilities.documentSymbolProvider then
+					require("nvim-navic").attach(client, buffer)
+				end
+			end)
+		end,
+		opts = function()
+			return {
+				separator = "   ",
+				highlight = true,
+				depth_limit = 5,
+				depth_limit_indicator = "  ",
+				icons = require("ui.icons").winbar,
+			}
+		end,
 	},
 }

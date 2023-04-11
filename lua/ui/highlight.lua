@@ -31,4 +31,6 @@ return {
 	FloatBorder = { fg = c.border_highlight, bg = c.bg_float },
 	WinSeparator = { fg = cl.magenta, bold = false },
 	NeoTreeDirectoryIcon = { fg = cl.yellow3, bg = "none" },
+	NavicText = { fg = cl.cyan, bg = c.none },
+	NavicSeparator = { fg = cl.yellow2, bg = c.none },
 }
