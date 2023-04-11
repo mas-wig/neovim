@@ -58,17 +58,17 @@ return {
 			styles = {
 				comments = { italic = true },
 				keywords = { italic = true },
-				functions = {},
+				functions = { italic = true, bold = true },
 				variables = {},
 				-- Background styles. Can be "dark", "transparent" or "normal"
 				sidebars = "normal",
 				floats = "normal", -- style for floating windows
 			},
-			sidebars = { "qf", "help" },
+			sidebars = { "qf", "help", "lazy", "neo-tree", "TelescopePrompt" },
 			hide_inactive_statusline = false,
 			dim_inactive = false,
 			lualine_bold = false,
-			on_highlights = function(highlights, colors)
+			on_highlights = function(highlights, _)
 				local override = require("ui.highlight")
 				for name, color in pairs(override) do
 					highlights[name] = color
@@ -596,5 +596,19 @@ return {
 				},
 			})
 		end,
+	},
+
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+
+	colors = {
+		error_fg = "#FF6363", -- diagnostic font color
+		error_bg = "#4B252C", -- diagnostic line color
+		warn_fg = "#FA973A",
+		warn_bg = "#403733",
+		info_fg = "#5B38E8",
+		info_bg = "#281478",
+		hint_fg = "#25E64B",
+		hint_bg = "#147828",
 	},
 }

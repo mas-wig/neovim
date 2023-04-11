@@ -30,4 +30,5 @@ return {
 	TelescopeResultsTitle = { fg = cl.black, bg = cl.yellow2 },
 	FloatBorder = { fg = c.border_highlight, bg = c.bg_float },
 	WinSeparator = { fg = cl.magenta, bold = false },
+	NeoTreeDirectoryIcon = { fg = cl.yellow3, bg = "none" },
 }

@@ -587,6 +587,11 @@ return {
 		branch = "master",
 		event = { "BufReadPre", "BufNewFile" },
 		lazy = true,
+		init = function()
+			if vim.o.ft == "clap_input" and vim.o.ft == "guihua" and vim.o.ft == "guihua_rust" then
+				require("cmp").setup.buffer({ completion = { enable = false } })
+			end
+		end,
 		dependencies = {
 			"ray-x/guihua.lua",
 			branch = "master",
