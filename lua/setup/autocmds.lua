@@ -166,4 +166,13 @@ return {
 			},
 		},
 	},
+
+	{
+		name = "FormatAutogroup",
+		{
+			"BufWritePost",
+			":FormatWrite",
+			opts = { pattern = "*" },
+		},
+	},
 }
