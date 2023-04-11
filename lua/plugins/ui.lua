@@ -440,6 +440,7 @@ return {
 				cond = function()
 					return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
 				end,
+				color = { bg = colors.lualine_bg },
 			})
 
 			ins_right({
