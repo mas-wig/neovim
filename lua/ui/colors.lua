@@ -14,7 +14,7 @@ return {
 	violet = "#a9a1e1",
 	magenta = "#c678dd",
 	magenta2 = "#e6005c",
-	violet2 = "#ac39ac",
+	violet2 = "#99004d",
 	blue = "#51afef",
 	blue2 = "#281478",
 	red = "#ec5f67",
