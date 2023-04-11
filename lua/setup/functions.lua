@@ -1,5 +1,15 @@
 local fn = {}
 local Util = require("lazy.core.util")
+local conceal_ns = vim.api.nvim_create_namespace("class_conceal")
+
+function fn.ChangeFiletype()
+	vim.ui.input({ prompt = "Change filetype to: " }, function(new_ft)
+		if new_ft ~= nil then
+			vim.bo.filetype = new_ft
+		end
+	end)
+end
+
 function fn.toggle(option, silent, values)
 	if values then
 		if vim.opt_local[option]:get() == values[1] then
@@ -44,7 +54,7 @@ function fn.ConcealHTML(bufnr)
 	local syntax_tree = language_tree:parse()
 	local root = syntax_tree[1]:root()
 
-	local query = vim.treesitter.parse_query(
+	local query = vim.treesitter.query.parse(
 		"html",
 		[[
     ((attribute

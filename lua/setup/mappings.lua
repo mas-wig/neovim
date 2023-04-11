@@ -94,10 +94,6 @@ map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceal
 map("n", "<leader>gg", function() Util.float_term({"lazygit"}, {cwd = Util.get_root()}) end, {desc = "Lazygit (root dir)"})
 map("n", "<leader>gG", function() Util.float_term({"lazygit"}) end, {desc = "Lazygit (cwd)"})
 
--- floating terminal
--- map("n", "<leader>ft", function() Util.float_term(nil, {cwd = Util.get_root()}) end, {desc = "Terminal (root dir)"})
--- map("n", "<A-i>", function() Util.float_term() end, {desc = "Terminal (cwd)"})
-
 local function termcodes(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -113,6 +109,8 @@ if vim.fn.has("nvim-0.9.0") == 1 then
 end
 
 map("t", "<esc><esc>", "<c-\\><c-n>", {desc = "Enter Normal Mode"})
+
+map("n","<leader>cft",function() Util.ChangeFiletype() end, { desc= "Change FileType" })
 
 -- windows
 map("n", "<leader>ww", "<C-W>p", {desc = "Other window"})
