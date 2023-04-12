@@ -23,7 +23,7 @@ return {
 	GitSignsChange = { fg = cl.yellow3 },
 	GitSignsDelete = { fg = cl.red },
 	LineNr = { fg = cl.yellow2 },
-	FoldColumn = { bg = options.transparent and c.none or c.bg, fg = cl.cyan },
+	-- FoldColumn = { bg = options.transparent and c.none or c.bg, fg = cl.cyan },
 	CursorLineNr = { fg = cl.magenta2 },
 	TelescopePromptTitle = { fg = cl.black, bg = cl.red2 },
 	TelescopePreviewTitle = { fg = cl.black, bg = cl.cyan },

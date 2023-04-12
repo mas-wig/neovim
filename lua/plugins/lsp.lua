@@ -107,11 +107,10 @@ return {
 			},
 		},
 		config = function(_, opts)
-			for name, icon in pairs(require("ui.icons").diagnostics) do
-				name = "DiagnosticSign" .. name
-				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-			end
-
+			-- for name, icon in pairs(require("ui.icons").diagnostics) do
+			-- 	name = "DiagnosticSign" .. name
+			-- 	vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+			-- end
 			require("setup.utils").on_attach(function(client, bufnr)
 				require("legendary").keymaps({
 					{

@@ -520,11 +520,11 @@ return {
 							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
 							{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 							{
-								sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+								sign = { name = { "Diagnostic" }, maxwidth = 1, auto = true },
 								click = "v:lua.ScSa",
 							},
 							{
-								sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true },
+								sign = { name = { ".*" }, maxwidth = 1, colwidth = 1, auto = true },
 								click = "v:lua.ScSa",
 							},
 						},
