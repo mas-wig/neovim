@@ -615,18 +615,6 @@ return {
 							underline = true,
 							update_in_insert = true,
 							prefix = "  ",
-							-- format = function(diagnostic)
-							-- 	if diagnostic.severity == vim.diagnostic.severity.ERROR then
-							-- 		return string.format(" %s", diagnostic.message)
-							-- 	elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-							-- 		return string.format("⚠️  %s", diagnostic.message)
-							-- 	elseif diagnostic.severity == vim.diagnostic.severity.HINT then
-							-- 		return string.format(" %s", diagnostic.message)
-							-- 	elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-							-- 		return string.format(" %s", diagnostic.message)
-							-- 	end
-							-- 	return diagnostic.message
-							-- end,
 						},
 						severity_sort = true,
 					},
@@ -634,6 +622,12 @@ return {
 					diagnostic_scrollbar_sign = false,
 					diagnostic_update_in_insert = true,
 					disply_diagnostic_qf = true,
+				},
+				icons = {
+					diagnostic_err = require("ui.icons").diagnostics.Error,
+					diagnostic_warn = require("ui.icons").diagnostics.Warn,
+					diagnostic_info = require("ui.icons").diagnostics.Info,
+					diagnostic_hint = require("ui.icons").diagnostics.Hint,
 				},
 			})
 		end,

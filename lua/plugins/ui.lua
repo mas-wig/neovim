@@ -511,22 +511,37 @@ return {
 				config = function()
 					local builtin = require("statuscol.builtin")
 					require("statuscol").setup({
+						bt_ignore = { "alpha", "lazy", "neo-tree" },
 						relculright = true,
 						segments = {
 							{
 								sign = { name = { "GitSigns" }, maxwidth = 1, auto = true },
 								click = "v:lua.ScSa",
+								condition = {
+									true,
+									builtin.not_empty,
+									function(args)
+										return vim.api.nvim_get_current_win() == args.win
+									end,
+								},
 							},
 							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
 							{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 							{
 								sign = { name = { "Diagnostic" }, maxwidth = 1, auto = true },
 								click = "v:lua.ScSa",
+								condition = {
+									true,
+									builtin.not_empty,
+									function(args)
+										return vim.api.nvim_get_current_win() == args.win
+									end,
+								},
 							},
-							{
-								sign = { name = { ".*" }, maxwidth = 1, colwidth = 1, auto = true },
-								click = "v:lua.ScSa",
-							},
+							-- {
+							-- 	sign = { name = { ".*" }, maxwidth = 1, colwidth = 1, auto = true },
+							-- 	click = "v:lua.ScSa",
+							-- },
 						},
 					})
 				end,
