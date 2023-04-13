@@ -163,8 +163,9 @@ return {
 					bold = true,
 					italic = true,
 				},
-				tab = {
+				tab_selected = {
 					bg = "#c6ff1a",
+					fg = "#000000",
 				},
 			},
 		},
