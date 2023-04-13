@@ -118,14 +118,13 @@ return {
 						description = "Navigate me Daddy",
 						icon = "🚀 ",
 						keymaps = {
-
 							{
 								"gr",
 								function()
 									require("navigator.reference").async_ref()
 								end,
 								opts = { buffer = bufnr },
-								description = "async_ref",
+								description = "⚡️ Async Reference",
 							},
 							{
 								"<Leader>gr",
@@ -133,7 +132,7 @@ return {
 									require("navigator.reference").reference()
 								end,
 								opts = { buffer = bufnr },
-								description = "reference",
+								description = "⚡️ Reference",
 							}, -- reference deprecated
 							{
 								mode = "i",
@@ -146,7 +145,7 @@ return {
 									vim.lsp.buf.signature_help()
 								end,
 								opts = { buffer = bufnr },
-								description = "signature_help",
+								description = "⚡️ Signature Help",
 							},
 							{
 								"g0",
@@ -154,7 +153,7 @@ return {
 									require("navigator.symbols").document_symbols()
 								end,
 								opts = { buffer = bufnr },
-								description = "document_symbols",
+								description = "⚡️ Doc Symbols",
 							},
 							{
 								"gW",
@@ -162,15 +161,7 @@ return {
 									require("navigator.workspace").workspace_symbol_live()
 								end,
 								opts = { buffer = bufnr },
-								description = "workspace_symbol_live",
-							},
-							{
-								"<c-]>",
-								function()
-									require("navigator.definition").definition()
-								end,
-								opts = { buffer = bufnr },
-								description = "definition",
+								description = "⚡️ Workspace Symbols",
 							},
 							{
 								"gd",
@@ -178,7 +169,7 @@ return {
 									require("navigator.definition").definition()
 								end,
 								opts = { buffer = bufnr },
-								description = "definition",
+								description = "⚡️ Goto definition",
 							},
 							{
 								"gD",
@@ -186,7 +177,7 @@ return {
 									vim.lsp.buf.declaration()
 								end,
 								opts = { buffer = bufnr },
-								description = "declaration",
+								description = "⚡️ Goto Declaration",
 							},
 							{
 								"gp",
@@ -194,7 +185,7 @@ return {
 									require("navigator.definition").definition_preview()
 								end,
 								opts = { buffer = bufnr },
-								description = "definition_preview",
+								description = "⚡️ Peek Definition",
 							},
 							{
 								"<Leader>gt",
@@ -202,7 +193,7 @@ return {
 									require("navigator.treesitter").buf_ts()
 								end,
 								opts = { buffer = bufnr },
-								description = "buf_ts",
+								description = "⚡️ TreeSitter Symbol",
 							},
 							{
 								"<Leader>gT",
@@ -210,7 +201,7 @@ return {
 									require("navigator.treesitter").bufs_ts()
 								end,
 								opts = { buffer = bufnr },
-								description = "bufs_ts",
+								description = "⚡️ TreeSitter Symbols",
 							},
 							{
 								"<Leader>ct",
@@ -218,7 +209,7 @@ return {
 									require("navigator.ctags").ctags()
 								end,
 								opts = { buffer = bufnr },
-								description = "ctags",
+								description = "⚡️ Ctags",
 							},
 							{
 								"<Space>ca",
@@ -227,7 +218,7 @@ return {
 									require("navigator.codeAction").code_action()
 								end,
 								opts = { buffer = bufnr },
-								description = "code_action",
+								description = "⚡️ Code Action",
 							},
 							{
 								"<Space>ca",
@@ -236,7 +227,7 @@ return {
 									require("navigator.codeAction").range_code_action()
 								end,
 								opts = { buffer = bufnr },
-								description = "range_code_action",
+								description = "⚡️ Range Code Action",
 							},
 							{
 								"<Space>rn",
@@ -244,7 +235,7 @@ return {
 									require("navigator.rename").rename()
 								end,
 								opts = { buffer = bufnr },
-								description = "rename",
+								description = "⚡️ Rename",
 							},
 							{
 								"<Leader>gi",
@@ -252,7 +243,7 @@ return {
 									vim.lsp.buf.incoming_calls()
 								end,
 								opts = { buffer = bufnr },
-								description = "incoming_calls",
+								description = "⚡️ Incoming Calls",
 							},
 							{
 								"<Leader>go",
@@ -260,7 +251,7 @@ return {
 									vim.lsp.buf.outgoing_calls()
 								end,
 								opts = { buffer = bufnr },
-								description = "outgoing_calls",
+								description = "⚡️ Outgoing Calls",
 							},
 							{
 								"gi",
@@ -268,7 +259,7 @@ return {
 									vim.lsp.buf.implementation()
 								end,
 								opts = { buffer = bufnr },
-								description = "implementation",
+								description = "⚡️ Implementation",
 							},
 							{
 								"<Space>D",
@@ -276,7 +267,7 @@ return {
 									vim.lsp.buf.type_definition()
 								end,
 								opts = { buffer = bufnr },
-								description = "type_definition",
+								description = "⚡️ Type Definition",
 							},
 							{
 								"gL",
@@ -284,7 +275,7 @@ return {
 									require("navigator.diagnostics").show_diagnostics()
 								end,
 								opts = { buffer = bufnr },
-								description = "show_diagnostics",
+								description = "⚡️ Show Diagnostics",
 							},
 							{
 								"gG",
@@ -292,7 +283,7 @@ return {
 									require("navigator.diagnostics").show_buf_diagnostics()
 								end,
 								opts = { buffer = bufnr },
-								description = "show_buf_diagnostics",
+								description = "⚡️ Show Buf Diagnostics",
 							},
 							{
 								"<Leader>dT",
@@ -300,7 +291,7 @@ return {
 									require("navigator.diagnostics").toggle_diagnostics()
 								end,
 								opts = { buffer = bufnr },
-								description = "toggle_diagnostics",
+								description = "⚡️ Toggle Diagnostics",
 							},
 							{
 								"]d",
@@ -308,7 +299,7 @@ return {
 									vim.diagnostic.goto_next()
 								end,
 								opts = { buffer = bufnr },
-								description = "next diagnostics",
+								description = "⚡️ Next Diagnostics",
 							},
 							{
 								"[d",
@@ -316,7 +307,7 @@ return {
 									vim.diagnostic.goto_prev()
 								end,
 								opts = { buffer = bufnr },
-								description = "prev diagnostics",
+								description = "⚡️ Prev Diagnostics",
 							},
 							{
 								"]O",
@@ -324,7 +315,7 @@ return {
 									vim.diagnostic.set_loclist()
 								end,
 								opts = { buffer = bufnr },
-								description = "diagnostics set loclist",
+								description = "⚡️ Diagnostics SetLoclist",
 							},
 							{
 								"]r",
@@ -332,7 +323,7 @@ return {
 									require("navigator.treesitter").goto_next_usage()
 								end,
 								opts = { buffer = bufnr },
-								description = "goto_next_usage",
+								description = "⚡️ Goto Next Usage",
 							},
 							{
 								"[r",
@@ -340,15 +331,7 @@ return {
 									require("navigator.treesitter").goto_previous_usage()
 								end,
 								opts = { buffer = bufnr },
-								description = "goto_previous_usage",
-							},
-							{
-								"<C-LeftMouse>",
-								function()
-									vim.lsp.buf.definition()
-								end,
-								opts = { buffer = bufnr },
-								description = "definition",
+								description = "⚡️ Goto Prev Usage",
 							},
 							{
 								"K",
@@ -359,15 +342,7 @@ return {
 									return vim.lsp.buf.hover()
 								end,
 								opts = { buffer = bufnr },
-								description = "hover doc",
-							},
-							{
-								"g<LeftMouse>",
-								function()
-									vim.lsp.buf.implementation()
-								end,
-								opts = { buffer = bufnr },
-								description = "implementation",
+								description = "⚡️ Hover Doc",
 							},
 							{
 								"<Leader>k",
@@ -375,7 +350,7 @@ return {
 									require("navigator.dochighlight").hi_symbol()
 								end,
 								opts = { buffer = bufnr },
-								description = "hi_symbol",
+								description = "⚡️ HL Symbol",
 							},
 							{
 								"<Space>wa",
@@ -383,7 +358,7 @@ return {
 									require("navigator.workspace").add_workspace_folder()
 								end,
 								opts = { buffer = bufnr },
-								description = "add_workspace_folder",
+								description = "⚡️ Add to Workspace",
 							},
 							{
 								"<Space>wr",
@@ -391,16 +366,7 @@ return {
 									require("navigator.workspace").remove_workspace_folder()
 								end,
 								opts = { buffer = bufnr },
-								description = "remove_workspace_folder",
-							},
-							{
-								"<Space>gm",
-								function()
-									require("navigator.formatting").range_format()
-								end,
-								mode = "n",
-								opts = { buffer = bufnr },
-								description = "range format operator e.g gmip",
+								description = "⚡️ Remove Workspace",
 							},
 							{
 								"<Space>wl",
@@ -408,7 +374,7 @@ return {
 									require("navigator.workspace").list_workspace_folders()
 								end,
 								opts = { buffer = bufnr },
-								description = "list_workspace_folders",
+								description = "⚡️ List Workspace",
 							},
 							{
 								"<Space>la",
@@ -417,7 +383,7 @@ return {
 									require("navigator.codelens").run_action()
 								end,
 								opts = { buffer = bufnr },
-								description = "run code lens action",
+								description = "⚡️ CodeLens Action",
 							},
 						},
 					},

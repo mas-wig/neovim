@@ -6,6 +6,7 @@ return {
 		dependencies = {
 			{ "nvim-telescope/telescope-fzf-native.nvim", lazy = true, build = "make" },
 			{ "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+			{ "nvim-telescope/telescope-media-files.nvim", lazy = true },
 		},
 		opts = function()
 			local actions = require("telescope.actions")
@@ -84,6 +85,10 @@ return {
 					},
 				},
 				extensions = {
+					media_files = {
+						filetypes = { "png", "svg", "gift", "webp", "jpg", "jpeg" },
+						find_cmd = "rg",
+					},
 					fzf = {
 						fuzzy = true,
 						override_generic_sorter = true,
@@ -129,6 +134,7 @@ return {
 			require("telescope").setup(opts)
 			require("telescope").load_extension("fzf")
 			require("telescope").load_extension("file_browser")
+			require("telescope").load_extension("media_files")
 		end,
 		init = function()
 			local t = require("legendary.toolbox")
@@ -139,6 +145,7 @@ return {
 					icon = "🔭",
 					keymaps = {
 						{ "<leader>fb", "<cmd>Telescope file_browser<cr>", description = "File browser" },
+						{ "<leader>mf", "<cmd>Telescope media_files<cr>", description = "Media File" },
 						{
 							"<leader>bs",
 							"<cmd>Telescope current_buffer_fuzzy_find<cr>",
@@ -414,6 +421,39 @@ return {
 				end,
 				desc = "Replace in files (Spectre)",
 			},
+		},
+	},
+
+	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
+	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+	{
+		"RRethy/vim-illuminate",
+		event = { "BufReadPost", "BufNewFile" },
+		opts = { delay = 200 },
+		config = function(_, opts)
+			require("illuminate").configure(opts)
+
+			local function map(key, dir, buffer)
+				vim.keymap.set("n", key, function()
+					require("illuminate")["goto_" .. dir .. "_reference"](false)
+				end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+			end
+
+			map("]]", "next")
+			map("[[", "prev")
+
+			-- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					local buffer = vim.api.nvim_get_current_buf()
+					map("]]", "next", buffer)
+					map("[[", "prev", buffer)
+				end,
+			})
+		end,
+		keys = {
+			{ "]]", desc = "Next Reference" },
+			{ "[[", desc = "Prev Reference" },
 		},
 	},
 }
