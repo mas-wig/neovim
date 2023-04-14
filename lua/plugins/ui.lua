@@ -644,7 +644,6 @@ return {
 				highlight = true,
 				depth_limit = 5,
 				depth_limit_indicator = "  ",
-				icons = require("ui.icons").winbar,
 			}
 		end,
 	},

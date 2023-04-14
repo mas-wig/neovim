@@ -26,7 +26,7 @@ return {
 				window = {
 					completion = {
 						scrollbar = false,
-						border = "rounded",
+						border = "single",
 						winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,Search:None,CursorLine:PmenuSel",
 						side_padding = 1,
 					},
@@ -94,7 +94,7 @@ return {
 					["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 					["<C-y>"] = cmp.config.disable,
 					["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-					["<CR>"] = cmp.mapping.confirm({ select = false }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()

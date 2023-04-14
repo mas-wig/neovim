@@ -112,6 +112,8 @@ return {
 			-- 	vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 			-- end
 			require("setup.utils").on_attach(function(client, bufnr)
+				require("navigator.dochighlight").documentHighlight(bufnr)
+				require("navigator.codeAction").code_action_prompt(bufnr)
 				require("legendary").keymaps({
 					{
 						itemgroup = "Navigator",
@@ -337,7 +339,7 @@ return {
 								"K",
 								function()
 									vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-										border = "rounded",
+										border = "single",
 									})
 									return vim.lsp.buf.hover()
 								end,
@@ -565,7 +567,7 @@ return {
 		},
 		config = function()
 			return require("navigator").setup({
-				border = "rounded",
+				border = "single",
 				ts_fold = false,
 				default_mapping = false,
 				transparency = 100,
