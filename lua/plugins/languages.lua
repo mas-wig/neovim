@@ -41,10 +41,6 @@ return {
 		"jose-elias-alvarez/typescript.nvim",
 		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 		config = function()
-			local on_attach = require("setup.utils").on_attach(function(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-			end)
 			return require("typescript").setup({
 				disable_commands = false,
 				debug = false,
@@ -52,7 +48,35 @@ return {
 					fallback = true,
 				},
 				server = {
-					on_attach = on_attach,
+					on_attach = require("setup.utils").on_attach(function(client, bufnr)
+						client.server_capabilities.documentFormattingProvider = false
+						client.server_capabilities.documentRangeFormattingProvider = false
+					end),
+					completions = { completeFunctionCalls = true },
+					javascript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- none | literals | all
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						},
+					},
+					typescript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- none | literals | all
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						},
+					},
 				},
 			})
 		end,
