@@ -141,20 +141,6 @@ return {
 		},
 	},
 	{
-		name = "SaveFold",
-		{
-			"BufWinLeave",
-			":mkview",
-			opts = { pattern = "*.*" },
-		},
-		{
-			"BufWinEnter",
-			":silent! loadview",
-			opts = { pattern = "*.*" },
-		},
-	},
-
-	{
 		name = "LuaLineRerfesh",
 		{
 			"User",
@@ -173,6 +159,78 @@ return {
 			"BufWritePost",
 			":FormatWrite",
 			opts = { pattern = "*" },
+		},
+	},
+
+	-- Code Folding and cursor
+	{
+		name = "CodeFolding",
+		{
+			"BufWinLeave",
+			function()
+				local ignoredFts = {
+					"TelescopePrompt",
+					"DressingSelect",
+					"DressingInput",
+					"toggleterm",
+					"gitcommit",
+					"replacer",
+					"harpoon",
+					"help",
+					"qf",
+				}
+				if vim.tbl_contains(ignoredFts, vim.bo.filetype) or vim.bo.buftype ~= "" or not vim.bo.modifiable then
+					return
+				end
+
+				return vim.cmd.mkview(1)
+			end,
+			opts = { pattern = { "?*" } },
+		},
+		{
+			"BufWinEnter",
+			function()
+				local ignoredFts = {
+					"TelescopePrompt",
+					"DressingSelect",
+					"DressingInput",
+					"toggleterm",
+					"gitcommit",
+					"replacer",
+					"harpoon",
+					"help",
+					"qf",
+				}
+				if vim.tbl_contains(ignoredFts, vim.bo.filetype) or vim.bo.buftype ~= "" or not vim.bo.modifiable then
+					return
+				end
+
+				pcall(function()
+					vim.cmd.loadview(1)
+				end)
+			end,
+			opts = { pattern = { "?*" } },
+		},
+	},
+
+	-- Save File
+	{
+		name = "SaveFile",
+		{
+			{ "BufWinLeave", "BufLeave", "QuitPre", "FocusLost", "InsertLeave" },
+			opts = { pattern = { "?*" } },
+			function()
+				local filepath = vim.fn.expand("%:p")
+				if
+					vim.fn.filereadable(filepath) == 1
+					and not vim.bo.readonly
+					and vim.fn.expand("%") ~= ""
+					and (vim.bo.buftype == "" or vim.bo.buftype == "acwrite")
+					and vim.bo.filetype ~= "gitcommit"
+				then
+					vim.cmd.update(filepath)
+				end
+			end,
 		},
 	},
 }
