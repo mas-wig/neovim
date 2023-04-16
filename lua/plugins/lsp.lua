@@ -6,6 +6,38 @@ return {
 		opts = {
 			setup = {},
 			servers = {
+				tsserver = {
+					completions = { completeFunctionCalls = true },
+					javascript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- none | literals | all
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						},
+					},
+					typescript = {
+						inlayHints = {
+							includeInlayEnumMemberValueHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayParameterNameHints = "all", -- none | literals | all
+							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayVariableTypeHints = true,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						},
+					},
+					single_file_support = true,
+					root_dir = function(fname)
+						return require("lspconfig").util.root_pattern(".git")(fname)
+							or require("setup.utils").dirname(fname)
+					end,
+				},
 				lua_ls = {
 					filetypes = { "lua" },
 					Lua = {

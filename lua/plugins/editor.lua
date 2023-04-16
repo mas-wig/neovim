@@ -11,7 +11,6 @@ return {
 		opts = function()
 			local actions = require("telescope.actions")
 			local actions_layout = require("telescope.actions.layout")
-
 			return {
 				defaults = {
 					winblend = 0,
