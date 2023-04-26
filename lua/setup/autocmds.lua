@@ -1,26 +1,4 @@
 return {
-	{
-		name = "FormatOpt",
-		{
-			{ "BufEnter" },
-			function()
-				vim.opt.formatoptions = vim.opt.formatoptions - { "c", "r", "o" }
-			end,
-			opts = { pattern = { "*" } },
-		},
-	},
-
-	{
-		name = "GoFormat",
-		{
-			{ "BufWritePre" },
-			function()
-				require("go.format").goimport()
-			end,
-			opts = { pattern = { "*.go" } },
-		},
-	},
-
 	-- {
 	-- 	name = "ConcealAttributes",
 	-- 	{
@@ -140,28 +118,6 @@ return {
 			opts = { pattern = "TelescopePreviewerLoaded" },
 		},
 	},
-	{
-		name = "LuaLineRerfesh",
-		{
-			"User",
-			function()
-				require("lualine").refresh()
-			end,
-			opts = {
-				pattern = "LspProgressStatusUpdated",
-			},
-		},
-	},
-
-	{
-		name = "FormatAutogroup",
-		{
-			"BufWritePost",
-			":FormatWrite",
-			opts = { pattern = "*" },
-		},
-	},
-
 	-- Code Folding and cursor
 	{
 		name = "CodeFolding",
@@ -185,7 +141,7 @@ return {
 
 				return vim.cmd.mkview(1)
 			end,
-			opts = { pattern = { "?*" } },
+			opts = { pattern = "?*" },
 		},
 		{
 			"BufWinEnter",
@@ -209,7 +165,20 @@ return {
 					vim.cmd.loadview(1)
 				end)
 			end,
-			opts = { pattern = { "?*" } },
+			opts = { pattern = "?*" },
+		},
+	},
+
+	{
+		name = "ShowTabLine",
+		{
+			{ "BufWinEnter" },
+			function()
+				if vim.bo.filetype ~= "alpha" then
+					vim.opt.showtabline = 2
+				end
+			end,
+			pattern = { opts = { "*" } },
 		},
 	},
 
@@ -218,7 +187,7 @@ return {
 		name = "SaveFile",
 		{
 			{ "BufWinLeave", "BufLeave", "QuitPre", "FocusLost", "InsertLeave" },
-			opts = { pattern = { "?*" } },
+			opts = { pattern = "?*" },
 			function()
 				local filepath = vim.fn.expand("%:p")
 				if

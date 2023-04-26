@@ -40,9 +40,9 @@ return {
 		Copilot = " ",
 	},
 	git = {
-		added = " ",
-		modified = " ",
-		removed = " ",
+		added = " ",
+		modified = " ",
+		removed = " ",
 		deleted = " ",
 		ignored = "◌ ",
 		renamed = " ",
@@ -150,5 +150,10 @@ return {
 		extends = "❯",
 		precedes = "❮",
 		nbsp = "␣",
+	},
+	neotest = {
+		running = " ",
+		failed = " ",
+		passed = " ",
 	},
 }

@@ -25,19 +25,6 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
--- Bufferline movement
-if require("setup.utils").has("bufferline.nvim") then
-	map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-	map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-	map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-	map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-else
-	map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-	map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-	map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-	map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
-end
-
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 
@@ -50,6 +37,11 @@ map(
 	"<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
 	{ desc = "Redraw / clear hlsearch / diff update" }
 )
+
+map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
+map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
 map("n", "gw", "*N")
 map("x", "gw", "*N")

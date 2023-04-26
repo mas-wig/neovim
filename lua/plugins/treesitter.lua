@@ -2,7 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		version = false,
-		event = { "BufReadPost", "BufNewFile" },
+		event = { "BufReadPre", "BufReadPost", "BufNewFile" },
 		cmd = {
 			"TSInstall",
 			"TSBufEnable",
@@ -12,6 +12,9 @@ return {
 			"TSDisable",
 			"TSModuleInfo",
 		},
+		build = function()
+			require("nvim-treesitter.install").update({ with_sync = true })
+		end,
 		dependencies = {
 			{ "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
 			{ "windwp/nvim-ts-autotag", lazy = true, config = true },
@@ -59,16 +62,34 @@ return {
 		},
 		opts = {
 			ensure_installed = {
-				"go",
-				"html",
-				"css",
 				"javascript",
-				"php",
-				"lua",
-				"vim",
-				"regex",
+				"typescript",
+				"regex", -- js patterns
+				"jsdoc", -- js annotations
+				"bash",
+				"css",
+				"scss",
 				"markdown",
-				"markdown_inline",
+				"markdown_inline", -- fenced code blocks
+				"python",
+				"lua",
+				"luap", -- lua patterns
+				"luadoc", -- lua annotations
+				"gitignore",
+				"gitcommit",
+				"diff",
+				"go",
+				"bibtex",
+				"vim",
+				"vimdoc", -- help files
+				"toml",
+				"ini",
+				"yaml",
+				"json",
+				"jsonc",
+				"html",
+				"query", -- treesitter query language
+				"http", -- http requests as format, used for rest.nvim
 			},
 			sync_install = false,
 			ignore_install = { "phpdoc" },

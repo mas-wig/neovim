@@ -1,17 +1,5 @@
 local utils = {}
 
-utils.root_patterns = { ".git", "lua" }
-
-utils.on_attach = function(on_attach)
-	vim.api.nvim_create_autocmd("LspAttach", {
-		callback = function(args)
-			local buffer = args.buf
-			local client = vim.lsp.get_client_by_id(args.data.client_id)
-			on_attach(client, buffer)
-		end,
-	})
-end
-
 utils.map = function(mode, lhs, rhs, opts)
 	local keys = require("lazy.core.handler").handlers.keys
 	if not keys.active[keys.parse({ lhs, mode = mode }).id] then
@@ -34,6 +22,8 @@ utils.dirname = function(pathname)
 	end
 	return result
 end
+
+utils.root_patterns = { ".git" } --require("lspconfig").util.root_pattern(".git")(fname) or utils.dirname(fname)
 
 utils.has = function(plugin)
 	return require("lazy.core.config").plugins[plugin] ~= nil

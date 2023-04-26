@@ -76,3 +76,4 @@ function fn.ConcealHTML(bufnr)
 end
 
 return fn
+

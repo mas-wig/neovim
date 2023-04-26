@@ -15,12 +15,7 @@ return {
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			return require("go").setup({
 				goimport = "goimports",
-				lsp_on_attach = function()
-					require("setup.utils").on_attach(function(client, _)
-						client.server_capabilities.documentFormattingProvider = true
-						client.server_capabilities.documentRangeFormattingProvider = true
-					end)
-				end,
+				lsp_on_attach = require("plugins.lsp.utils"),
 				lsp_cfg = {
 					capabilities = capabilities,
 				},
@@ -35,62 +30,54 @@ return {
 			})
 		end,
 	},
-	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
-	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
-	-- {
-	-- 	"jose-elias-alvarez/typescript.nvim",
-	-- 	ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-	-- 	config = function()
-	-- 		return require("typescript").setup({
-	-- 			disable_commands = false,
-	-- 			debug = false,
-	-- 			go_to_source_definition = {
-	-- 				fallback = true,
-	-- 			},
-	-- 			server = {
-	-- 				on_attach = require("setup.utils").on_attach(function(client, bufnr)
-	-- 					client.server_capabilities.documentFormattingProvider = false
-	-- 					client.server_capabilities.documentRangeFormattingProvider = false
-	-- 				end),
-	-- 				completions = { completeFunctionCalls = true },
-	-- 				javascript = {
-	-- 					inlayHints = {
-	-- 						includeInlayEnumMemberValueHints = true,
-	-- 						includeInlayFunctionLikeReturnTypeHints = true,
-	-- 						includeInlayFunctionParameterTypeHints = true,
-	-- 						includeInlayParameterNameHints = "all", -- none | literals | all
-	-- 						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-	-- 						includeInlayPropertyDeclarationTypeHints = true,
-	-- 						includeInlayVariableTypeHints = true,
-	-- 						includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-	-- 					},
-	-- 				},
-	-- 				typescript = {
-	-- 					inlayHints = {
-	-- 						includeInlayEnumMemberValueHints = true,
-	-- 						includeInlayFunctionLikeReturnTypeHints = true,
-	-- 						includeInlayFunctionParameterTypeHints = true,
-	-- 						includeInlayParameterNameHints = "all", -- none | literals | all
-	-- 						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-	-- 						includeInlayPropertyDeclarationTypeHints = true,
-	-- 						includeInlayVariableTypeHints = true,
-	-- 						includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-	-- 					},
-	-- 				},
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
-	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
-	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
+
+	{
+		"jose-elias-alvarez/typescript.nvim",
+		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+		config = function()
+			return require("typescript").setup({
+				disable_commands = false,
+				debug = false,
+				go_to_source_definition = {
+					fallback = true,
+				},
+				server = {
+					on_attach = require("plugins.lsp.utils"),
+					completions = { completeFunctionCalls = true },
+					-- 	javascript = {
+					-- 		inlayHints = {
+					-- 			includeInlayEnumMemberValueHints = true,
+					-- 			includeInlayFunctionLikeReturnTypeHints = true,
+					-- 			includeInlayFunctionParameterTypeHints = true,
+					-- 			includeInlayParameterNameHints = "all", -- none | literals | all
+					-- 			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					-- 			includeInlayPropertyDeclarationTypeHints = true,
+					-- 			includeInlayVariableTypeHints = true,
+					-- 			includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+					-- 		},
+					-- 	},
+					-- 	typescript = {
+					-- 		inlayHints = {
+					-- 			includeInlayEnumMemberValueHints = true,
+					-- 			includeInlayFunctionLikeReturnTypeHints = true,
+					-- 			includeInlayFunctionParameterTypeHints = true,
+					-- 			includeInlayParameterNameHints = "all", -- none | literals | all
+					-- 			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					-- 			includeInlayPropertyDeclarationTypeHints = true,
+					-- 			includeInlayVariableTypeHints = true,
+					-- 			includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+					-- 		},
+					-- 	},
+				},
+			})
+		end,
+	},
+
 	{
 		"simrat39/rust-tools.nvim",
 		ft = { "rust" },
 		config = function()
-			local on_attach = require("setup.utils").on_attach(function(client, _)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-			end)
+			local on_attach = require("plugins.lsp.utils")
 			return require("rust-tools").setup({
 				on_attach = on_attach,
 				inlay_hints = { auto = false },
