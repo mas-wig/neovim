@@ -183,7 +183,7 @@ statusline.git = {
 		{
 			provider = function(self)
 				local count = self.status_dict.changed or 0
-				return count > 0 and ("C " .. count)
+				return count > 0 and ("C " .. count .. " ")
 			end,
 			hl = { fg = "yellow2" },
 		},
@@ -191,7 +191,7 @@ statusline.git = {
 			condition = function(self)
 				return self.has_changes
 			end,
-			provider = " ]",
+			provider = "]",
 		},
 
 		statusline.spacer_right,
