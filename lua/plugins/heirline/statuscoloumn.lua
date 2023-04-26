@@ -83,15 +83,6 @@ M.signs = {
 	end,
 	provider = function(self)
 		if self.has_sign then
-			if self.sign.name == "neotest_running" then
-				return require("ui.icons").neotest.running
-			end
-			if self.sign.name == "neotest_failed" then
-				return require("ui.icons").neotest.failed
-			end
-			if self.sign.name == "neotest_passed" then
-				return require("ui.icons").neotest.passed
-			end
 			return vim.fn.sign_getdefined(self.sign.name)[1].text
 		end
 		return " "

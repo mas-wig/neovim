@@ -8,13 +8,46 @@ return {
 		},
 		module = { "neotest" },
 		config = function()
-			for name, icon in pairs(require("ui.icons").neotest) do
-				name = "neotest_" .. name
-				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-			end
 			require("neotest").setup({
 				adapters = {
 					require("neotest-go"),
+				},
+				consumers = {
+					overseer = require("neotest.consumers.overseer"),
+				},
+				diagnostic = {
+					enabled = false,
+				},
+				log_level = 1,
+				icons = {
+					expanded = "",
+					child_prefix = "",
+					child_indent = "",
+					final_child_prefix = "",
+					non_collapsible = "",
+					collapsed = "",
+					passed =  " ",
+					running =  " ",
+					failed =  " ",
+					unknown = " ",
+					skipped = " ",
+				},
+				floating = {
+					border = "single",
+					max_height = 0.8,
+					max_width = 0.9,
+				},
+				summary = {
+					mappings = {
+						attach = "a",
+						expand = { "<CR>", "<2-LeftMouse>" },
+						expand_all = "e",
+						jumpto = "i",
+						output = "o",
+						run = "r",
+						short = "O",
+						stop = "u",
+					},
 				},
 			})
 		end,
@@ -55,6 +88,61 @@ return {
 						},
 						{ "<leader>tS", "<cmd>lua require('neotest').run.stop()<cr>", description = "Stop" },
 						{ "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<cr>", description = "Summary" },
+					},
+				},
+			})
+		end,
+	},
+
+	{
+		"stevearc/overseer.nvim", -- Task runner and job management
+		lazy = true,
+		opts = {
+			component_aliases = {
+				default_neotest = {
+					"on_output_summarize",
+					"on_exit_set_status",
+					"on_complete_dispose",
+				},
+			},
+		},
+		init = function()
+			require("legendary").commands({
+				{
+					itemgroup = "Overseer",
+					icon = "省",
+					description = "Task running functionality...",
+					commands = {
+						{
+							":OverseerRun",
+							description = "Run a task from a template",
+						},
+						{
+							":OverseerBuild",
+							description = "Open the task builder",
+						},
+						{
+							":OverseerToggle",
+							description = "Toggle the Overseer window",
+						},
+					},
+				},
+			})
+			require("legendary").keymaps({
+				itemgroup = "Overseer",
+				keymaps = {
+					{
+						"<Leader>o",
+						function()
+							local overseer = require("overseer")
+							local tasks = overseer.list_tasks({ recent_first = true })
+							if vim.tbl_isempty(tasks) then
+								vim.notify("No tasks found", vim.log.levels.WARN)
+							else
+								overseer.run_action(tasks[1], "restart")
+							end
+						end,
+						description = "Run the last Overseer task",
 					},
 				},
 			})

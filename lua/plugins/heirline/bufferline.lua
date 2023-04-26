@@ -112,8 +112,8 @@ local TablineBufnr = {
 		else
 			return {
 				fg = "black",
-                bg = "green3",
-                bold = true
+				bg = "green3",
+				bold = true,
 			}
 		end
 	end,
@@ -176,9 +176,9 @@ local TablineFileNameBlock = {
 		name = "heirline_tabline_buffer_callback",
 	},
 	TablinePicker,
-	TablineBufnr,
 	TablineFileName,
 	TablineFileFlags,
+	TablineBufnr,
 }
 
 local TablineBufferBlock = utils.surround({ " ", " " }, function(self) end, { TablineFileNameBlock })

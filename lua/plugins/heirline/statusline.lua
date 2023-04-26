@@ -155,45 +155,46 @@ statusline.git = {
 				or self.status_dict.changed ~= 0
 		end,
 		{
-			provider = function(self)
-				return " " .. self.status_dict.head
-			end,
-			hl = { fg = "orange" },
-		},
-
-		{
 			condition = function(self)
 				return self.has_changes
 			end,
-			provider = " ",
+			provider = "[ ",
+		},
+		{
+			provider = function(self)
+				return self.status_dict.head .. " "
+			end,
+			hl = { fg = "orange" },
 		},
 		{
 			provider = function(self)
 				local count = self.status_dict.added or 0
-				return count > 0 and (require("ui.icons").git.added .. count)
+				return count > 0 and ("A " .. count .. " ")
 			end,
 			hl = { fg = "green" },
 		},
 		{
 			provider = function(self)
 				local count = self.status_dict.removed or 0
-				return count > 0 and (require("ui.icons").git.removed .. count)
+				return count > 0 and ("D " .. count .. " ")
 			end,
 			hl = { fg = "red" },
 		},
 		{
 			provider = function(self)
 				local count = self.status_dict.changed or 0
-				return count > 0 and (require("ui.icons").git.modified .. count)
+				return count > 0 and ("C " .. count)
 			end,
-			hl = { fg = "yellow" },
+			hl = { fg = "yellow2" },
 		},
 		{
 			condition = function(self)
 				return self.has_changes
 			end,
-			provider = " ",
+			provider = " ]",
 		},
+
+		statusline.spacer_right,
 	},
 }
 statusline.ruler = {
@@ -236,6 +237,62 @@ statusline.lspstatus = {
 		return table.concat(names, " ")
 	end,
 	hl = { fg = "pink" },
+	statusline.spacer_left,
+}
+
+statusline.overseer = {
+	condition = function()
+		local ok, _ = pcall(require, "overseer")
+		if ok then
+			return true
+		end
+	end,
+	init = function(self)
+		self.overseer = require("overseer")
+		self.tasks = self.overseer.task_list
+		self.STATUS = self.overseer.constants.STATUS
+	end,
+	static = {
+		symbols = {
+			["FAILURE"] = "FAILED",
+			["CANCELED"] = "CENCELED",
+			["SUCCESS"] = "SUCCESS",
+			["RUNNING"] = "RUNNING",
+		},
+		colors = {
+			["FAILURE"] = "red",
+			["CANCELED"] = "gray",
+			["SUCCESS"] = "green",
+			["RUNNING"] = "yellow",
+		},
+	},
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		{
+			provider = function(self)
+				local tasks_by_status =
+					self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
+				for _, status in ipairs(self.STATUS.values) do
+					local status_tasks = tasks_by_status[status]
+					if self.symbols[status] and status_tasks then
+						self.color = self.colors[status]
+						return "[ " .. self.symbols[status] .. " " .. tostring(#self.tasks.list_tasks()) .. " ]"
+					end
+				end
+			end,
+			hl = function(self)
+				return { fg = self.color }
+			end,
+			on_click = {
+				callback = function()
+					require("neotest").run.run_last()
+				end,
+				name = "run_last_test",
+			},
+		},
+	},
 	statusline.spacer_left,
 }
 

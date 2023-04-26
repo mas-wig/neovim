@@ -89,7 +89,7 @@ return {
 					find_cmd = "rg",
 				},
 				fzf = {
-					fuzzy = true,
+					fuzzy = false,
 					override_generic_sorter = true,
 					override_file_sorter = true,
 					case_mode = "smart_case",
@@ -157,7 +157,7 @@ return {
 						t.lazy_required_fn("telescope.builtin", "find_files", {
 							prompt_title = false,
 							results_title = false,
-                            dynamic_preview_title = false,
+							dynamic_preview_title = false,
 							hidden = true,
 						}),
 						description = "Find files",

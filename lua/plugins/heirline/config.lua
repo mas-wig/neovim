@@ -51,6 +51,7 @@ config.statusline = config.utils.insert(
 	config.set_statusline.vimMode,
 	config.set_statusline.git,
 	config.set_statusline.macroRecording,
+	config.set_statusline.overseer,
 	require("plugins.heirline.component").left_components,
 	{ provider = "%=" },
 	require("plugins.heirline.component").right_components,

@@ -1,5 +1,4 @@
 return require("plugins.lsp.on_attach")(function(client, bufnr)
-	require("plugins.lsp.keymaps")(client, bufnr)
 	require("navigator.dochighlight").documentHighlight(bufnr)
 	require("navigator.codeAction").code_action_prompt(bufnr)
 	if client.server_capabilities.documentSymbolProvider then

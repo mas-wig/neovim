@@ -7,6 +7,7 @@ return {
 			setup = {},
 		},
 		config = function(_, opts)
+			require("plugins.lsp.keymaps")
 			require("plugins.lsp.utils")
 			for name, icon in pairs(require("ui.icons").diagnostics) do
 				name = "DiagnosticSign" .. name

@@ -1,4 +1,4 @@
-return function(client, bufnr)
+return require("plugins.lsp.on_attach")(function(_, bufnr)
 	require("legendary").keymaps({
 		{
 			itemgroup = "Navigator",
@@ -274,4 +274,4 @@ return function(client, bufnr)
 			},
 		},
 	})
-end
+end)

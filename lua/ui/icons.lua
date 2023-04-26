@@ -151,9 +151,4 @@ return {
 		precedes = "❮",
 		nbsp = "␣",
 	},
-	neotest = {
-		running = " ",
-		failed = " ",
-		passed = " ",
-	},
 }
