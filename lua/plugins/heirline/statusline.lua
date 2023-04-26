@@ -272,13 +272,23 @@ statusline.overseer = {
 		end,
 		{
 			provider = function(self)
+				local count_element =
+					require("neotest").state.status_counts(require("neotest").state.adapter_ids()[1], self.bufnr)
 				local tasks_by_status =
 					self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
 				for _, status in ipairs(self.STATUS.values) do
 					local status_tasks = tasks_by_status[status]
 					if self.symbols[status] and status_tasks then
 						self.color = self.colors[status]
-						return "[ " .. self.symbols[status] .. " " .. tostring(#self.tasks.list_tasks()) .. " ]"
+						if count_element["failed"] then
+							return "[ " .. self.symbols[status] .. " : " .. count_element["failed"] .. " ]"
+						elseif count_element["running"] then
+							return "[ " .. self.symbols[status] .. " : " .. count_element["running"] .. " ]"
+						elseif count_element["passed"] then
+							return "[ " .. self.symbols[status] .. " : " .. count_element["passed"] .. " ]"
+						elseif self.symbols[status] == "CANCELED" then
+							return "[ " .. self.symbols[status] .. " ]"
+						end
 					end
 				end
 			end,

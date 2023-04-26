@@ -187,7 +187,9 @@ M.folds = {
 M.git_signs = {
 	{
 		condition = function()
-			return not conditions.is_git_repo() or vim.v.virtnum ~= 0
+			if not conditions.is_git_repo() or vim.v.virtnum ~= 0 then
+				return
+			end
 		end,
 	},
 	{
@@ -209,7 +211,13 @@ M.git_signs = {
 
 			self.has_sign = self.sign ~= nil
 		end,
-		provider = "󰧞",
+		provider = function(self)
+			if self.has_sign then
+				return "󰧞"
+			else
+				return " "
+			end
+		end,
 		hl = function(self)
 			if self.has_sign then
 				return self.sign.name

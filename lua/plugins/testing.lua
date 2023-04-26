@@ -6,7 +6,6 @@ return {
 			{ "antoinemadec/FixCursorHold.nvim", lazy = true },
 			{ "nvim-neotest/neotest-go", lazy = true },
 		},
-		module = { "neotest" },
 		config = function()
 			require("neotest").setup({
 				adapters = {
@@ -26,11 +25,19 @@ return {
 					final_child_prefix = "",
 					non_collapsible = "",
 					collapsed = "",
-					passed =  " ",
-					running =  " ",
-					failed =  " ",
+					passed = " ",
+					running = " ",
+					failed = " ",
 					unknown = " ",
 					skipped = " ",
+				},
+				state = {
+					enabled = true,
+				},
+				status = {
+					enabled = true,
+					signs = true,
+					virtual_text = false,
 				},
 				floating = {
 					border = "single",
@@ -38,6 +45,10 @@ return {
 					max_width = 0.9,
 				},
 				summary = {
+					animated = true,
+					enabled = true,
+					expand_errors = true,
+					follow = true,
 					mappings = {
 						attach = "a",
 						expand = { "<CR>", "<2-LeftMouse>" },
@@ -52,6 +63,23 @@ return {
 			})
 		end,
 		init = function()
+			require("legendary").commands({
+				{
+					itemgroup = "Neotest",
+					icon = "省",
+					description = "Task running functionality...",
+					commands = {
+						{
+							":NeotestRunNearest",
+							function()
+								require("neotest").run.run()
+							end,
+							description = "Run Nearest",
+						},
+					},
+				},
+			})
+
 			require("legendary").keymaps({
 				{
 					itemgroup = "NeoTest",

@@ -73,7 +73,7 @@ config.statuscoloumn = {
 	static = config.set_statuscoloumn.static,
 	init = config.set_statuscoloumn.init,
 	config.set_statuscoloumn.signs,
-	config.spacer,
+	-- config.spacer,
 	config.align,
 	config.set_statuscoloumn.line_numbers,
 	config.spacer,
