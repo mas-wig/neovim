@@ -55,6 +55,7 @@ config.statusline = config.utils.insert(
 	require("plugins.heirline.component").left_components,
 	{ provider = "%=" },
 	require("plugins.heirline.component").right_components,
+	config.set_statusline.session,
 	config.set_statusline.fileType,
 	config.set_statusline.lazy,
 	config.set_statusline.lspstatus,

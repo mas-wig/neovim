@@ -94,6 +94,9 @@ return {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
+				persisted = {
+					layout_config = { width = 0.55, height = 0.55 },
+				},
 				file_browser = {
 					multi_icon = " 👉 ",
 					prompt_title = false,
@@ -136,6 +139,7 @@ return {
 		require("telescope").load_extension("fzf")
 		require("telescope").load_extension("file_browser")
 		require("telescope").load_extension("media_files")
+		require("telescope").load_extension("persisted")
 	end,
 	init = function()
 		local t = require("legendary.toolbox")

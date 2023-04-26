@@ -296,4 +296,32 @@ statusline.overseer = {
 	statusline.spacer_left,
 }
 
+statusline.session = {
+	update = { "User", pattern = "PersistedStateChange" },
+	{
+		condition = function(self)
+			return not statusline.conditions.buffer_matches({
+				filetype = self.filetypes,
+			})
+		end,
+		statusline.spacer_left,
+		{
+			provider = function(self)
+				if vim.g.persisting then
+					return "SESSION ON"
+				else
+					return "SESSION OFF"
+				end
+			end,
+			hl = { fg = "green2", bg = "bg" },
+			on_click = {
+				callback = function()
+					vim.cmd("SessionToggle")
+				end,
+				name = "toggle_session",
+			},
+		},
+		statusline.spacer_left,
+	},
+}
 return statusline
