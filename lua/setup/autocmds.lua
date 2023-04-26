@@ -19,10 +19,8 @@ return {
 			"User",
 			function(session)
 				require("persisted").save()
-
 				-- Delete all of the open buffers
 				vim.api.nvim_input("<ESC>:%bd!<CR>")
-
 				-- Don't start saving the session yet
 				require("persisted").stop()
 			end,

@@ -118,7 +118,7 @@ statusline.lazy = {
 		}) and require("lazy.status").has_updates()
 	end,
 	provider = function()
-		return "  " .. require("lazy.status").updates() .. " "
+		return "Lazy " .. require("lazy.status").updates()
 	end,
 	on_click = {
 		callback = function()

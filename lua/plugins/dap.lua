@@ -44,6 +44,55 @@ return {
 					},
 					{ "<leader>dx", "<cmd>lua require'dap'.terminate()<cr>", description = "Terminate" },
 					{ "<leader>du", "<cmd>lua require'dap'.step_out()<cr>", description = "Step Out" },
+					-- Floating dap windows --
+					{
+
+						"<leader>dft",
+						function()
+							require("dapui").float_element("scopes", { width = 100, height = 20, enter = true })
+						end,
+						description = "Scope Float",
+					},
+					{
+
+						"<leader>dfr",
+						function()
+							require("dapui").float_element("repl", { width = 100, height = 20, enter = true })
+						end,
+						description = "Repl Float",
+					},
+					{
+
+						"<leader>dfc",
+						function()
+							require("dapui").float_element("console", { width = 100, height = 20, enter = true })
+						end,
+						description = "Console Float",
+					},
+					{
+
+						"<leader>dfb",
+						function()
+							require("dapui").float_element("breakpoints", { width = 100, height = 20, enter = true })
+						end,
+						description = "Breakpoint Float",
+					},
+					{
+
+						"<leader>dfs",
+						function()
+							require("dapui").float_element("stacks", { width = 100, height = 20, enter = true })
+						end,
+						description = "Stacks Float",
+					},
+					{
+
+						"<leader>dfw",
+						function()
+							require("dapui").float_element("watches", { width = 100, height = 20, enter = true })
+						end,
+						description = "Watches Float",
+					},
 				},
 			},
 		})
