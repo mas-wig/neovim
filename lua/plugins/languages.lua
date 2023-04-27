@@ -28,7 +28,7 @@ return {
 				lsp_inlay_hints = {
 					enable = false,
 				},
-				luasnip = true,
+				luasnip = false,
 				lsp_diag_update_in_insert = true,
 				lsp_keymaps = false,
 				dap_debug = false,

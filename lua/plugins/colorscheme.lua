@@ -8,9 +8,9 @@ return {
 			terminal_colors = true,
 			styles = {
 				comments = { italic = true },
-				keywords = { bold = true, italic = true },
+				keywords = { italic = true },
 				functions = { italic = true, bold = true },
-				variables = {},
+				variables = { bold = false },
 				sidebars = "normal",
 				floats = "normal", -- style for floating windows
 			},

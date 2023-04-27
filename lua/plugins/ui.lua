@@ -10,7 +10,7 @@ return {
 		end,
 		opts = function()
 			return {
-				separator = "   ",
+				separator = "   ",
 				highlight = true,
 				depth_limit = 5,
 				depth_limit_indicator = "  ",

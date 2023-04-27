@@ -2,7 +2,10 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "williamboman/mason-lspconfig.nvim", lazy = true },
+		dependencies = {
+			{ "folke/neodev.nvim", ft = "lua", opts = { experimental = { pathStrict = true } } },
+			{ "williamboman/mason-lspconfig.nvim", lazy = true },
+		},
 		opts = {
 			setup = {},
 		},

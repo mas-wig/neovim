@@ -159,7 +159,7 @@ local TablineFileNameBlock = {
 		if not self.is_active then
 			return { fg = "cyan" }
 		else
-			return { fg = "white2", bg = "grey" }
+			return { fg = "pink", bg = "bg", italic = true }
 		end
 	end,
 	on_click = {

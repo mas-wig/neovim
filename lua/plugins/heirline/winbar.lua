@@ -1,6 +1,46 @@
 local wb = {}
 local conditions = require("heirline.conditions")
 
+wb.fileFlag = {
+	{
+		{
+			provider = function()
+				local filetype_icon, filetype_hl = require("nvim-web-devicons").get_icon_by_filetype(vim.bo.filetype)
+				return (filetype_icon and "%#" .. filetype_hl .. "#" .. " " .. filetype_icon) or ""
+			end,
+		},
+	},
+	{
+		condition = function()
+			return vim.bo.modified
+		end,
+		provider = " ",
+		hl = { fg = "red" },
+	},
+}
+
+wb.fileLocation = {
+	{
+		provider = function()
+			return "[ "
+		end,
+		hl = { fg = "white", bold = true },
+	},
+	{
+		provider = function()
+			return "  " .. vim.fn.expand("%")
+		end,
+		hl = { fg = "blue", bold = true },
+	},
+	wb.fileFlag,
+	{
+		provider = function()
+			return " ] "
+		end,
+		hl = { fg = "white", bold = true },
+	},
+}
+
 wb.lspDiagnostics = {
 	condition = conditions.has_diagnostics,
 	init = function(self)
@@ -16,7 +56,6 @@ wb.lspDiagnostics = {
 		name = "heirline_diagnostics",
 	},
 	update = { "DiagnosticChanged", "BufEnter" },
-	-- Errors
 	{
 		condition = function(self)
 			return self.errors > 0

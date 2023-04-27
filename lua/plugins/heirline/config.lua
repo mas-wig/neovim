@@ -56,7 +56,6 @@ config.statusline = config.utils.insert(
 	{ provider = "%=" },
 	require("plugins.heirline.component").right_components,
 	config.set_statusline.session,
-	config.set_statusline.fileType,
 	config.set_statusline.lazy,
 	config.set_statusline.lspstatus,
 	config.set_statusline.ruler,
@@ -110,6 +109,8 @@ config.winbar = {
 	{ provider = "%=" },
 	require("plugins.heirline.component").right_components,
 	config.set_winbar.lspDiagnostics,
+	config.spacer,
+	config.set_winbar.fileLocation,
 }
 
 config.opts = {

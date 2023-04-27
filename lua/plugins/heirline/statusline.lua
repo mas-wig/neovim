@@ -93,7 +93,7 @@ statusline.vimMode = {
 		return " " .. self.mode_names[self.mode]
 	end,
 	hl = function(self)
-		return { fg = self:mode_color(), bg = "bg" }
+		return { fg = self:mode_color(), bg = "bg", bold = true }
 	end,
 	update = {
 		"ModeChanged",
@@ -130,14 +130,6 @@ statusline.lazy = {
 	statusline.spacer_right,
 }
 
-statusline.fileType = {
-	provider = function()
-		return string.upper(vim.bo.filetype)
-	end,
-	hl = { fg = "vibrant_green" },
-	statusline.spacer_right,
-}
-
 statusline.git = {
 	{
 		condition = function()
@@ -162,7 +154,7 @@ statusline.git = {
 		},
 		{
 			provider = function(self)
-				return self.status_dict.head .. " "
+				return string.upper(self.status_dict.head) .. " "
 			end,
 			hl = { fg = "orange" },
 		},
@@ -229,12 +221,12 @@ statusline.lspstatus = {
 	update = { "LspAttach", "LspDetach" },
 	provider = function()
 		local names = {}
-		for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
 			if server.name ~= 0 and server.name ~= "null-ls" then
-				table.insert(names, "LSP")
+				table.insert(names, server.name)
 			end
 		end
-		return table.concat(names, " ")
+		return "[ " .. string.upper(table.concat(names, " ")) .. " ]"
 	end,
 	hl = { fg = "pink" },
 	statusline.spacer_left,
@@ -249,14 +241,17 @@ statusline.overseer = {
 	end,
 	init = function(self)
 		self.overseer = require("overseer")
+		self.neotest = require("neotest")
+		self.status_test_counts_golang =
+			self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
 		self.tasks = self.overseer.task_list
 		self.STATUS = self.overseer.constants.STATUS
 	end,
 	static = {
 		symbols = {
 			["FAILURE"] = "FAILED",
-			["CANCELED"] = "CENCELED",
-			["SUCCESS"] = "SUCCESS",
+			["CANCELED"] = "CANCELED",
+			["SUCCESS"] = "PASSED",
 			["RUNNING"] = "RUNNING",
 		},
 		colors = {
@@ -272,23 +267,14 @@ statusline.overseer = {
 		end,
 		{
 			provider = function(self)
-				local count_element =
-					require("neotest").state.status_counts(require("neotest").state.adapter_ids()[1], self.bufnr)
+				local count_element = self.status_test_counts_golang
 				local tasks_by_status =
 					self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
 				for _, status in ipairs(self.STATUS.values) do
 					local status_tasks = tasks_by_status[status]
 					if self.symbols[status] and status_tasks then
 						self.color = self.colors[status]
-						if count_element["failed"] then
-							return "[ " .. self.symbols[status] .. " : " .. count_element["failed"] .. " ]"
-						elseif count_element["running"] then
-							return "[ " .. self.symbols[status] .. " : " .. count_element["running"] .. " ]"
-						elseif count_element["passed"] then
-							return "[ " .. self.symbols[status] .. " : " .. count_element["passed"] .. " ]"
-						elseif self.symbols[status] == "CANCELED" then
-							return "[ " .. self.symbols[status] .. " ]"
-						end
+						return "[ " .. self.symbols[status] .. " / " .. count_element["total"] .. " ]"
 					end
 				end
 			end,
@@ -318,15 +304,15 @@ statusline.session = {
 		{
 			provider = function(self)
 				if vim.g.persisting then
-					return "SESSION ON"
+					return "[ SESSION ON ]"
 				else
-					return "SESSION OFF"
+					return "[ SESSION OFF ]"
 				end
 			end,
 			hl = { fg = "green2", bg = "bg" },
 			on_click = {
 				callback = function()
-					vim.cmd("SessionToggle")
+					return vim.cmd("SessionToggle")
 				end,
 				name = "toggle_session",
 			},
@@ -334,4 +320,5 @@ statusline.session = {
 		statusline.spacer_left,
 	},
 }
+
 return statusline
