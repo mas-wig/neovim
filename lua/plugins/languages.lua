@@ -17,7 +17,12 @@ return {
 				goimport = "goimports",
 				lsp_on_attach = require("plugins.lsp.utils"),
 				lsp_cfg = {
-					capabilities = capabilities,
+					capabilities = require("plugins.lsp.on_attach")(function(client, bufnr)
+						if client.name == "gopls" then
+							client.server_capabilities.document_formatting = false
+							client.server_capabilities.documentFormattingProvider = false
+						end
+					end),
 				},
 				lsp_document_formatting = true,
 				lsp_inlay_hints = {

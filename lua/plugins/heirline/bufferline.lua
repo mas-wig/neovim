@@ -132,7 +132,7 @@ local TablineFileFlags = {
 		condition = function(self)
 			return vim.api.nvim_buf_get_option(self.bufnr, "modified")
 		end,
-		provider = " ",
+		provider = " ",
 		hl = { fg = "green" },
 	},
 	{
@@ -176,8 +176,8 @@ local TablineFileNameBlock = {
 		name = "heirline_tabline_buffer_callback",
 	},
 	TablinePicker,
-	TablineFileName,
 	TablineFileFlags,
+	TablineFileName,
 	TablineBufnr,
 }
 

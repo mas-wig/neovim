@@ -4,6 +4,12 @@ return require("plugins.lsp.on_attach")(function(client, bufnr)
 	if client.server_capabilities.documentSymbolProvider then
 		require("nvim-navic").attach(client, bufnr)
 	end
+
+	if client.name == "gopls" then
+		client.server_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
+	end
+
 	if client.supports_method("textDocument/formatting") then
 		vim.api.nvim_clear_autocmds({
 			group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),

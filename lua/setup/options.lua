@@ -69,14 +69,16 @@ local global = {
 	db_ui_use_nerd_fonts = 1,
 	markdown_recommended_style = 0,
 	cmp_enabled = true,
+	mapleader = " ",
+	maplocalleader = " ",
 }
-
-for key, value in pairs(opts) do
-	vim.opt[key] = value
-end
 
 for key, value in pairs(global) do
 	vim.g[key] = value
+end
+
+for key, value in pairs(opts) do
+	vim.opt[key] = value
 end
 
 local opt = vim.opt

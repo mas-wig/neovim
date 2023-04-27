@@ -200,4 +200,15 @@ return {
 			end,
 		},
 	},
+
+	{
+		name = "GoFormat",
+		{
+			{ "BufWritePre" },
+			opts = { pattern = "*.go" },
+			function()
+				require("go.format").goimport()
+			end,
+		},
+	},
 }

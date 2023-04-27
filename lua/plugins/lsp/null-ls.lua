@@ -3,7 +3,6 @@ return function()
 	null_ls.setup({
 		root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
 		sources = {
-			null_ls.builtins.formatting.goimports,
 			null_ls.builtins.formatting.stylua.with({
 				extra_args = {
 					"--indent-type",

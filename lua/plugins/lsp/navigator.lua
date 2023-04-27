@@ -13,7 +13,7 @@ return require("navigator").setup({
 			virtual_text = {
 				spacing = 10,
 				underline = true,
-				update_in_insert = true,
+				update_in_insert = false,
 				prefix = "  ",
 			},
 			severity_sort = true,
