@@ -28,7 +28,7 @@ wb.fileLocation = {
 	},
 	{
 		provider = function()
-			return "  " .. vim.fn.expand("%")
+			return "  " .. string.gsub(vim.fn.expand("%"), "/" ,"   ")
 		end,
 		hl = { fg = "blue", bold = true },
 	},

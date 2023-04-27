@@ -110,11 +110,19 @@ local TablineBufnr = {
 		if not self.is_active then
 			return { fg = "purple" }
 		else
-			return {
-				fg = "black",
-				bg = "green3",
-				bold = true,
-			}
+			if vim.bo.modified then
+				return {
+					fg = "black",
+					bg = "green3",
+					bold = true,
+				}
+			else
+				return {
+					fg = "black",
+					bg = "purple",
+					bold = true,
+				}
+			end
 		end
 	end,
 }
@@ -128,13 +136,6 @@ local TablineFileName = {
 }
 
 local TablineFileFlags = {
-	{
-		condition = function(self)
-			return vim.api.nvim_buf_get_option(self.bufnr, "modified")
-		end,
-		provider = " ",
-		hl = { fg = "green" },
-	},
 	{
 		condition = function(self)
 			return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
