@@ -93,7 +93,7 @@ statusline.vimMode = {
 		return " " .. self.mode_names[self.mode]
 	end,
 	hl = function(self)
-		return { fg = self:mode_color(), bg = "bg", bold = true }
+		return { fg = self:mode_color(), bg = "bg" }
 	end,
 	update = {
 		"ModeChanged",
@@ -154,6 +154,9 @@ statusline.git = {
 		},
 		{
 			provider = function(self)
+				if not self.status_dict.head then
+					return
+				end
 				return string.upper(self.status_dict.head) .. " "
 			end,
 			hl = { fg = "orange" },
@@ -210,10 +213,11 @@ statusline.macroRecording = {
 	},
 	{
 		provider = function(self)
-			return " " .. vim.fn.reg_recording() .. " "
+			return vim.fn.reg_recording()
 		end,
 		hl = { fg = "pink" },
 	},
+	statusline.spacer_left,
 }
 
 statusline.lspstatus = {
@@ -229,66 +233,6 @@ statusline.lspstatus = {
 		return "[ " .. string.upper(table.concat(names, " ")) .. " ]"
 	end,
 	hl = { fg = "pink" },
-	statusline.spacer_left,
-}
-
-statusline.overseer = {
-	condition = function()
-		local ok, _ = pcall(require, "overseer")
-		if ok then
-			return true
-		end
-	end,
-	init = function(self)
-		self.overseer = require("overseer")
-		self.neotest = require("neotest")
-		self.status_test_counts_golang =
-			self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
-		self.tasks = self.overseer.task_list
-		self.STATUS = self.overseer.constants.STATUS
-	end,
-	static = {
-		symbols = {
-			["FAILURE"] = "FAILED",
-			["CANCELED"] = "CANCELED",
-			["SUCCESS"] = "PASSED",
-			["RUNNING"] = "RUNNING",
-		},
-		colors = {
-			["FAILURE"] = "red",
-			["CANCELED"] = "gray",
-			["SUCCESS"] = "green",
-			["RUNNING"] = "yellow",
-		},
-	},
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		{
-			provider = function(self)
-				local count_element = self.status_test_counts_golang
-				local tasks_by_status =
-					self.overseer.util.tbl_group_by(self.tasks.list_tasks({ unique = true }), "status")
-				for _, status in ipairs(self.STATUS.values) do
-					local status_tasks = tasks_by_status[status]
-					if self.symbols[status] and status_tasks then
-						self.color = self.colors[status]
-						return "[ " .. self.symbols[status] .. " / " .. count_element["total"] .. " ]"
-					end
-				end
-			end,
-			hl = function(self)
-				return { fg = self.color }
-			end,
-			on_click = {
-				callback = function()
-					require("neotest").run.run_last()
-				end,
-				name = "run_last_test",
-			},
-		},
-	},
 	statusline.spacer_left,
 }
 
@@ -312,13 +256,133 @@ statusline.session = {
 			hl = { fg = "green2", bg = "bg" },
 			on_click = {
 				callback = function()
-					return vim.cmd("SessionToggle")
+					vim.cmd("SessionToggle")
 				end,
 				name = "toggle_session",
 			},
 		},
 		statusline.spacer_left,
 	},
+}
+
+statusline.overseer = {
+	condition = function()
+		local ok, _ = pcall(require, "overseer")
+		if ok then
+			return true
+		end
+	end,
+	init = function(self)
+		self.overseer = require("overseer")
+		self.neotest = require("neotest")
+		self.go_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
+		self.tasks = self.overseer.task_list
+		self.STATUS = self.overseer.constants.STATUS
+	end,
+	static = {
+		symbols = {
+			["FAILURE"] = "FAILED",
+			["CANCELED"] = "CANCELED",
+			["SUCCESS"] = "PASSED",
+			["RUNNING"] = "RUNNING",
+		},
+		colors = {
+			["FAILURE"] = "red",
+			["CANCELED"] = "gray",
+			["SUCCESS"] = "green",
+			["RUNNING"] = "yellow",
+		},
+	},
+
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function()
+			return "[ "
+		end,
+		hl = { fg = "white", bold = true },
+	},
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function(self)
+			local success_count = 0
+			local success_tasks = self.tasks.list_tasks({ status = self.STATUS.SUCCESS })
+			if success_tasks then
+				-- success_count = #success_tasks
+				success_count = self.go_test["passed"]
+			end
+			self.color = self.colors["SUCCESS"]
+			return "SUCCESS " .. success_count .. " "
+		end,
+		hl = function(self)
+			return { fg = self.color }
+		end,
+	},
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function(self)
+			local failed_count = 0
+			local failed_tasks = self.tasks.list_tasks({ status = self.STATUS.FAILURE })
+			if failed_tasks then
+				failed_count = self.go_test["failed"]
+			end
+			self.color = self.colors["FAILURE"]
+			return "FAILED " .. failed_count .. " "
+		end,
+		hl = function(self)
+			return { fg = self.color }
+		end,
+	},
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function(self)
+			local running_count = 0
+			local running_tasks = self.tasks.list_tasks({ status = self.STATUS.RUNNING })
+			if running_tasks then
+				running_count = self.go_test["running"]
+			end
+			self.color = self.colors["RUNNING"]
+			return "RUNNING " .. running_count .. " "
+		end,
+		hl = function(self)
+			return { fg = self.color }
+		end,
+	},
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function(self)
+			local running_count = 0
+			local running_tasks = self.tasks.list_tasks({ status = self.STATUS.CANCELED })
+			if running_tasks then
+				running_count = #running_tasks
+			end
+			self.color = self.colors["CANCELED"]
+			return "CANCELED " .. running_count
+		end,
+		hl = function(self)
+			return { fg = self.color }
+		end,
+	},
+
+	{
+		condition = function(self)
+			return #self.tasks.list_tasks() > 0
+		end,
+		provider = function()
+			return " ]"
+		end,
+		hl = { fg = "white", bold = true },
+	},
+	statusline.spacer_left,
 }
 
 return statusline

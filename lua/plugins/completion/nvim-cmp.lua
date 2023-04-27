@@ -107,6 +107,7 @@ return function()
 	})
 
 	cmp.setup.cmdline({ "/", "?" }, {
+		formatting = { fields = { cmp.ItemField.Abbr } },
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = {
 			{ name = "buffer" },
@@ -114,9 +115,11 @@ return function()
 	})
 
 	cmp.setup.cmdline(":", {
+		formatting = { fields = { cmp.ItemField.Abbr } },
 		mapping = cmp.mapping.preset.cmdline(),
 		sources = cmp.config.sources({
 			{ name = "path" },
+                  { name = 'cmdline_history' },
 			{
 				name = "cmdline",
 				option = {

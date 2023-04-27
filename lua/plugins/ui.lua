@@ -247,7 +247,7 @@ return {
 			dashboard.section.footer.opts.hl = "Type"
 			dashboard.section.header.opts.hl = "AlphaHeader"
 			dashboard.section.buttons.opts.hl = "AlphaButtons"
-			dashboard.opts.layout[1].val = 8
+			dashboard.opts.layout[1].val = 3
 
 			alpha.setup(dashboard.opts)
 
