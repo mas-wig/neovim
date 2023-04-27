@@ -30,7 +30,7 @@ wb.fileLocation = {
 		provider = function()
 			return "  " .. string.gsub(vim.fn.expand("%"), "/" ,"   ")
 		end,
-		hl = { fg = "blue", bold = true },
+		hl = { fg = "yellow3", bold = true },
 	},
 	wb.fileFlag,
 	{

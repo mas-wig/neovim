@@ -56,4 +56,5 @@ return {
 	GitSignsAdd = { fg = cl.green2 },
 	GitSignsChange = { fg = cl.yellow2 },
 	GitSignsDelete = { fg = cl.red2 },
+
 }

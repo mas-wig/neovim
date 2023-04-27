@@ -20,6 +20,7 @@ return {
 	blue = "#7aa2f7",
 	yellow = "#e0af68",
 	yellow2 = "#ffff33",
+	yellow3 = "#ffaa00",
 	sun = "#EBCB8B",
 	purple = "#bb9af7",
 	purple2 = "#9900cc",
