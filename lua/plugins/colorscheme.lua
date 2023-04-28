@@ -19,7 +19,7 @@ return {
 			dim_inactive = false,
 			lualine_bold = false,
 			on_highlights = function(highlights, _)
-				local override = require("ui.highlights")
+				local override = require("setup.ui.hl")
 				for name, color in pairs(override) do
 					highlights[name] = color
 				end

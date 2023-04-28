@@ -1,69 +1,51 @@
 return {
 	{
+		"nvim-neo-tree/neo-tree.nvim",
+		cmd = "Neotree",
+		deactivate = function()
+			vim.cmd([[Neotree close]])
+		end,
+		init = function()
+			vim.g.neo_tree_remove_legacy_commands = 1
+			if vim.fn.argc() == 1 then
+				local stat = vim.loop.fs_stat(vim.fn.argv(0))
+				if stat and stat.type == "directory" then
+					require("neo-tree")
+				end
+			end
+			require("setup.plugins.neotree").init()
+		end,
+		config = function()
+			require("setup.plugins.neotree").setup()
+		end,
+	},
+
+	{
+		"nvim-telescope/telescope.nvim",
+		cmd = "Telescope",
+		lazy = true,
+		dependencies = {
+			{ "nvim-lua/plenary.nvim", lazy = true },
+			{ "nvim-telescope/telescope-fzf-native.nvim", lazy = true, build = "make" },
+			{ "nvim-telescope/telescope-file-browser.nvim", lazy = true },
+			{ "nvim-telescope/telescope-media-files.nvim", lazy = true },
+		},
+		init = function()
+			require("setup.plugins.telescope").init()
+		end,
+		config = function()
+			require("setup.plugins.telescope").setup()
+		end,
+	},
+
+	{
 		"kevinhwang91/nvim-ufo",
 		event = { "BufReadPre", "BufReadPost", "BufNewFile" },
 		dependencies = {
 			{ "kevinhwang91/promise-async", lazy = true },
 		},
-		opts = {
-			preview = {
-				mappings = {
-					scrollB = "<C-b>",
-					scrollF = "<C-f>",
-					scrollU = "<C-u>",
-					scrollD = "<C-d>",
-				},
-			},
-			provider_selector = function(_, filetype, buftype)
-				local function handleFallbackException(bufnr, err, providerName)
-					if type(err) == "string" and err:match("UfoFallbackException") then
-						return require("ufo").getFolds(bufnr, providerName)
-					else
-						return require("promise").reject(err)
-					end
-				end
-
-				return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-					or function(bufnr)
-						return require("ufo")
-							.getFolds(bufnr, "lsp")
-							:catch(function(err)
-								return handleFallbackException(bufnr, err, "treesitter")
-							end)
-							:catch(function(err)
-								return handleFallbackException(bufnr, err, "indent")
-							end)
-					end
-			end,
-			fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-				local newVirtText = {}
-				local suffix = ("  📌 %d Line Folded"):format(endLnum - lnum)
-				local sufWidth = vim.fn.strdisplaywidth(suffix)
-				local targetWidth = width - sufWidth
-				local curWidth = 0
-				for _, chunk in ipairs(virtText) do
-					local chunkText = chunk[1]
-					local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-					if targetWidth > curWidth + chunkWidth then
-						table.insert(newVirtText, chunk)
-					else
-						chunkText = truncate(chunkText, targetWidth - curWidth)
-						local hlGroup = chunk[2]
-						table.insert(newVirtText, { chunkText, hlGroup })
-						chunkWidth = vim.fn.strdisplaywidth(chunkText)
-						if curWidth + chunkWidth < targetWidth then
-							suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-						end
-						break
-					end
-					curWidth = curWidth + chunkWidth
-				end
-				table.insert(newVirtText, { suffix, "MoreMsg" })
-				return newVirtText
-			end,
-		},
-		config = function(_, opts)
-			require("ufo").setup(opts)
+		config = function()
+			require("setup.plugins.nvim-ufo").setup()
 		end,
 	},
 
@@ -72,49 +54,7 @@ return {
 		cmd = { "TroubleToggle", "Trouble" },
 		opts = { use_diagnostic_signs = true },
 		init = function()
-			require("legendary").keymaps({
-				{
-					itemgroup = "Trouble",
-					description = "Daddy im in trouble",
-					icon = "📡",
-					keymaps = {
-						{
-							"<leader>xx",
-							"<cmd>TroubleToggle document_diagnostics<cr>",
-							desc = "Document Diagnostics (Trouble)",
-						},
-						{
-							"<leader>xX",
-							"<cmd>TroubleToggle workspace_diagnostics<cr>",
-							desc = "Workspace Diagnostics (Trouble)",
-						},
-						{ "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-						{ "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-						{
-							"[q",
-							function()
-								if require("trouble").is_open() then
-									require("trouble").previous({ skip_groups = true, jump = true })
-								else
-									vim.cmd.cprev()
-								end
-							end,
-							desc = "Previous trouble/quickfix item",
-						},
-						{
-							"]q",
-							function()
-								if require("trouble").is_open() then
-									require("trouble").next({ skip_groups = true, jump = true })
-								else
-									vim.cmd.cnext()
-								end
-							end,
-							desc = "Next trouble/quickfix item",
-						},
-					},
-				},
-			})
+			require("setup.plugins.trouble").init()
 		end,
 	},
 
@@ -174,14 +114,25 @@ return {
 		cmd = { "TodoTrouble", "TodoTelescope" },
 		event = { "BufReadPost", "BufNewFile" },
 		config = true,
-  -- stylua: ignore
-  keys = {
-    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-    { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-    { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-    { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-    { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
-  },
+		keys = {
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next todo comment",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Previous todo comment",
+			},
+			{ "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+			{ "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+			{ "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+		},
 	},
 }

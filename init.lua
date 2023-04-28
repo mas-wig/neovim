@@ -15,7 +15,6 @@ local function safeRequire(module)
 	end
 end
 
-safeRequire("setup.options")
-
-require("setup.lazy")
-require("setup.mappings")
+safeRequire("wiggy.options")
+safeRequire("wiggy.lazy")
+safeRequire("wiggy.mappings")

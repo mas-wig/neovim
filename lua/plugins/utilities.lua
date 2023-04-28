@@ -53,7 +53,7 @@ return {
 				include_builtin = false,
 				include_legendary_cmds = false,
 				which_key = { auto_register = false },
-				autocmds = require("setup.autocmds"),
+				autocmds = require("wiggy.autocmds"),
 			})
 		end,
 	},

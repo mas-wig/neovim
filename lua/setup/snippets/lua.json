@@ -1,0 +1,88 @@
+{
+	"require": {
+		"prefix": "require(string)",
+		"body": "require(\"$0\")"
+	},
+	"block comment": {
+		"prefix": "block comment",
+		"body": ["--[[", "$0", "--]]"]
+	},
+	"export module": {
+		"prefix": "export module",
+		"body": [
+			"local M = {}",
+			"--------------------------------------------------------------------------------",
+			"",
+			"$0",
+			"",
+			"--------------------------------------------------------------------------------",
+			"return M"
+		]
+	},
+	"import module": {
+		"prefix": "import module",
+		"body": "local ${1:name} = require(\"${2:module}.${1:name}\")"
+	},
+	"trim trailing line break": {
+		"prefix": "trim trailing line break",
+		"body": ":gsub(\"\\n$\", \"\")"
+	},
+	"nodiscard": {
+		"prefix": "nodiscard",
+		"body": "---@nodiscard",
+		"description": "Luadoc Annotation that a function's return value should not be discarded. https://github.com/LuaLS/lua-language-server/wiki/Annotations#nodiscard"
+	},
+	"enum": {
+		"prefix": "enum",
+		"body": "\"${1:value1}\"|\"${2:value2}\"",
+		"description": "Luadoc Custom Parameter Type for a function. https://github.com/LuaLS/lua-language-server/wiki/Annotations#param"
+	},
+	"ignore start/end (stylua)": {
+		"prefix": "ignore start/end (stylua)",
+		"body": ["-- stylua: ignore start", "-- stylua: ignore end"]
+	},
+	"ignore (stylua)": {
+		"prefix": "ignore (stylua)",
+		"body": "-- stylua: ignore"
+	},
+	"ignore rule (selene)": {
+		"prefix": "ignore rule (selene)",
+		"body": "-- selene: allow(${1:high_cyclomatic_complexity})"
+	},
+	"if .. then .. else": {
+		"prefix": "if .. then .. else",
+		"body": ["if ${1:true} then", "\t$2", "else", "\t$0", "end"]
+	},
+	"return end": {
+		"prefix": "return end",
+		"body": "return end"
+	},
+	"then return end": {
+		"prefix": "then return end",
+		"body": "then return end"
+	},
+	"string format": {
+		"prefix": "string format",
+		"body": "(\"$0%s\"):format(${1:var})"
+	},
+	"home": {
+		"prefix": "home",
+		"body": "os.getenv(\"HOME\")"
+	},
+	"try": {
+		"prefix": ["try", "pcall"],
+		"body": [
+			"local success = pcall(${1:func})",
+			"if not success then",
+			"\t$0",
+			"\treturn",
+			"end"
+		]
+	},
+	"for each (list)": {
+		"prefix": "for each (list)",
+		"body": ["for _, ${1:v} in pairs(${2:table}) do", "\t$0", "end"]
+	},
+	"for each line (file)": {
+		"prefix": "for each line (file)",
+		"body": ["for line in io.open(${1:filepath}):lines() do", "\t$0", "end"

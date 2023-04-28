@@ -14,13 +14,10 @@ return {
 				highlight = true,
 				depth_limit = 5,
 				depth_limit_indicator = "  ",
-				icons = require("ui.icons").kind,
+				icons = require("setup.ui.icons").kind,
 			}
 		end,
 	},
-
-	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
-	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 	{
 		"rcarriga/nvim-notify",
 		init = function()
@@ -32,47 +29,9 @@ return {
 				end)
 			end
 		end,
-		opts = {
-			timeout = 2000,
-			top_down = true,
-			icons = require("ui.icons").diagnostics,
-			max_width = function()
-				return math.floor(vim.o.columns * 0.75)
-			end,
-			render = function(bufnr, notif, highlights)
-				local message = {}
-				for i, line in ipairs(notif.message) do
-					if line ~= "" then
-						local prefix = ""
-						if notif.icon then
-							if i == 1 then
-								prefix = " " .. notif.icon .. " │ "
-							else
-								prefix = string.rep(" ", #notif.icon) .. "│ "
-							end
-						end
-
-						-- Replace `heading` with `bold`
-						line, _ = line:gsub("^# (.+)", "*%1*")
-						table.insert(message, prefix .. line)
-					end
-				end
-
-				vim.api.nvim_buf_set_option(bufnr, "filetype", "markdown")
-				vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, message)
-				-- Color Icon and vertical bar
-				local namespace = require("notify.render.base").namespace()
-				for i = 0, #message - 1 do
-					vim.api.nvim_buf_set_extmark(
-						bufnr,
-						namespace,
-						i,
-						0,
-						{ hl_group = highlights.icon, end_col = 9, strict = false }
-					)
-				end
-			end,
-		},
+        config = function ()
+            require("setup.plugins.notify").setup()
+        end
 	},
 
 	{
@@ -90,8 +49,6 @@ return {
 		end,
 	},
 
-	-- █████╗ █████╗ █████╗ █████╗ █████╗ █████╗
-	-- ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝ ╚════╝
 	{
 		"NvChad/nvim-colorizer.lua",
 		ft = { "css", "html", "lua", "javascriptreact", "javascript", "typescript", "typescriptreact" },
@@ -174,43 +131,7 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		config = function()
-			return require("noice").setup({
-				cmdline = {
-					enabled = true,
-					view = "cmdline",
-				},
-				notify = {
-					enabled = true,
-					view = "notify",
-				},
-				lsp = {
-					progress = {
-						enabled = false,
-					},
-					hover = {
-						enabled = false,
-					},
-					signature = {
-						enabled = false,
-					},
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true,
-					},
-					smart_move = {
-						enabled = true,
-						excluded_filetypes = { "sql", "cmp_menu", "cmp_docs", "notify" },
-					},
-				},
-				presets = {
-					bottom_search = false,
-					command_palette = false,
-					long_message_to_split = true,
-					inc_rename = false,
-					lsp_doc_border = true,
-				},
-			})
+            require("setup.plugins.noice").setup()
 		end,
 	},
 
@@ -218,58 +139,7 @@ return {
 		"goolord/alpha-nvim",
 		event = "VimEnter",
 		config = function()
-			local dashboard = require("alpha.themes.dashboard")
-			local alpha = require("alpha")
-
-			dashboard.section.header.val = {
-				"██████╗  ██╗  ██████╗ ███╗   ███╗ ██╗ ██╗      ██╗       █████╗  ██╗  ██╗",
-				"██╔══██╗ ██║ ██╔════╝ ████╗ ████║ ██║ ██║      ██║      ██╔══██╗ ██║  ██║",
-				"██████╦╝ ██║ ╚█████╗  ██╔████╔██║ ██║ ██║      ██║      ███████║ ███████║",
-				"██╔══██╗ ██║  ╚═══██╗ ██║╚██╔╝██║ ██║ ██║      ██║      ██╔══██║ ██╔══██║",
-				"██████╦╝ ██║ ██████╔╝ ██║ ╚═╝ ██║ ██║ ███████╗ ███████╗ ██║  ██║ ██║  ██║",
-				"╚═════╝  ╚═╝ ╚═════╝  ╚═╝     ╚═╝ ╚═╝ ╚══════╝ ╚══════╝ ╚═╝  ╚═╝ ╚═╝  ╚═╝",
-			}
-			dashboard.section.buttons.val = {
-				dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
-				dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-				dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
-				dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
-				dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-				dashboard.button("s", "勒" .. " Restore Session", [[:SessionLoadLast<cr>]]),
-				dashboard.button("l", "鈴" .. " Lazy", ":Lazy<CR>"),
-				dashboard.button("q", " " .. " Quit", ":qa<CR>"),
-			}
-			for _, button in ipairs(dashboard.section.buttons.val) do
-				button.opts.hl = "AlphaButtons"
-				button.opts.hl_shortcut = "AlphaShortcut"
-			end
-
-			dashboard.section.footer.opts.hl = "Type"
-			dashboard.section.header.opts.hl = "AlphaHeader"
-			dashboard.section.buttons.opts.hl = "AlphaButtons"
-			dashboard.opts.layout[1].val = 3
-
-			alpha.setup(dashboard.opts)
-
-			if vim.o.filetype == "lazy" then
-				vim.cmd.close()
-				vim.api.nvim_create_autocmd("User", {
-					pattern = "AlphaReady",
-					callback = function()
-						require("lazy").show()
-					end,
-				})
-			end
-
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "LazyVimStarted",
-				callback = function()
-					local stats = require("lazy").stats()
-					local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-					dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-					pcall(vim.cmd.AlphaRedraw)
-				end,
-			})
+            require("setup.plugins.aplha").setup()
 		end,
 	},
 
@@ -277,7 +147,6 @@ return {
 		"echasnovski/mini.animate",
 		event = "VeryLazy",
 		opts = function()
-			-- don't use animate when scrolling with the mouse
 			local mouse_scrolled = false
 			for _, scroll in ipairs({ "Up", "Down" }) do
 				local key = "<ScrollWheel" .. scroll .. ">"
