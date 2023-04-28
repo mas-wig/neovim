@@ -15,14 +15,9 @@ return {
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			return require("go").setup({
 				goimport = "goimports",
-				lsp_on_attach = require("plugins.lsp.utils"),
+				lsp_on_attach = require("setup.plugins.lspconfig").setup(),
 				lsp_cfg = {
-					capabilities = require("plugins.lsp.on_attach")(function(client, bufnr)
-						if client.name == "gopls" then
-							client.server_capabilities.document_formatting = false
-							client.server_capabilities.documentFormattingProvider = false
-						end
-					end),
+					capabilities = capabilities,
 				},
 				lsp_document_formatting = true,
 				lsp_inlay_hints = {
@@ -46,7 +41,7 @@ return {
 					fallback = true,
 				},
 				server = {
-					on_attach = require("plugins.lsp.utils"),
+					on_attach = require("setup.plugins.lspconfig").setup(),
 					completions = { completeFunctionCalls = true },
 					-- 	javascript = {
 					-- 		inlayHints = {
@@ -81,7 +76,7 @@ return {
 		"simrat39/rust-tools.nvim",
 		ft = { "rust" },
 		config = function()
-			local on_attach = require("plugins.lspconfig.utils")
+			local on_attach = require("setup.plugins.lspconfig").setup()
 			return require("rust-tools").setup({
 				on_attach = on_attach,
 				inlay_hints = { auto = false },
