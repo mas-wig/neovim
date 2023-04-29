@@ -12,10 +12,8 @@ end
 
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
-		if client.name ~= "html" and "css-lsp" then
-			require("navigator.dochighlight").documentHighlight(bufnr)
-			require("navigator.codeAction").code_action_prompt(bufnr)
-		end
+		require("navigator.dochighlight").documentHighlight(bufnr)
+		require("navigator.codeAction").code_action_prompt(bufnr)
 
 		if client.name == "gopls" then
 			client.server_capabilities.document_formatting = false
