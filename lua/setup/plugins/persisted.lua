@@ -1,4 +1,20 @@
 return function()
+	local group = vim.api.nvim_create_augroup("PersistedHooks", {})
+	vim.api.nvim_create_autocmd({ "User" }, {
+		pattern = "PersistedSavePre",
+		group = group,
+		callback = function()
+			pcall(vim.cmd, "bw minimap")
+		end,
+	})
+	vim.api.nvim_create_autocmd({ "User" }, {
+		pattern = "PersistedTelescopeLoadPre",
+		group = group,
+		callback = function(session)
+			print(session.data.branch) -- Print the session's branch
+		end,
+	})
+
 	require("legendary").keymaps({
 		{
 			itemgroup = "Persisted",

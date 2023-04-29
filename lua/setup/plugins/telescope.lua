@@ -144,6 +144,8 @@ M.setup = function()
 				case_mode = "smart_case",
 			},
 			persisted = {
+				prompt_title = false,
+				results_title = false,
 				layout_config = { width = 0.55, height = 0.55 },
 			},
 			file_browser = {
