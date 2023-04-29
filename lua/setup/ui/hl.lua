@@ -8,10 +8,10 @@ return {
 
 	NeoTreeIndentMarker = { bg = "none", fg = cl.cyan },
 	NeoTreeWinSeparator = { bg = "none", fg = cl.yellow },
-	PmenuSel = { bg = cl.purple2, fg = cl.white },
-	LineNr = { fg = cl.white },
+	PmenuSel = { bg = cl.purple2, fg = cl.yellow4, bold = true },
+	LineNr = { fg = cl.purple3, bold = true },
+	CursorLineNr = { fg = cl.vibrant_green, bold = true },
 	-- FoldColumn = { bg = options.transparent and c.none or c.bg, fg = cl.cyan },
-	CursorLineNr = { fg = cl.magenta2 },
 	TelescopeNormal = { link = "NormalFloat" },
 	TelescopeResultsNormal = { bg = "none" },
 	TelescopePromptTitle = { fg = cl.black, bg = cl.red2 },

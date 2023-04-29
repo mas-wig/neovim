@@ -34,7 +34,6 @@ M.setup = function()
 
 	alpha.setup(dashboard.opts)
 
-
 	if vim.o.filetype == "lazy" then
 		vim.cmd.close()
 		vim.api.nvim_create_autocmd("User", {
