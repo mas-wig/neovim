@@ -16,14 +16,14 @@ return {
 				name = "DiagnosticSign" .. name
 				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 			end
+
+			local servers = require("setup.plugins.lspconfig.server")
+
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			local function setup(server)
-				local server_opts = vim.tbl_deep_extend(
-					"force",
-					{ capabilities = vim.deepcopy(capabilities) },
-					require("setup.plugins.lspconfig.server")[server] or {}
-				)
+				local server_opts =
+					vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, servers[server] or {})
 				if opts.setup[server] then
 					if opts.setup[server](server, server_opts) then
 						return
