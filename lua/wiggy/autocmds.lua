@@ -211,4 +211,15 @@ return {
 			end,
 		},
 	},
+
+	{
+		name = "LspProgressRefresh",
+		{
+			{ "User" },
+			opts = { pattern = "LspProgressStatusUpdated" },
+			function()
+				vim.cmd("redrawstatus")
+			end,
+		},
+	},
 }

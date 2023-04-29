@@ -222,7 +222,13 @@ statusline.macroRecording = {
 
 statusline.lspstatus = {
 	condition = statusline.conditions.lsp_attached,
-	update = { "LspAttach", "LspDetach" },
+	update = {
+		"LspDetach",
+		"LspAttach",
+		callback = vim.schedule_wrap(function()
+			vim.cmd("redrawstatus")
+		end),
+	},
 	provider = function()
 		local names = {}
 		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
@@ -230,7 +236,7 @@ statusline.lspstatus = {
 				table.insert(names, server.name)
 			end
 		end
-		return "[ " .. string.upper(table.concat(names, " ")) .. " ]"
+		return string.upper("[ " .. table.concat(names, " ") .. " ]")
 	end,
 	hl = { fg = "pink" },
 	statusline.spacer_left,
