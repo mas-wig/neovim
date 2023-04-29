@@ -27,7 +27,7 @@ return {
 		Operator = "󰆖 ",
 		TypeParameter = " ",
 		Table = " ",
-		Object = "  ",
+		Object = " ",
 		Tag = " ",
 		Array = "󰅨 ",
 		Boolean = " ",

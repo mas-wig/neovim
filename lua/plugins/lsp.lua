@@ -16,15 +16,14 @@ return {
 				name = "DiagnosticSign" .. name
 				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
 			end
-			local servers = require("setup.plugins.lspconfig.server")
-			local have_mason, mlsp = pcall(require, "mason-lspconfig")
-			local available = have_mason and mlsp.get_available_servers() or {}
-			local ensure_installed = {}
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			local function setup(server)
-				local server_opts =
-					vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, servers[server] or {})
+				local server_opts = vim.tbl_deep_extend(
+					"force",
+					{ capabilities = vim.deepcopy(capabilities) },
+					require("setup.plugins.lspconfig.server")[server] or {}
+				)
 				if opts.setup[server] then
 					if opts.setup[server](server, server_opts) then
 						return
@@ -36,8 +35,10 @@ return {
 				end
 				require("lspconfig")[server].setup(server_opts)
 			end
-
-			for server, server_opts in pairs(servers) do
+			local have_mason, mlsp = pcall(require, "mason-lspconfig")
+			local available = have_mason and mlsp.get_available_servers() or {}
+			local ensure_installed = {}
+			for server, server_opts in pairs(require("setup.plugins.lspconfig.server")) do
 				if server_opts then
 					server_opts = server_opts == true and {} or server_opts
 					if server_opts.mason == false or not vim.tbl_contains(available, server) then
@@ -47,7 +48,6 @@ return {
 					end
 				end
 			end
-
 			if have_mason then
 				mlsp.setup({ ensure_installed = ensure_installed, automatic_installation = true })
 				mlsp.setup_handlers({ setup })

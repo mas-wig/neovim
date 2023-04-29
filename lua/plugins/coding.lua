@@ -166,14 +166,14 @@ return {
 
 	{
 		"echasnovski/mini.ai",
-		keys = {
-			{ "a", mode = { "x", "o" } },
-			{ "i", mode = { "x", "o" } },
-		},
-		-- event = "VeryLazy",
+		-- keys = {
+		-- 	{ "a", mode = { "x", "o" } },
+		-- 	{ "i", mode = { "x", "o" } },
+		-- },
+		event = "VeryLazy",
 		dependencies = { "nvim-treesitter-textobjects" },
-        config = function ()
-            require("setup.plugins.mini-ai")()
-        end
+		config = function()
+			require("setup.plugins.mini-ai")()
+		end,
 	},
 }

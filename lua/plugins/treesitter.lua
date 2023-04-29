@@ -92,34 +92,14 @@ return {
 				"http", -- http requests as format, used for rest.nvim
 			},
 			sync_install = false,
-			ignore_install = { "phpdoc" },
-			highlight = {
-				enable = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "gnn",
-					node_incremental = "grn",
-					scope_incremental = "grc",
-					node_decremental = "grm",
-				},
-			},
+			highlight = { enable = true },
 			textsubjects = { enable = true, keymaps = { [","] = "textsubjects-smart" } },
 			indent = { enable = true },
-			autotag = { enable = true },
+			autotag = { enable = true, filetypes = { "html", "jsx", "tsx", "xml" } },
 			endwise = { enable = true },
 			context_commentstring = { enable = true },
-			rainbow = {
-				enable = true,
-				disable = { "jsx", "cpp" },
-				query = "rainbow-parens",
-			},
-			query_linter = {
-				enable = true,
-				use_virtual_text = true,
-				lint_events = { "BufWrite", "CursorHold" },
-			},
+			rainbow = { enable = true, query = "rainbow-parens" },
+			query_linter = { enable = true, use_virtual_text = true, lint_events = { "BufWrite", "CursorHold" } },
 		},
 		config = function(_, opts)
 			return require("nvim-treesitter.configs").setup(opts)
@@ -130,11 +110,7 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
-			return require("treesitter-context").setup({
-				max_lines = 1,
-				trim_scope = "outer",
-				min_window_height = 0,
-			})
+			return require("treesitter-context").setup({ max_lines = 1, trim_scope = "outer", min_window_height = 0 })
 		end,
 	},
 }

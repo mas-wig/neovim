@@ -1,5 +1,5 @@
 return function()
-	local ai, _ = pcall(require, "mini.ai")
+	local _, ai = pcall(require, "mini.ai")
 	ai.setup({
 		n_lines = 500,
 		custom_textobjects = {
@@ -12,7 +12,6 @@ return function()
 			p = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }, {}),
 		},
 	})
-
 	if require("setup.utils").has("which-key.nvim") then
 		local i = {
 			[" "] = "Whitespace",
