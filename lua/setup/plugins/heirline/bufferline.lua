@@ -236,7 +236,13 @@ local session = {
 					return "  "
 				end
 			end,
-			hl = { fg = "green2", bg = "bg" },
+			hl = function()
+				if vim.g.persisting then
+					return { fg = "green2", bg = "bg" }
+				else
+					return { fg = "red", bg = "bg" }
+				end
+			end,
 			on_click = {
 				callback = function()
 					vim.cmd("SessionToggle")
