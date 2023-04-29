@@ -1,6 +1,4 @@
-local M = {}
-
-M.setup = function()
+return function()
 	local dashboard = require("alpha.themes.dashboard")
 	local alpha = require("alpha")
 
@@ -54,5 +52,3 @@ M.setup = function()
 		end,
 	})
 end
-
-return M

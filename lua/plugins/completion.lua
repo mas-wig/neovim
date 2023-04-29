@@ -13,7 +13,7 @@ return {
 			{ "dmitmel/cmp-cmdline-history", lazy = true },
 		},
 		config = function()
-			require("setup.plugins.nvim-cmp").setup()
+			require("setup.plugins.nvim-cmp")()
 		end,
 	},
 	{

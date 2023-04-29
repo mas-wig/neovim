@@ -32,7 +32,7 @@ return {
 			end
 		end,
 		config = function()
-			require("setup.plugins.notify").setup()
+			require("setup.plugins.notify")
 		end,
 	},
 
@@ -133,7 +133,7 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		config = function()
-			require("setup.plugins.noice").setup()
+			require("setup.plugins.noice")
 		end,
 	},
 
@@ -146,7 +146,7 @@ return {
 			end
 		end,
 		config = function()
-			require("setup.plugins.aplha").setup()
+			require("setup.plugins.aplha")()
 		end,
 	},
 

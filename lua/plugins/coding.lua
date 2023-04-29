@@ -125,7 +125,7 @@ return {
 		"mhartington/formatter.nvim",
 		cmd = { "Format", "FormatWrite" },
 		config = function()
-			require("setup.plugins.formatter").setup()
+			require("setup.plugins.formatter")
 		end,
 	},
 
@@ -172,5 +172,8 @@ return {
 		},
 		-- event = "VeryLazy",
 		dependencies = { "nvim-treesitter-textobjects" },
+        config = function ()
+            require("setup.plugins.mini-ai")()
+        end
 	},
 }

@@ -48,6 +48,7 @@ return {
 					static = statusline.stl_static,
 					hl = { bg = "bg" },
 				},
+                spacer,
 				statusline.vimMode,
 				statusline.git,
 				statusline.macroRecording,

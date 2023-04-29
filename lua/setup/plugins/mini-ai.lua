@@ -1,6 +1,4 @@
-local M = {}
-
-M.setup = function()
+return function()
 	local ai, _ = pcall(require, "mini.ai")
 	ai.setup({
 		n_lines = 500,
@@ -58,5 +56,3 @@ M.setup = function()
 		})
 	end
 end
-
-return M

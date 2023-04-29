@@ -60,7 +60,7 @@ return {
 		cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonInstallAll" },
 		lazy = true,
 		config = function()
-			require("setup.plugins.mason").setup()
+			require("setup.plugins.mason")()
 		end,
 	},
 
@@ -68,7 +68,7 @@ return {
 		"jose-elias-alvarez/null-ls.nvim",
 		event = "LspAttach",
 		config = function()
-			require("setup.plugins.null-ls").setup()
+			require("setup.plugins.null-ls")()
 		end,
 	},
 
@@ -89,7 +89,7 @@ return {
 			build = "cd lua/fzy && make",
 		},
 		config = function()
-			return require("setup.plugins.navigator").setup()
+			return require("setup.plugins.navigator")
 		end,
 	},
 }

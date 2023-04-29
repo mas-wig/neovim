@@ -93,7 +93,7 @@ statusline.vimMode = {
 		return " " .. self.mode_names[self.mode]
 	end,
 	hl = function(self)
-		return { fg = self:mode_color(), bg = "bg" }
+		return { fg = self:mode_color(), bg = "bg", bold = true }
 	end,
 	update = {
 		"ModeChanged",
@@ -103,12 +103,17 @@ statusline.vimMode = {
 
 statusline.fileLastModified = {
 	provider = function()
-		local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-		return (ftime > 0) and os.date("%c", ftime)
+		if vim.o.filetype == "alpha" then
+			return ""
+		else
+			local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
+			return "[ " .. tostring((ftime > 0) and os.date("%x %X", ftime)) .. " ]"
+		end
 	end,
 	hl = function()
 		return { fg = "yellow" }
 	end,
+	statusline.spacer_right,
 }
 
 statusline.lazy = {
@@ -151,6 +156,7 @@ statusline.git = {
 				return self.has_changes
 			end,
 			provider = "[ ",
+			hl = { bold = true },
 		},
 		{
 			provider = function(self)
@@ -164,37 +170,38 @@ statusline.git = {
 		{
 			provider = function(self)
 				local count = self.status_dict.added or 0
-				return count > 0 and ("A " .. count .. " ")
+				return count > 0 and (require("setup.ui.icons").git.added .. count .. " ")
 			end,
-			hl = { fg = "green" },
+			hl = { fg = "green", bold = true },
 		},
 		{
 			provider = function(self)
 				local count = self.status_dict.removed or 0
-				return count > 0 and ("D " .. count .. " ")
+				return count > 0 and (require("setup.ui.icons").git.deleted .. count .. " ")
 			end,
-			hl = { fg = "red" },
+			hl = { fg = "red", bold = true },
 		},
 		{
 			provider = function(self)
 				local count = self.status_dict.changed or 0
-				return count > 0 and ("C " .. count .. " ")
+				return count > 0 and (require("setup.ui.icons").git.modified .. count .. " ")
 			end,
-			hl = { fg = "yellow2" },
+			hl = { fg = "yellow2", bold = true },
 		},
 		{
 			condition = function(self)
 				return self.has_changes
 			end,
 			provider = "]",
+			hl = { bold = true },
 		},
 
 		statusline.spacer_right,
 	},
 }
 statusline.ruler = {
-	provider = "%l : %L : %c : %P",
-	hl = function(self)
+	provider = "[ %l : %L : %c : %P ]",
+	hl = function()
 		return { fg = "green" }
 	end,
 	statusline.spacer_left,
@@ -262,7 +269,7 @@ statusline.session = {
 			hl = { fg = "green2", bg = "bg" },
 			on_click = {
 				callback = function()
-					vim.cmd("SessionToggle")
+					pcall(vim.cmd, "SessionToggle")
 				end,
 				name = "toggle_session",
 			},
@@ -270,7 +277,6 @@ statusline.session = {
 		statusline.spacer_left,
 	},
 }
-
 statusline.overseer = {
 	condition = function()
 		local ok, _ = pcall(require, "overseer")

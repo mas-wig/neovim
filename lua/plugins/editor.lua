@@ -45,7 +45,7 @@ return {
 			{ "kevinhwang91/promise-async", lazy = true },
 		},
 		config = function()
-			require("setup.plugins.nvim-ufo").setup()
+			require("setup.plugins.nvim-ufo")
 		end,
 	},
 
@@ -54,7 +54,7 @@ return {
 		cmd = { "TroubleToggle", "Trouble" },
 		opts = { use_diagnostic_signs = true },
 		init = function()
-			require("setup.plugins.trouble").init()
+			require("setup.plugins.trouble")
 		end,
 	},
 

@@ -1,6 +1,4 @@
-local M = {}
-
-M.setup = function()
+return function()
 	local ok, cmp = pcall(require, "cmp")
 	local compare = require("cmp.config.compare")
 
@@ -132,5 +130,3 @@ M.setup = function()
 		}),
 	})
 end
-
-return M

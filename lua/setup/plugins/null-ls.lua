@@ -1,6 +1,4 @@
-local M = {}
-
-M.setup = function()
+return function()
 	local null_ls = require("null-ls")
 	null_ls.setup({
 		root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
@@ -24,5 +22,3 @@ M.setup = function()
 		},
 	})
 end
-
-return M

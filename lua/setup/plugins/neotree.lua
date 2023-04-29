@@ -75,9 +75,9 @@ M.setup = function()
 				folder_open = require("setup.ui.icons").ui.FolderOpen,
 				folder_empty = require("setup.ui.icons").ui.EmptyFolder,
 				folder_empty_open = require("setup.ui.icons").ui.EmptyFolderOpen,
-				git_status = {
-					symbols = require("setup.ui.icons").git,
-				},
+			},
+			git_status = {
+				symbols = require("setup.ui.icons").git,
 			},
 		},
 		filtered_items = {

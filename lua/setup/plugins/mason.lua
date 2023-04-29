@@ -1,6 +1,4 @@
-local M = {}
-
-M.setup = function()
+return function()
 	local ensure_installed = { "stylua", "prettier" }
 	require("mason").setup({
 		ensure_installed = ensure_installed,
@@ -29,5 +27,3 @@ M.setup = function()
 	end, {})
 	vim.g.mason_binaries_list = ensure_installed
 end
-
-return M

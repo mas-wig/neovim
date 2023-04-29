@@ -60,7 +60,7 @@ wb.lspDiagnostics = {
 		condition = function(self)
 			return self.errors > 0
 		end,
-		hl = { fg = "red3" },
+		hl = { fg = "red3", bold = true },
 		{
 			provider = function(self)
 				return vim.fn.sign_getdefined("DiagnosticSignError")[1].text .. self.errors .. " "
@@ -72,7 +72,7 @@ wb.lspDiagnostics = {
 		condition = function(self)
 			return self.warnings > 0
 		end,
-		hl = { fg = "yellow" },
+		hl = { fg = "yellow", bold = true },
 		{
 			{
 				provider = function(self)
@@ -86,7 +86,7 @@ wb.lspDiagnostics = {
 		condition = function(self)
 			return self.hints > 0
 		end,
-		hl = { fg = "blue" },
+		hl = { fg = "blue", bold = true },
 		{
 			{
 				provider = function(self)
@@ -99,7 +99,7 @@ wb.lspDiagnostics = {
 		condition = function(self)
 			return self.info > 0
 		end,
-		hl = { fg = "green" },
+		hl = { fg = "green", bold = true },
 		{
 			{
 				provider = function(self)
