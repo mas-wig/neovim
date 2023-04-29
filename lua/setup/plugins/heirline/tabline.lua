@@ -6,9 +6,9 @@ local Tabpage = {
 	end,
 	hl = function(self)
 		if not self.is_active then
-			return "TabLine"
+			return { fg = "pink" }
 		else
-			return "TabLineSel"
+			return { fg = "black", bg = "blue", bold = true }
 		end
 	end,
 	update = { "TabNew", "TabClosed", "TabEnter", "TabLeave", "WinNew", "WinClosed" },

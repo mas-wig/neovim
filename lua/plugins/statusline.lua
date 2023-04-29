@@ -1,6 +1,6 @@
 return {
 	"rebelot/heirline.nvim",
-	event = { "BufEnter" },
+	event = { "VimEnter" },
 	dependencies = { "tiagovla/scope.nvim", config = true },
 	config = function()
 		local filetype = {
