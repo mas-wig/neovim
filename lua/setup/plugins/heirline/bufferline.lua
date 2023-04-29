@@ -1,6 +1,5 @@
 local utils = require("heirline.utils")
 table.unpack = table.unpack or unpack -- 5.1 compatibility
-
 local function get_current_filenames()
 	local listed_buffers = vim.tbl_filter(function(bufnr)
 		return vim.bo[bufnr].buflisted and vim.api.nvim_buf_is_loaded(bufnr)
@@ -221,13 +220,33 @@ local BufferLineOffset = {
 	end,
 }
 
-local VimLogo = {
-	provider = function(self)
-		return "    "
-	end,
-	hl = { fg = "blue", bg = "bg" },
+local session = {
+	update = { "User", pattern = "PersistedStateChange" },
+	{
+		condition = function(self)
+			return not require("heirline.conditions").buffer_matches({
+				filetype = self.filetypes,
+			})
+		end,
+		{
+			provider = function(self)
+				if vim.g.persisting then
+					return "  "
+				else
+					return "  "
+				end
+			end,
+			hl = { fg = "green2", bg = "bg" },
+			on_click = {
+				callback = function()
+					vim.cmd("SessionToggle")
+				end,
+				name = "toggle_session",
+			},
+		},
+	},
 }
 
-local TabLine = { BufferLineOffset, VimLogo, BufferLine, require("setup.plugins.heirline.tabline") }
+local TabLine = { BufferLineOffset, session, BufferLine, require("setup.plugins.heirline.tabline") }
 
 return TabLine

@@ -56,7 +56,6 @@ return {
 				require("setup.plugins.heirline").left_components,
 				{ provider = "%=" },
 				require("setup.plugins.heirline").right_components,
-				statusline.session,
 				statusline.lazy,
 				statusline.lspstatus,
 				statusline.ruler,
