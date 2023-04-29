@@ -1,6 +1,6 @@
 return {
 	"rebelot/heirline.nvim",
-	event = "VeryLazy",
+	event = { "BufEnter" },
 	dependencies = { "tiagovla/scope.nvim", config = true },
 	config = function()
 		local filetype = {
@@ -25,7 +25,6 @@ return {
 			"help",
 			"quickfix",
 		}
-
 		local align = { provider = "%=" }
 		local spacer = { provider = " " }
 		local statusline = require("setup.plugins.heirline.statusline")

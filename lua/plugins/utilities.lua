@@ -113,7 +113,7 @@ return {
 				autochdir = true,
 				highlights = {
 					FloatBorder = {
-						guifg = require("ui.colors").purple2,
+						guifg = require("setup.ui.colors").purple2,
 						guibg = "none",
 					},
 				},

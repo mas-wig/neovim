@@ -29,9 +29,9 @@ return {
 				end)
 			end
 		end,
-        config = function ()
-            require("setup.plugins.notify").setup()
-        end
+		config = function()
+			require("setup.plugins.notify").setup()
+		end,
 	},
 
 	{
@@ -131,15 +131,20 @@ return {
 		event = "VeryLazy",
 		lazy = true,
 		config = function()
-            require("setup.plugins.noice").setup()
+			require("setup.plugins.noice").setup()
 		end,
 	},
 
 	{
 		"goolord/alpha-nvim",
 		event = "VimEnter",
+		init = function()
+			if vim.o.filetype == "alpha" then
+				vim.opt.laststatus = 0
+			end
+		end,
 		config = function()
-            require("setup.plugins.aplha").setup()
+			require("setup.plugins.aplha").setup()
 		end,
 	},
 
