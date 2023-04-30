@@ -1,6 +1,8 @@
 local utils = require("heirline.utils")
 
-local Tabpage = {
+local M = {}
+
+M.tabpage = {
 	provider = function(self)
 		return "%" .. self.tabnr .. "T " .. self.tabnr .. " %T"
 	end,
@@ -14,13 +16,13 @@ local Tabpage = {
 	update = { "TabNew", "TabClosed", "TabEnter", "TabLeave", "WinNew", "WinClosed" },
 }
 
-local TabPages = {
-	-- only show this component if there's 2 or more tabpages
+
+M.tabPages = {
 	condition = function()
 		return #vim.api.nvim_list_tabpages() >= 2
 	end,
 	{ provider = "%=" },
-	utils.make_tablist(Tabpage),
+	utils.make_tablist(M.tabpage),
 }
 
-return TabPages
+return M

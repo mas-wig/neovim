@@ -1,13 +1,25 @@
 local wb = {}
 local conditions = require("heirline.conditions")
 
-wb.fileFlag = {
-	{
-		provider = function()
-			local filetype_icon, filetype_hl = require("nvim-web-devicons").get_icon_by_filetype(vim.bo.filetype)
-			return (filetype_icon and "%#" .. filetype_hl .. "#" .. " " .. filetype_icon) or ""
-		end,
+wb.lspstatus = {
+	condition = require("heirline.conditions").lsp_attached,
+	update = {
+		"LspDetach",
+		"LspAttach",
+		callback = vim.schedule_wrap(function()
+			vim.cmd("redrawstatus")
+		end),
 	},
+	provider = function()
+		local names = {}
+		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+			if server.name ~= 0 and server.name ~= "null-ls" then
+				table.insert(names, "  ")
+			end
+		end
+		return table.concat(names, " ")
+	end,
+	hl = { fg = "pink" },
 }
 
 wb.fileLocation = {
@@ -23,10 +35,10 @@ wb.fileLocation = {
 		end,
 		hl = { fg = "yellow3", bold = true },
 	},
-	wb.fileFlag,
+	wb.lspstatus,
 	{
 		provider = function()
-			return " ] "
+			return "] "
 		end,
 		hl = { fg = "white", bold = true },
 	},

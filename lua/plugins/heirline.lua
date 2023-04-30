@@ -29,7 +29,8 @@ return {
 		local spacer = { provider = " " }
 		local statusline = require("setup.plugins.heirline.statusline")
 		local winbar = require("setup.plugins.heirline.winbar")
-		local tabline = require("setup.plugins.heirline.bufferline")
+		local bufferline = require("setup.plugins.heirline.bufferline")
+		local tabline = require("setup.plugins.heirline.tabline")
 		local sc = require("setup.plugins.heirline.statuscolumn")
 		local conditions = require("heirline.conditions")
 
@@ -41,25 +42,29 @@ return {
 						filetype = filetype,
 					})
 				end,
-				tabline,
+				bufferline,
+				tabline.lspstatus,
+				tabline.tabPages,
 			},
 			statusline = require("heirline.utils").insert(
 				{
 					static = statusline.stl_static,
 					hl = { bg = "bg" },
 				},
-                spacer,
 				statusline.vimMode,
+				spacer,
 				statusline.git,
+				spacer,
 				statusline.macroRecording,
+				spacer,
 				statusline.overseer,
-				require("setup.plugins.heirline").left_components,
 				{ provider = "%=" },
-				require("setup.plugins.heirline").right_components,
 				statusline.lazy,
-				statusline.lspstatus,
+				spacer,
 				statusline.ruler,
-				statusline.fileLastModified
+				spacer,
+				statusline.fileLastModified,
+				spacer
 			),
 			statuscolumn = {
 				condition = function()

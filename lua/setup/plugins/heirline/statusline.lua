@@ -2,22 +2,6 @@ local statusline = {}
 
 statusline.conditions = require("heirline.conditions")
 
-statusline.spacer_left = {
-	-- provider = "  ",
-	provider = "  ",
-	hl = function()
-		return { fg = "yellow" }
-	end,
-}
-
-statusline.spacer_right = {
-	-- provider = "  ",
-	provider = "  ",
-	hl = function()
-		return { fg = "yellow" }
-	end,
-}
-
 statusline.stl_static = {
 	mode_color_map = {
 		n = "blue",
@@ -98,7 +82,6 @@ statusline.vimMode = {
 	update = {
 		"ModeChanged",
 	},
-	statusline.spacer_right,
 }
 
 statusline.fileLastModified = {
@@ -113,7 +96,6 @@ statusline.fileLastModified = {
 	hl = function()
 		return { fg = "yellow" }
 	end,
-	statusline.spacer_right,
 }
 
 statusline.lazy = {
@@ -123,7 +105,7 @@ statusline.lazy = {
 		}) and require("lazy.status").has_updates()
 	end,
 	provider = function()
-		return "Lazy " .. require("lazy.status").updates()
+		return "Lzy " .. require("lazy.status").updates()
 	end,
 	on_click = {
 		callback = function()
@@ -132,7 +114,6 @@ statusline.lazy = {
 		name = "update_plugins",
 	},
 	hl = { fg = "blue" },
-	statusline.spacer_right,
 }
 
 statusline.git = {
@@ -195,8 +176,6 @@ statusline.git = {
 			provider = "]",
 			hl = { bold = true },
 		},
-
-		statusline.spacer_right,
 	},
 }
 statusline.ruler = {
@@ -204,7 +183,6 @@ statusline.ruler = {
 	hl = function()
 		return { fg = "green" }
 	end,
-	statusline.spacer_left,
 }
 
 statusline.macroRecording = {
@@ -224,29 +202,6 @@ statusline.macroRecording = {
 		end,
 		hl = { fg = "pink" },
 	},
-	statusline.spacer_left,
-}
-
-statusline.lspstatus = {
-	condition = statusline.conditions.lsp_attached,
-	update = {
-		"LspDetach",
-		"LspAttach",
-		callback = vim.schedule_wrap(function()
-			vim.cmd("redrawstatus")
-		end),
-	},
-	provider = function()
-		local names = {}
-		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-			if server.name ~= 0 and server.name ~= "null-ls" then
-				table.insert(names, server.name)
-			end
-		end
-		return string.upper("[ " .. table.concat(names, " ") .. " ]")
-	end,
-	hl = { fg = "pink" },
-	statusline.spacer_left,
 }
 
 statusline.overseer = {
@@ -366,7 +321,6 @@ statusline.overseer = {
 		end,
 		hl = { fg = "white", bold = true },
 	},
-	statusline.spacer_left,
 }
 
 return statusline
