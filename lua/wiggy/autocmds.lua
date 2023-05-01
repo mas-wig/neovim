@@ -5,7 +5,7 @@ return {
 			{ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
 			function()
 				local bufnr = vim.api.nvim_get_current_buf()
-				require("setup.functions").ConcealHTML(bufnr)
+				require("setup.utils.functions").ConcealHTML(bufnr)
 			end,
 			opts = {
 				pattern = { "*.html" },

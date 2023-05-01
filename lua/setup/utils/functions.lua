@@ -64,7 +64,6 @@ function fn.ConcealHTML(bufnr)
         ))
         ]]
 	)
-
 	for _, captures, metadata in query:iter_matches(root, bufnr, root:start(), root:end_()) do
 		local start_row, start_col, end_row, end_col = captures[2]:range()
 		vim.api.nvim_buf_set_extmark(bufnr, conceal_ns, start_row, start_col, {

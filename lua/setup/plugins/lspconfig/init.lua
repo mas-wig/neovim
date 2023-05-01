@@ -12,8 +12,8 @@ end
 
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
-		require("navigator.dochighlight").documentHighlight(bufnr)
-		require("navigator.codeAction").code_action_prompt(bufnr)
+		-- require("navigator.dochighlight").documentHighlight(bufnr)
+		-- require("navigator.codeAction").code_action_prompt(bufnr)
 
 		if client.name == "gopls" then
 			client.server_capabilities.document_formatting = false
