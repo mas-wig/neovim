@@ -23,6 +23,7 @@ return {
 			"nofile",
 			"prompt",
 			"help",
+			"terminal",
 			"quickfix",
 		}
 		local align = { provider = "%=" }

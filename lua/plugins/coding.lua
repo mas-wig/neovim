@@ -187,7 +187,7 @@ return {
 				startinsert = true,
 				term = {
 					position = "vert",
-					size = 40,
+					size = 65,
 				},
 				filetype_path = vim.fn.expand("~/.config/nvim/setup/code-runner/code_runner.json"),
 				-- project_path = vim.fn.expand("~/.config/nvim/setup/code-runner/project_manager.json"),
