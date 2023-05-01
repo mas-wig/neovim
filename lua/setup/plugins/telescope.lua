@@ -165,7 +165,7 @@ M.setup = function()
 				},
 				-- theme             = "ivy",
 				hide_parent_dir = true,
-				hijack_netrw = true,
+				hijack_netrw = false,
 				previewer = false,
 				prompt_path = true,
 				hidden = true,
@@ -184,6 +184,10 @@ M.setup = function()
 			},
 		},
 	})
+	telescope.load_extension("fzf")
+	telescope.load_extension("file_browser")
+	telescope.load_extension("media_files")
+	telescope.load_extension("persisted")
 end
 
 return M
