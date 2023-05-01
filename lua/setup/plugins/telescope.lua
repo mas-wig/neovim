@@ -58,9 +58,15 @@ M.init = function()
 end
 
 M.setup = function()
+	local ok, telescope = pcall(require, "telescope")
 	local actions = require("telescope.actions")
 	local actions_layout = require("telescope.actions.layout")
-	require("telescope").setup({
+
+	if not ok then
+		return
+	end
+
+	local config = {
 		defaults = {
 			winblend = 0,
 			borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -183,7 +189,9 @@ M.setup = function()
 				},
 			},
 		},
-	})
+	}
+
+	telescope.setup(config)
 	telescope.load_extension("fzf")
 	telescope.load_extension("file_browser")
 	telescope.load_extension("media_files")
