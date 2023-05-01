@@ -1,17 +1,17 @@
 return {
-	{
-		name = "ConcealAttributes",
-		{
-			{ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
-			function()
-				local bufnr = vim.api.nvim_get_current_buf()
-				require("setup.utils.functions").ConcealHTML(bufnr)
-			end,
-			opts = {
-				pattern = { "*.html" },
-			},
-		},
-	},
+	-- {
+	-- 	name = "ConcealAttributes",
+	-- 	{
+	-- 		{ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
+	-- 		function()
+	-- 			local bufnr = vim.api.nvim_get_current_buf()
+	-- 			require("setup.utils.functions").ConcealHTML(bufnr)
+	-- 		end,
+	-- 		opts = {
+	-- 			pattern = { "*.html" },
+	-- 		},
+	-- 	},
+	-- },
 
 	{
 		name = "PersistedHooks",
