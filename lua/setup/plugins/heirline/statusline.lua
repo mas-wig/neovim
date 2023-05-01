@@ -37,7 +37,45 @@ statusline.vimMode = {
 	end,
 	static = {
 		mode_names = {
-			n = "NORMAL",
+			-- n = "NORMAL",
+			-- no = "NORMAL-",
+			-- nov = "NORMAL-",
+			-- noV = "NORMAL-",
+			-- ["no\22"] = "NORMAL-",
+			-- niI = "NORMAL-",
+			-- niR = "NORMAL-",
+			-- niV = "NORMAL-",
+			-- nt = "NORMAL-",
+			-- v = "VISUAL",
+			-- vs = "VISUAL-",
+			-- V = "V-LINE",
+			-- Vs = "V-LINE-",
+			-- ["\22"] = "V-BLOCK",
+			-- ["\22s"] = "V-BLOCK-",
+			-- s = "SELECT",
+			-- S = "S-LINE",
+			-- ["\19"] = "S-BLOCK",
+			-- i = "INSERT",
+			-- ic = "INSERT-",
+			-- ix = "INSERT-",
+			-- R = "REPLACE",
+			-- Rc = "REPLACE-",
+			-- Rx = "REPLACE-",
+			-- Rv = "REPLACE-",
+			-- Rvc = "REPLACE-",
+			-- Rvx = "REPLACE-",
+			-- c = "COMMAND",
+			-- cv = "COMMAND-",
+			-- r = "PROMPT",
+			-- rm = "MORE",
+			-- ["r?"] = "CONFIRM",
+			-- ["!"] = "SHELL",
+			-- t = "TERMINAL",
+
+			-------------
+			-------------
+
+			n = "N",
 			no = "NORMAL-",
 			nov = "NORMAL-",
 			noV = "NORMAL-",
@@ -46,35 +84,36 @@ statusline.vimMode = {
 			niR = "NORMAL-",
 			niV = "NORMAL-",
 			nt = "NORMAL-",
-			v = "VISUAL",
+			v = "V",
 			vs = "VISUAL-",
-			V = "V-LINE",
+			V = "V-L",
 			Vs = "V-LINE-",
-			["\22"] = "V-BLOCK",
+			["\22"] = "V-B",
 			["\22s"] = "V-BLOCK-",
 			s = "SELECT",
 			S = "S-LINE",
 			["\19"] = "S-BLOCK",
-			i = "INSERT",
+			i = "I",
 			ic = "INSERT-",
 			ix = "INSERT-",
-			R = "REPLACE",
+			R = "R",
 			Rc = "REPLACE-",
 			Rx = "REPLACE-",
 			Rv = "REPLACE-",
 			Rvc = "REPLACE-",
 			Rvx = "REPLACE-",
-			c = "COMMAND",
+			c = "C",
 			cv = "COMMAND-",
 			r = "PROMPT",
 			rm = "MORE",
 			["r?"] = "CONFIRM",
 			["!"] = "SHELL",
-			t = "TERMINAL",
+			t = "T",
 		},
 	},
 	provider = function(self)
-		return " " .. self.mode_names[self.mode]
+		--	return " " .. self.mode_names[self.mode]
+		return " %2(" .. self.mode_names[self.mode] .. "%)"
 	end,
 	hl = function(self)
 		return { fg = self:mode_color(), bg = "bg", bold = true }
@@ -179,7 +218,9 @@ statusline.git = {
 	},
 }
 statusline.ruler = {
-	provider = "[ %l : %L : %c : %P ]",
+	provider = function()
+		return "[ %l : %c : %L : %P ]"
+	end,
 	hl = function()
 		return { fg = "green" }
 	end,

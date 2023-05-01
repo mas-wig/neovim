@@ -16,6 +16,15 @@ return {
 		end,
 	},
 
+	jdtls = {
+		settings = {
+			java = {
+				signatureHelp = { enabled = true },
+				contentProvider = { preferred = "fernflower" },
+			},
+		},
+	},
+
 	pyright = {
 		on_init = function(client)
 			require("navigator.lspclient.python").on_init(client)
@@ -74,23 +83,19 @@ return {
 		},
 	},
 
-	clangd = {
-		flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
-		cmd = {
-			"clangd",
-			"--background-index",
-			"--suggest-missing-includes",
-			"--clang-tidy",
-			"--header-insertion=iwyu",
-			"--enable-config",
-			"--offset-encoding=utf-16",
-			"--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
-			"--cross-file-rename",
+	ccls = {
+		init_options = {
+			compilationDatabaseDirectory = "build",
+			root_dir = require("lspconfig").util.root_pattern(
+				"compile_commands.json",
+				"compile_flags.txt",
+				"CMakeLists.txt",
+				"Makefile",
+				".git"
+			)(fname) or require("setup.utils").dirname(fname),
+			index = { threads = 2 },
+			clang = { excludeArgs = { "-frounding-math" } },
 		},
-		filetypes = { "c", "cpp", "objc", "objcpp" },
-		single_file_support = true,
-		root_dir = function(fname)
-			return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
-		end,
+		flags = { allow_incremental_sync = true },
 	},
 }

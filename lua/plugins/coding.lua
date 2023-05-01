@@ -176,4 +176,22 @@ return {
 			require("setup.plugins.mini-ai")()
 		end,
 	},
+	{
+		"CRAG666/code_runner.nvim",
+		lazy = true,
+		keys = { { "<leader>rc", "<cmd>RunCode<CR>", desc = "Run code" } },
+		config = function()
+			require("code_runner").setup({
+				mode = "term",
+				focus = false,
+				startinsert = true,
+				term = {
+					position = "vert",
+					size = 40,
+				},
+				filetype_path = vim.fn.expand("~/.config/nvim/setup/code-runner/code_runner.json"),
+				-- project_path = vim.fn.expand("~/.config/nvim/setup/code-runner/project_manager.json"),
+			})
+		end,
+	},
 }

@@ -51,6 +51,7 @@ return {
 					static = statusline.stl_static,
 					hl = { bg = "bg" },
 				},
+				spacer,
 				statusline.vimMode,
 				spacer,
 				statusline.git,
