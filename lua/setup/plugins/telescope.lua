@@ -16,7 +16,7 @@ M.init = function()
 					desc = "Buffer Search",
 				},
 				{
-					"<leader>ff",
+					"<C-p>",
 					t.lazy_required_fn("telescope.builtin", "find_files", {
 						prompt_title = false,
 						results_title = false,

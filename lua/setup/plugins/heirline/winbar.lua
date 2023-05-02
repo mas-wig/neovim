@@ -100,7 +100,9 @@ wb.lspDiagnostics = {
 	},
 	{
 		condition = function(self)
-			return self.info > 0
+			if vim.bo.filetype ~= "lazy" then
+				return self.info > 0
+			end
 		end,
 		hl = { fg = "green", bold = true },
 		{

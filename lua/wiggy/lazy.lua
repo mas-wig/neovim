@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local config = {
 	defaults = {
-		lazy = false,
+		lazy = true,
 		version = nil,
 	},
 	spec = {

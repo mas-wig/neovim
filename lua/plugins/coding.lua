@@ -124,6 +124,7 @@ return {
 	{
 		"mhartington/formatter.nvim",
 		cmd = { "Format", "FormatWrite" },
+		keys = { { "<leader>fw", "<cmd>FormatWrite<cr>", desc = "Format documennt" } },
 		config = function()
 			require("setup.plugins.formatter")
 		end,

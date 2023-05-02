@@ -1,7 +1,7 @@
 return {
 	{
 		"folke/tokyonight.nvim",
-		enabled = true,
+		event = "VimEnter",
 		opts = {
 			style = "night",
 			transparent = false,
