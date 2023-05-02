@@ -8,8 +8,6 @@ M.init = function()
 			description = "Fuck me Daddy",
 			icon = "🔭",
 			keymaps = {
-				{ "<leader>fb", "<cmd>Telescope file_browser<cr>", description = "File browser" },
-				{ "<leader>mf", "<cmd>Telescope media_files<cr>", description = "Media File" },
 				{
 					"<leader>bs",
 					"<cmd>Telescope current_buffer_fuzzy_find<cr>",
@@ -139,10 +137,6 @@ M.setup = function()
 			},
 		},
 		extensions = {
-			media_files = {
-				filetypes = { "png", "svg", "gift", "webp", "jpg", "jpeg" },
-				find_cmd = "rg",
-			},
 			fzf = {
 				fuzzy = false,
 				override_generic_sorter = true,
@@ -153,40 +147,6 @@ M.setup = function()
 				prompt_title = false,
 				results_title = false,
 				layout_config = { width = 0.55, height = 0.55 },
-			},
-			file_browser = {
-				multi_icon = " 👉 ",
-				prompt_title = false,
-				results_title = false,
-				layout_config = {
-					horizontal = {
-						prompt_position = "bottom",
-						results_width = 0.6,
-					},
-					vertical = {
-						mirror = false,
-					},
-					width = 0.93,
-					height = 0.84,
-				},
-				-- theme             = "ivy",
-				hide_parent_dir = true,
-				hijack_netrw = false,
-				previewer = false,
-				prompt_path = true,
-				hidden = true,
-				respect_gitignore = false,
-				grouped = true,
-				border = true,
-				mappings = {
-					i = {
-						["<C-j>"] = actions.move_selection_next,
-						["<C-k>"] = actions.move_selection_previous,
-						["<C-n>"] = actions.cycle_history_next,
-						["<C-p>"] = actions.cycle_history_prev,
-						["?"] = actions_layout.toggle_preview,
-					},
-				},
 			},
 		},
 	}
