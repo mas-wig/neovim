@@ -37,12 +37,14 @@ return {
 
 		require("heirline").setup({
 			tabline = {
-				condition = function()
-					return not conditions.buffer_matches({
-						buftype = buftype,
-						filetype = filetype,
-					})
-				end,
+				{
+					condition = function()
+						return not conditions.buffer_matches({
+							buftype = buftype,
+							filetype = filetype,
+						})
+					end,
+				},
 				bufferline,
 				tabline.lspstatus,
 				tabline.tabPages,
@@ -63,7 +65,7 @@ return {
 				{ provider = "%=" },
 				statusline.lazy,
 				spacer,
-                statusline.lspstatus,
+				statusline.lspstatus,
 				spacer,
 				statusline.ruler,
 				spacer,

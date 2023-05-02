@@ -167,6 +167,19 @@ return {
 		},
 	},
 
+	{
+		name = "ShowTabLine",
+		{
+			{ "BufWinEnter" },
+			function()
+				if vim.bo.filetype ~= "alpha" then
+					vim.opt.showtabline = 2
+				end
+			end,
+			pattern = { opts = { "*" } },
+		},
+	},
+
 	-- Save File
 	{
 		name = "SaveFile",
