@@ -63,6 +63,8 @@ return {
 				{ provider = "%=" },
 				statusline.lazy,
 				spacer,
+                statusline.lspstatus,
+				spacer,
 				statusline.ruler,
 				spacer,
 				statusline.fileLastModified,
@@ -106,6 +108,7 @@ return {
 				winbar.lspDiagnostics,
 				spacer,
 				winbar.fileLocation,
+				spacer,
 			},
 			opts = {
 				colors = require("setup.ui.colors"),

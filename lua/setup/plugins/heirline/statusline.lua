@@ -364,4 +364,25 @@ statusline.overseer = {
 	},
 }
 
+statusline.lspstatus = {
+	condition = require("heirline.conditions").lsp_attached,
+	update = {
+		"LspDetach",
+		"LspAttach",
+		callback = vim.schedule_wrap(function()
+			vim.cmd("redrawstatus")
+		end),
+	},
+	provider = function()
+		local names = {}
+		for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+			if server.name ~= 0 and server.name ~= "null-ls" then
+				table.insert(names, "[ LSP ON ]")
+			end
+		end
+		return table.concat(names, " ")
+	end,
+	hl = { fg = "pink" },
+}
+
 return statusline
