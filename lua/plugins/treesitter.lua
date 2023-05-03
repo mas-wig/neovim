@@ -77,6 +77,9 @@ return {
 				"luadoc", -- lua annotations
 				"gitignore",
 				"gitcommit",
+				"rust",
+				"java",
+				"solidity",
 				"diff",
 				"go",
 				"bibtex",
