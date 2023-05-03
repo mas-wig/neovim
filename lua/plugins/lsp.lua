@@ -10,15 +10,11 @@ return {
 			setup = {},
 		},
 		config = function(_, opts)
-			require("setup.plugins.lspconfig.keymaps")
 			require("setup.plugins.lspconfig").setup()
-			for name, icon in pairs(require("setup.ui.icons").diagnostics) do
-				name = "DiagnosticSign" .. name
-				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-			end
+			require("setup.plugins.lspconfig.keymaps")
+			require("setup.plugins.lspconfig").diagnostics()
 
 			local servers = require("setup.plugins.lspconfig.server")
-
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			local function setup(server)

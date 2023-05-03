@@ -12,9 +12,9 @@ return require("navigator").setup({
 			underline = true,
 			update_in_insert = false,
 			virtual_text = {
-				spacing = 10,
+				spacing = 30,
 				underline = true,
-				update_in_insert = false,
+				update_in_insert = true,
 				prefix = "  ",
 			},
 			severity_sort = true,
@@ -25,6 +25,7 @@ return require("navigator").setup({
 		disply_diagnostic_qf = true,
 	},
 	icons = {
+		icons = true,
 		diagnostic_err = require("setup.ui.icons").diagnostics.Error,
 		diagnostic_warn = require("setup.ui.icons").diagnostics.Warn,
 		diagnostic_info = require("setup.ui.icons").diagnostics.Info,

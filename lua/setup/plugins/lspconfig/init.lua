@@ -10,9 +10,16 @@ M.on_attach = function(on_attach)
 	})
 end
 
+M.diagnostics = function()
+	for type, icon in pairs(require("setup.ui.icons").diagnostics) do
+		local hl = "DiagnosticSign" .. type
+		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+	end
+end
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
-		if client.name == "gopls" then client.server_capabilities.document_formatting = false
+		if client.name == "gopls" then
+			client.server_capabilities.document_formatting = false
 			client.server_capabilities.documentFormattingProvider = false
 		end
 
