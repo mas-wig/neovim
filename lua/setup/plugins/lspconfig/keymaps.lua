@@ -25,9 +25,6 @@ return require("setup.plugins.lspconfig").on_attach(function(_, bufnr)
 					mode = "i",
 					"<c-k>",
 					function()
-						vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-							border = "single",
-						})
 						vim.lsp.buf.signature_help()
 					end,
 					opts = { buffer = bufnr },
@@ -222,10 +219,7 @@ return require("setup.plugins.lspconfig").on_attach(function(_, bufnr)
 				{
 					"K",
 					function()
-						vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-							border = "single",
-						})
-						return vim.lsp.buf.hover()
+						vim.lsp.buf.hover()
 					end,
 					opts = { buffer = bufnr },
 					description = "⚡️ Hover Doc",
