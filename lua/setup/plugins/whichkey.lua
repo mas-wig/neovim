@@ -3,7 +3,6 @@ return function()
 	vim.o.timeoutlen = 300
 	return require("which-key").setup({
 		icons = {
-
 			breadcrumb = " 🌐",
 			separator = " 🡆 ",
 			group = "🔰 ",
@@ -13,7 +12,7 @@ return function()
 			scroll_up = "<c-u>",
 		},
 		window = {
-			border = "single", -- none/single/double/shadow
+			border = "none", -- none/single/double/shadow
 		},
 		layout = {
 			spacing = 6, -- spacing between columns

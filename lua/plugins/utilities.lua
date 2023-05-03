@@ -1,5 +1,6 @@
 return {
 	{ "nvim-lua/plenary.nvim", lazy = true },
+
 	{
 		"mrjones2014/legendary.nvim",
 		lazy = false,
@@ -30,7 +31,7 @@ return {
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		config = function()
-            require("setup.plugins.whichkey")()
+			require("setup.plugins.whichkey")()
 		end,
 	},
 	{
