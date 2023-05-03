@@ -87,6 +87,7 @@ return {
 				"yaml",
 				"json",
 				"jsonc",
+				"sql",
 				"html",
 				"query", -- treesitter query language
 				"http", -- http requests as format, used for rest.nvim

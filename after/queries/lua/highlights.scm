@@ -6,4 +6,4 @@
   "}"
 ] @punctuation.bracket)
 
-
+(string) @nospell

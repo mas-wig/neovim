@@ -26,7 +26,7 @@ return {
 			"rafamadriz/friendly-snippets",
 			config = function()
 				require("luasnip.loaders.from_vscode").lazy_load({
-					paths = { "./snippets/" },
+					paths = { "./after/snippets/" },
 				})
 			end,
 		},
@@ -37,7 +37,7 @@ return {
 				delete_check_events = "TextChanged,InsertEnter",
 			})
 			require("luasnip.loaders.from_vscode").lazy_load({
-				paths = { "./snippets/" },
+				paths = { "./after/snippets/" },
 			})
 			vim.api.nvim_create_autocmd("InsertLeave", {
 				callback = function()
