@@ -26,7 +26,13 @@ map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+map("n", "<leader>`", function()
+	vim.ui.input({ prompt = "Buffer ID : " }, function(id)
+		if id ~= nil then
+			vim.cmd("buffer " .. id)
+		end
+	end)
+end, { desc = "Switch Buffer whit ID" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })

@@ -7,7 +7,7 @@ return require("navigator").setup({
 	lsp = {
 		disable_lsp = "all",
 		format_on_save = false,
-		document_highlight = false,
+		document_highlight = true,
 		diagnostic = {
 			underline = true,
 			update_in_insert = false,

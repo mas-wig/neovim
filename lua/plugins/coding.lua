@@ -61,14 +61,18 @@ return {
 		config = function()
 			require("lsp-lens").setup({
 				enable = true,
-				include_declaration = false, -- Reference include declaration
+				include_declaration = true, -- Reference include declaration
 				sections = { -- Enable / Disable specific request
-					definition = false,
+					definition = true,
 					references = true,
 					implementation = true,
 				},
 				ignore_filetype = {
 					"prisma",
+					"html",
+					"css",
+					"sql",
+					"md",
 				},
 			})
 		end,
