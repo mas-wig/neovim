@@ -48,23 +48,6 @@ M.setup = function()
 				end,
 			})
 		end
-
-		require("legendary").autocmds({
-			{
-				name = "LspOnAttachAutocmds",
-				clear = false,
-				{
-					{ "CursorHold", "CursorHoldI" },
-					":silent! lua vim.lsp.buf.document_highlight()",
-					opts = { buffer = bufnr },
-				},
-				{
-					"CursorMoved",
-					":silent! lua vim.lsp.buf.clear_references()",
-					opts = { buffer = bufnr },
-				},
-			},
-		})
 	end)
 end
 return M
