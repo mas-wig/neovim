@@ -2,12 +2,6 @@
 -- pandoc  [https://pandoc.org/]
 -- zathura [https://pwmt.org/projects/zathura/]
 
-vim.cmd("augroup LspHighlight")
-vim.cmd("autocmd!")
-vim.cmd("autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()")
-vim.cmd("autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()")
-vim.cmd("augroup END")
-
 vim.opt_local.spell = true
 vim.bo.tabstop = 2
 vim.bo.softtabstop = 2

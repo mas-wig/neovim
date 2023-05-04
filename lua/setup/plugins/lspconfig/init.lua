@@ -36,15 +36,19 @@ M.setup = function()
 				group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
 				buffer = bufnr,
 				callback = function()
-					vim.lsp.buf.format({
+					local success, result = pcall(vim.lsp.buf.format, {
 						filter = function(client)
 							return client.name == "null-ls"
 						end,
-						bufnr = bufnr,
-						id = client.id,
+						bufnr = vim.fn.bufnr(),
 						timeout_ms = 5000,
 						async = true,
 					})
+					if not success then
+						return
+					else
+						return result
+					end
 				end,
 			})
 		end
