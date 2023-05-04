@@ -15,6 +15,6 @@ local function safeRequire(module)
 	end
 end
 
-safeRequire("wiggy.options")
-safeRequire("wiggy.lazy")
-safeRequire("wiggy.mappings")
+safeRequire("core.options")
+safeRequire("core.lazy")
+safeRequire("core.mappings")

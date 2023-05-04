@@ -23,7 +23,7 @@ return {
 				include_builtin = false,
 				include_legendary_cmds = false,
 				which_key = { auto_register = false },
-				autocmds = require("wiggy.autocmds"),
+				autocmds = require("core.autocmds"),
 			})
 		end,
 	},
