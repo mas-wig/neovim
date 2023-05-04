@@ -78,49 +78,62 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
--- stylua: ignore start
-
 -- toggle options
-map("n", "<leader>us", function() Util.toggle("spell") end, {desc = "Toggle Spelling"})
-map("n", "<leader>uw", function() Util.toggle("wrap") end, {desc = "Toggle Word Wrap"})
-map("n", "<leader>ul", function() Util.toggle("relativenumber", true) Util.toggle("number") end, {desc = "Toggle Line Numbers"})
-map("n", "<leader>ud", Util.toggle_diagnostics, {desc = "Toggle Diagnostics"})
+map("n", "<leader>us", function()
+	Util.toggle("spell")
+end, { desc = "Toggle Spelling" })
+map("n", "<leader>uw", function()
+	Util.toggle("wrap")
+end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>ul", function()
+	Util.toggle("relativenumber", true)
+	Util.toggle("number")
+end, { desc = "Toggle Line Numbers" })
+
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
-map("n", "<leader>uc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, {desc = "Toggle Conceal"})
+map("n", "<leader>uc", function()
+	Util.toggle("conceallevel", false, { 0, conceallevel })
+end, { desc = "Toggle Conceal" })
 
 -- lazygit
-map("n", "<leader>gg", function() Util.float_term({"lazygit"}, {cwd = Util.get_root()}) end, {desc = "Lazygit (root dir)"})
-map("n", "<leader>gG", function() Util.float_term({"lazygit"}) end, {desc = "Lazygit (cwd)"})
+map("n", "<leader>gg", function()
+	Util.float_term({ "lazygit" }, { cwd = require("setup.utils").get_root() })
+end, { desc = "Lazygit (root dir)" })
+map("n", "<leader>gG", function()
+	Util.float_term({ "lazygit" })
+end, { desc = "Lazygit (cwd)" })
 
 local function termcodes(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
+	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-map("t", "<c-x>", termcodes("<c-\\><c-n>"), {desc = "Enter Normal Mode"})
+map("t", "<c-x>", termcodes("<c-\\><c-n>"), { desc = "Enter Normal Mode" })
 
 -- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", {desc = "Quit all"})
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
-    map("n", "<leader>ui", vim.show_pos, {desc = "Inspect Pos"})
+	map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 end
 
-map("n","<leader>cF", function() Util.ChangeFiletype() end,{ desc = "Change FileType" })
-map("t", "<esc><esc>", "<c-\\><c-n>", {desc = "Enter Normal Mode"})
+map("n", "<leader>cF", function()
+	Util.ChangeFiletype()
+end, { desc = "Change FileType" })
+map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 
 -- windows
-map("n", "<leader>ww", "<C-W>p", {desc = "Other window"})
-map("n", "<leader>wd", "<C-W>c", {desc = "Delete window"})
+map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
+map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
 -- map("n", "<leader>w-", "<C-W>s", {desc = "Split window below"})
 -- map("n", "<leader>w|", "<C-W>v", {desc = "Split window right"})
-map("n", "<leader>-", "<C-W>s", {desc = "Split window below"})
-map("n", "<leader>|", "<C-W>v", {desc = "Split window right"})
+map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
+map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 
 -- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", {desc = "Last Tab"})
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", {desc = "First Tab"})
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", {desc = "New Tab"})
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", {desc = "Next Tab"})
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", {desc = "Close Tab"})
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", {desc = "Previous Tab"})
+map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
