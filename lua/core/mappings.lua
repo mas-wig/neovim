@@ -27,7 +27,7 @@ map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", function()
-	vim.ui.input({ prompt = "Buffer ID : " }, function(id)
+	vim.ui.input({ prompt = " Buffer ID " }, function(id)
 		if id ~= nil then
 			vim.cmd("buffer " .. id)
 		end
