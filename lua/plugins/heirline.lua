@@ -6,6 +6,7 @@ return {
 		local filetype = {
 			"^git.*",
 			"fugitive",
+			"dbout",
 			"^aerial$",
 			"^alpha$",
 			"^neo--tree$",
