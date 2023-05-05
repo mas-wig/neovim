@@ -31,12 +31,12 @@ return function()
 		sorting = {
 			comparators = {
 				require("cmp_fuzzy_buffer.compare"),
-				compare.score,
-				compare.exact,
-				compare.recently_used,
 				compare.offset,
-				compare.kind,
-				compare.sort_text,
+				compare.recently_used, -- higher
+				compare.score,
+				compare.kind, -- higher (prioritize snippets)
+				compare.locality,
+				compare.exact, -- lower
 				compare.length,
 				compare.order,
 			},
