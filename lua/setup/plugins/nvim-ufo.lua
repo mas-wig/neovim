@@ -1,4 +1,4 @@
-require("ufo").setup({
+return require("ufo").setup({
 	preview = {
 		mappings = {
 			scrollB = "<C-b>",

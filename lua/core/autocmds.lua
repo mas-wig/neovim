@@ -19,9 +19,7 @@ return {
 			"User",
 			function(session)
 				require("persisted").save()
-				-- Delete all of the open buffers
 				vim.api.nvim_input("<ESC>:%bd!<CR>")
-				-- Don't start saving the session yet
 				require("persisted").stop()
 			end,
 			opts = { pattern = "PersistedTelescopeLoadPre" },
@@ -136,7 +134,6 @@ return {
 				if vim.tbl_contains(ignoredFts, vim.bo.filetype) or vim.bo.buftype ~= "" or not vim.bo.modifiable then
 					return
 				end
-
 				return vim.cmd.mkview(1)
 			end,
 			opts = { pattern = "?*" },

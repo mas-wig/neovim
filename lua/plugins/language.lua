@@ -75,9 +75,11 @@ return {
 		"simrat39/rust-tools.nvim",
 		ft = { "rust" },
 		config = function()
-			local on_attach = require("setup.plugins.lspconfig").setup()
 			return require("rust-tools").setup({
-				on_attach = on_attach,
+				on_attach = function()
+					require("setup.plugins.lspconfig").setup()
+					require("setup.plugins.lspconfig.keymaps")
+				end,
 				inlay_hints = { auto = false },
 				hover_actions = { border = "rounded" },
 			})

@@ -2,6 +2,14 @@ return require("noice").setup({
 	cmdline = {
 		enabled = true,
 		view = "cmdline",
+		format = {
+			cmdline = { pattern = "^:", icon = " CMD :", lang = "vim" },
+			search_down = { kind = "search", pattern = "^/", icon = " SEARCH UP :", lang = "regex" },
+			search_up = { kind = "search", pattern = "^%?", icon = " SEARCH DOWN :", lang = "regex" },
+			filter = { pattern = "^:%s*!", icon = " SHELL CMD :", lang = "bash" },
+			lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "  ", lang = "lua" },
+			help = { pattern = "^:%s*he?l?p?%s+", icon = " Help :" },
+		},
 	},
 	notify = {
 		enabled = true,
@@ -13,7 +21,7 @@ return require("noice").setup({
 	},
 	lsp = {
 		progress = {
-			enabled = false,
+			enabled = true,
 		},
 		hover = {
 			enabled = true,
