@@ -40,39 +40,62 @@ return {
 			tabline = {
 				{
 					condition = function()
-						return not conditions.buffer_matches({
-							buftype = buftype,
-							filetype = filetype,
+						return conditions.buffer_matches({
+							buftype = {
+								"^git.*",
+								"fugitive",
+								"dbout",
+								"^aerial$",
+								"^alpha$",
+								"^neo--tree$",
+								"^neotest--summary$",
+								"^neo--tree--popup$",
+								"^NvimTree$",
+								"^toggleterm$",
+								"^netrw$",
+								"^TelescopePrompt$",
+								"^DressingInput$",
+								"^lazy$",
+							},
+							filetype = {
+								"nofile",
+								"terminal",
+								"quickfix",
+							},
 						})
+					end,
+					init = function()
+						vim.cmd("setlocal showtabline=0")
 					end,
 				},
 				bufferline,
-				tabline.lspstatus,
 				tabline.tabPages,
 			},
-			statusline = require("heirline.utils").insert(
-				{
-					static = statusline.stl_static,
-					hl = { bg = "bg" },
-				},
-				spacer,
-				statusline.vimMode,
-				spacer,
-				statusline.git,
-				spacer,
-				statusline.macroRecording,
-				spacer,
-				statusline.overseer,
-				{ provider = "%=" },
-				statusline.lazy,
-				spacer,
-				statusline.lspstatus,
-				spacer,
-				statusline.ruler,
-				spacer,
-				statusline.fileLastModified,
-				spacer
-			),
+			statusline = {
+				require("heirline.utils").insert(
+					{
+						static = statusline.stl_static,
+						hl = { bg = "bg" },
+					},
+					spacer,
+					statusline.vimMode,
+					spacer,
+					statusline.git,
+					spacer,
+					statusline.macroRecording,
+					spacer,
+					statusline.overseer,
+					{ provider = "%=" },
+					statusline.lazy,
+					spacer,
+					statusline.lspstatus,
+					spacer,
+					statusline.ruler,
+					spacer,
+					statusline.fileLastModified,
+					spacer
+				),
+			},
 			statuscolumn = {
 				condition = function()
 					return not conditions.buffer_matches({
