@@ -13,15 +13,15 @@ return function()
 		window = {
 			completion = {
 				scrollbar = false,
-				border = "single",
+				border = "rounded",
 				winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,Search:None,CursorLine:PmenuSel",
 				side_padding = 1,
 			},
 			documentation = false,
-			--		documentation = {
-			--			border = "single",
-			--			winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-			--		},
+			-- documentation = {
+			-- 	border = "rounded",
+			-- 	winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+			-- },
 		},
 		snippet = {
 			expand = function(args)

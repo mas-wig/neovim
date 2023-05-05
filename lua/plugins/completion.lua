@@ -31,7 +31,7 @@ return {
 			end,
 		},
 		config = function()
-            require('setup.plugins.luasnip')()
+			require("setup.plugins.luasnip")()
 		end,
 	},
 }

@@ -20,6 +20,7 @@ return require("noice").setup({
 		},
 		signature = {
 			enabled = true,
+			auto_open = { enabled = false },
 		},
 		override = {
 			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
