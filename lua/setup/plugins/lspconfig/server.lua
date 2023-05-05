@@ -82,20 +82,20 @@ return {
 			},
 		},
 	},
-
-	ccls = {
-		init_options = {
-			compilationDatabaseDirectory = "build",
-			root_dir = require("lspconfig").util.root_pattern(
-				"compile_commands.json",
-				"compile_flags.txt",
-				"CMakeLists.txt",
-				"Makefile",
-				".git"
-			)(fname) or require("setup.utils").dirname(fname),
-			index = { threads = 2 },
-			clang = { excludeArgs = { "-frounding-math" } },
+	clangd = {
+		flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+		cmd = {
+			"clangd",
+			"--background-index",
+			"--suggest-missing-includes",
+			"--clang-tidy",
+			"--header-insertion=iwyu",
+			"--enable-config",
+			"--offset-encoding=utf-16",
+			"--clang-tidy-checks=-*,llvm-*,clang-analyzer-*",
+			"--cross-file-rename",
 		},
-		flags = { allow_incremental_sync = true },
+		filetypes = { "c", "cpp", "objc", "objcpp" },
+		root_dir = require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname),
 	},
 }

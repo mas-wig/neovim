@@ -4,8 +4,9 @@ return {
 	{
 		"mrjones2014/legendary.nvim",
 		lazy = false,
-		priority = 1000,
-		dependencies = "kkharji/sqlite.lua",
+		branch = "master",
+		priority = 900,
+		dependencies = { "kkharji/sqlite.lua" },
 		init = function()
 			require("legendary").keymaps({
 				{
