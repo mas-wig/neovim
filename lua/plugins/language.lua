@@ -15,16 +15,15 @@ return {
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 			return require("go").setup({
 				goimport = "goimports",
-				lsp_on_attach = require("setup.plugins.lspconfig").setup(),
-				lsp_cfg = {
-					capabilities = capabilities,
-				},
+				lsp_on_attach = function()
+					require("setup.plugins.lspconfig").setup()
+					require("setup.plugins.lspconfig.keymaps")
+				end,
+				lsp_cfg = { capabilities = capabilities },
 				lsp_document_formatting = true,
-				lsp_inlay_hints = {
-					enable = false,
-				},
-				luasnip = false,
-				lsp_diag_update_in_insert = true,
+				lsp_inlay_hints = { enable = false },
+				luasnip = true,
+				lsp_diag_update_in_insert = false,
 				lsp_keymaps = false,
 				dap_debug = false,
 			})
