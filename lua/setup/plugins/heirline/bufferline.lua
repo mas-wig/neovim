@@ -68,7 +68,7 @@ end
 
 local function format_filename(filename, char_limit)
 	filename = get_unique_filename(filename, false)
-	local padding_left = 1
+	local padding_left = 2
 	local padding_right = 2
 	return string.rep(" ", padding_left) .. trim_filename(filename, char_limit) .. string.rep(" ", padding_right)
 end
@@ -127,24 +127,24 @@ local TablineBufnr = {
 }
 
 local TablineFileName = {
-	init = function(self)
-		local filename = self.filename
-		local extension = vim.fn.fnamemodify(filename, ":e")
-		self.icon, self.icon_color =
-			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
-	end,
-	{
-		provider = function(self)
-			if not self.is_active then
-				return ""
-			else
-				return " " .. self.icon
-			end
-		end,
-		hl = function(self)
-			return { fg = self.icon_color }
-		end,
-	},
+	-- init = function(self)
+	-- 	local filename = self.filename
+	-- 	local extension = vim.fn.fnamemodify(filename, ":e")
+	-- 	self.icon, self.icon_color =
+	-- 		require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+	-- end,
+	-- {
+	-- 	provider = function(self)
+	-- 		if not self.is_active then
+	-- 			return ""
+	-- 		else
+	-- 			return " " .. self.icon
+	-- 		end
+	-- 	end,
+	-- 	hl = function(self)
+	-- 		return { fg = self.icon_color }
+	-- 	end,
+	-- },
 	{
 		provider = function(self)
 			local filename = self.filename
