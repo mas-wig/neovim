@@ -280,6 +280,6 @@ local session = {
 	},
 }
 
-local TabLine = { BufferLineOffset, session, BufferLine, require("setup.plugins.heirline.tabline").tabPages }
+local TabLine = { BufferLineOffset, session, BufferLine}
 
 return TabLine

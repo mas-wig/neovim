@@ -2,7 +2,7 @@ return {
 	{
 		"ray-x/go.nvim",
 		branch = "master",
-		ft = { "go" },
+		ft = { "go", "gomod" },
 		build = ":GoInstallBinaries",
 		dependencies = {
 			"ray-x/guihua.lua",

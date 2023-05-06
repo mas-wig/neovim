@@ -16,7 +16,6 @@ M.tabpage = {
 	update = { "TabNew", "TabClosed", "TabEnter", "TabLeave", "WinNew", "WinClosed" },
 }
 
-
 M.tabPages = {
 	condition = function()
 		return #vim.api.nvim_list_tabpages() >= 2
