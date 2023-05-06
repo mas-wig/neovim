@@ -1,3 +1,7 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+vim.g.markdown_recommended_style = 0
+
 if vim.version().minor >= 9 then
 	vim.opt.splitkeep = "screen"
 	vim.opt.shortmess:append({ C = true })
@@ -64,18 +68,6 @@ local opts = {
 	directory = vim.fn.stdpath("data") .. "/swaps",
 	undodir = vim.fn.stdpath("data") .. "/undos",
 }
-
-local global = {
-	db_ui_use_nerd_fonts = 1,
-	markdown_recommended_style = 0,
-	cmp_enabled = true,
-	mapleader = " ",
-	maplocalleader = " ",
-}
-
-for key, value in pairs(global) do
-	vim.g[key] = value
-end
 
 for key, value in pairs(opts) do
 	vim.opt[key] = value

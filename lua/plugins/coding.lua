@@ -19,6 +19,9 @@ return {
 		lazy = true,
 		dependencies = { "kristijanhusak/vim-dadbod-ui", lazy = true },
 		cmd = "DBUI",
+		config = function()
+			vim.g.db_ui_use_nerd_fonts = 1
+		end,
 	},
 	{
 		"echasnovski/mini.surround",
