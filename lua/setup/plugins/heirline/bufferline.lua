@@ -93,9 +93,9 @@ local TablinePicker = {
 		self.label = label
 	end,
 	provider = function(self)
-		return self.label .. ": "
+		return " " .. self.label .. " :"
 	end,
-	hl = { fg = "red", italic = true },
+	hl = { fg = "yellow2" },
 }
 
 local TablineBufnr = {
@@ -151,6 +151,13 @@ local TablineFileName = {
 			filename = filename == "" and " Untitled " or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
 			return filename
 		end,
+		hl = function(self)
+			if not self.is_active then
+				return { bold = false }
+			else
+				return { bold = true }
+			end
+		end,
 	},
 }
 
@@ -179,7 +186,7 @@ local TablineFileNameBlock = {
 		if not self.is_active then
 			return { fg = "cyan" }
 		else
-			return { fg = "pink", bg = "bg", italic = true }
+			return { fg = "pink", bg = "bg" }
 		end
 	end,
 	on_click = {
@@ -205,8 +212,8 @@ local TablineBufferBlock = utils.surround({ " ", " " }, function(self) end, { Ta
 
 local BufferLine = utils.make_buflist(
 	TablineBufferBlock,
-	{ provider = " ", hl = { fg = "gray" } },
-	{ provider = " ", hl = { fg = "gray" } }
+	{ provider = "  ", hl = { fg = "gray" } },
+	{ provider = "  ", hl = { fg = "gray" } }
 )
 
 local BufferLineOffset = {
