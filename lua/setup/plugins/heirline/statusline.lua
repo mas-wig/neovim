@@ -189,7 +189,7 @@ statusline.ruler = {
 }
 
 statusline.macroRecording = {
-	condition = function(self)
+	condition = function()
 		return vim.fn.reg_recording() ~= ""
 	end,
 	update = {
@@ -200,7 +200,7 @@ statusline.macroRecording = {
 		end),
 	},
 	{
-		provider = function(self)
+		provider = function()
 			return vim.fn.reg_recording()
 		end,
 		hl = { fg = "pink" },
@@ -245,6 +245,7 @@ statusline.overseer = {
 		end,
 		hl = { fg = "white", bold = true },
 	},
+
 	{
 		condition = function(self)
 			return #self.tasks.list_tasks() > 0
@@ -266,6 +267,7 @@ statusline.overseer = {
 			return { fg = self.color }
 		end,
 	},
+
 	{
 		condition = function(self)
 			return #self.tasks.list_tasks() > 0
@@ -287,6 +289,7 @@ statusline.overseer = {
 			return { fg = self.color }
 		end,
 	},
+
 	{
 		condition = function(self)
 			return #self.tasks.list_tasks() > 0
@@ -308,6 +311,7 @@ statusline.overseer = {
 			return { fg = self.color }
 		end,
 	},
+
 	{
 		condition = function(self)
 			return #self.tasks.list_tasks() > 0
