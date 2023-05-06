@@ -253,8 +253,11 @@ statusline.overseer = {
 			local success_count = 0
 			local success_tasks = self.tasks.list_tasks({ status = self.STATUS.SUCCESS })
 			if success_tasks then
-				-- success_count = #success_tasks
-				success_count = self.go_test["passed"]
+				if self.neotest then
+					success_count = self.go_test["passed"]
+				else
+					success_count = #success_tasks
+				end
 			end
 			self.color = self.colors["SUCCESS"]
 			return "SUCCESS " .. success_count .. " "
@@ -271,7 +274,11 @@ statusline.overseer = {
 			local failed_count = 0
 			local failed_tasks = self.tasks.list_tasks({ status = self.STATUS.FAILURE })
 			if failed_tasks then
-				failed_count = self.go_test["failed"]
+				if self.neotest then
+					failed_count = self.go_test["failed"]
+				else
+					failed_count = #failed_tasks
+				end
 			end
 			self.color = self.colors["FAILURE"]
 			return "FAILED " .. failed_count .. " "
@@ -288,7 +295,11 @@ statusline.overseer = {
 			local running_count = 0
 			local running_tasks = self.tasks.list_tasks({ status = self.STATUS.RUNNING })
 			if running_tasks then
-				running_count = self.go_test["running"]
+				if self.neotest then
+					running_count = self.go_test["running"]
+				else
+					running_count = #running_tasks
+				end
 			end
 			self.color = self.colors["RUNNING"]
 			return "RUNNING " .. running_count .. " "
