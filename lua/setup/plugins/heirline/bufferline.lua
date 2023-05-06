@@ -68,7 +68,6 @@ end
 
 local function format_filename(filename, char_limit)
 	filename = get_unique_filename(filename, false)
-	char_limit = char_limit or 19
 	local padd = 2
 	return string.rep(" ", padd) .. trim_filename(filename, char_limit) .. string.rep(" ", padd)
 end
@@ -129,7 +128,7 @@ local TablineBufnr = {
 local TablineFileName = {
 	provider = function(self)
 		local filename = self.filename
-		filename = filename == "" and " Untitled " or format_filename(vim.fn.fnamemodify(filename, ":t:r"), 15)
+		filename = filename == "" and " Untitled " or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
 		return filename
 	end,
 }
@@ -149,6 +148,21 @@ local TablineFileFlags = {
 		end,
 		hl = { fg = "blue" },
 	},
+}
+
+local FileIcon = {
+	init = function(self)
+		local filename = self.filename
+		local extension = vim.fn.fnamemodify(filename, ":e")
+		self.icon, self.icon_color =
+			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+	end,
+	provider = function(self)
+		return " " .. self.icon
+	end,
+	hl = function(self)
+		return { fg = self.icon_color }
+	end,
 }
 
 local TablineFileNameBlock = {
@@ -177,6 +191,7 @@ local TablineFileNameBlock = {
 	},
 	TablinePicker,
 	TablineFileFlags,
+	FileIcon,
 	TablineFileName,
 	TablineBufnr,
 }

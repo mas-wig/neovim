@@ -10,8 +10,7 @@ wb.fileLocation = {
 	},
 	{
 		provider = function()
-			local result = string.gsub(tostring(vim.fn.expand("%")), tostring(vim.fn.getcwd(0)), "")
-			return "  " .. string.gsub(result, "/", " / ")
+			return "  " .. string.gsub(vim.fn.expand("%:h"), "/", " / ")
 		end,
 		hl = { fg = "yellow3", bold = true },
 	},
