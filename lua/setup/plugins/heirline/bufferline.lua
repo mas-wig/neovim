@@ -126,11 +126,31 @@ local TablineBufnr = {
 }
 
 local TablineFileName = {
-	provider = function(self)
+	init = function(self)
 		local filename = self.filename
-		filename = filename == "" and " Untitled " or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
-		return filename
+		local extension = vim.fn.fnamemodify(filename, ":e")
+		self.icon, self.icon_color =
+			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
 	end,
+	{
+		provider = function(self)
+			if not self.is_active then
+				return ""
+			else
+				return self.icon
+			end
+		end,
+		hl = function(self)
+			return { fg = self.icon_color }
+		end,
+	},
+	{
+		provider = function(self)
+			local filename = self.filename
+			filename = filename == "" and " Untitled " or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
+			return filename
+		end,
+	},
 }
 
 local TablineFileFlags = {
@@ -148,21 +168,6 @@ local TablineFileFlags = {
 		end,
 		hl = { fg = "blue" },
 	},
-}
-
-local FileIcon = {
-	init = function(self)
-		local filename = self.filename
-		local extension = vim.fn.fnamemodify(filename, ":e")
-		self.icon, self.icon_color =
-			require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
-	end,
-	provider = function(self)
-		return " " .. self.icon
-	end,
-	hl = function(self)
-		return { fg = self.icon_color }
-	end,
 }
 
 local TablineFileNameBlock = {
@@ -191,7 +196,6 @@ local TablineFileNameBlock = {
 	},
 	TablinePicker,
 	TablineFileFlags,
-	FileIcon,
 	TablineFileName,
 	TablineBufnr,
 }
