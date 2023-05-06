@@ -68,8 +68,9 @@ end
 
 local function format_filename(filename, char_limit)
 	filename = get_unique_filename(filename, false)
-	local padd = 2
-	return string.rep(" ", padd) .. trim_filename(filename, char_limit) .. string.rep(" ", padd)
+	local padding_left = 1
+	local padding_right = 2
+	return string.rep(" ", padding_left) .. trim_filename(filename, char_limit) .. string.rep(" ", padding_right)
 end
 
 local TablinePicker = {
@@ -137,7 +138,7 @@ local TablineFileName = {
 			if not self.is_active then
 				return ""
 			else
-				return self.icon
+				return " " .. self.icon
 			end
 		end,
 		hl = function(self)
