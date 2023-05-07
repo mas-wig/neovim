@@ -43,11 +43,10 @@ return function()
 		},
 		sources = cmp.config.sources({
 			{ name = "luasnip", priority = 100, max_item_count = 4 },
-			{ name = "rg" },
+			{ name = "rg", priority = 95 },
 			{ name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 10 },
 			{ name = "path", priority = 20 },
 			{ name = "buffer", priority = 10, keyword_length = 3, max_item_count = 5 },
-			{ name = "fuzzy_buffer", priority = 30, keyword_length = 3, max_item_count = 3 },
 		}),
 		formatting = {
 			format = function(entry, vim_item)

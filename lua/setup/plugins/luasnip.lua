@@ -3,11 +3,6 @@ return function()
 		history = true,
 		delete_check_events = "TextChanged",
 		region_check_events = "CursorMoved",
-		ext_opts = {
-			[require("luasnip.util.types").choiceNode] = {
-				active = { hl_group = "DiagnosticHint", virt_text = { { "󰊖 ", "DiagnosticHint" } } },
-			},
-		},
 	})
 	require("luasnip.loaders.from_vscode").lazy_load({
 		paths = { "./after/snippets/" },

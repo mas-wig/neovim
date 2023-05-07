@@ -147,7 +147,7 @@ statusline.git = {
 				end
 				return string.upper(self.status_dict.head) .. " "
 			end,
-			hl = { fg = "orange" },
+			hl = { bold = true, fg = "orange" },
 		},
 		{
 			provider = function(self)
