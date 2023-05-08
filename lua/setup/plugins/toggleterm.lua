@@ -67,8 +67,8 @@ M.setup = function()
 		shell = vim.o.shell,
 		float_opts = {
 			border = "rounded",
-			width = 140,
-			height = 25,
+			width = 145,
+			height = 20,
 			winblend = 0,
 		},
 		winbar = {

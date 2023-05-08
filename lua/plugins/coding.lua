@@ -19,7 +19,7 @@ return {
 		lazy = true,
 		dependencies = { "kristijanhusak/vim-dadbod-ui", lazy = true },
 		cmd = "DBUI",
-		config = function()
+		init = function()
 			vim.g.db_ui_use_nerd_fonts = 1
 		end,
 	},
@@ -119,6 +119,7 @@ return {
 		dependencies = {
 			"theHamsta/nvim-dap-virtual-text",
 			"rcarriga/nvim-dap-ui",
+			"LiadOz/nvim-dap-repl-highlights",
 		},
 		init = function()
 			require("setup.plugins.nvim-dap").init()

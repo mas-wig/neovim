@@ -1,12 +1,14 @@
 return function()
 	require("luasnip").config.set_config({
-		history = true,
+		history = false,
 		delete_check_events = "TextChanged",
 		region_check_events = "CursorMoved",
 	})
+
 	require("luasnip.loaders.from_vscode").lazy_load({
 		paths = { "./after/snippets/" },
 	})
+
 	vim.api.nvim_create_autocmd("InsertLeave", {
 		callback = function()
 			if

@@ -90,6 +90,7 @@ return {
 				"yaml",
 				"json",
 				"jsonc",
+				"dap_repl",
 				"sql",
 				"html",
 				"query", -- treesitter query language
