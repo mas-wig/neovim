@@ -19,6 +19,7 @@ return {
 			{ "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
 			{ "windwp/nvim-ts-autotag", lazy = true, config = true },
 			{ "RRethy/nvim-treesitter-endwise", lazy = true },
+			{ "nvim-treesitter/nvim-treesitter-refactor", lazy = true },
 			{ "HiPhish/nvim-ts-rainbow2", lazy = true },
 			{
 				"windwp/nvim-autopairs",
@@ -90,7 +91,6 @@ return {
 				"yaml",
 				"json",
 				"jsonc",
-				"dap_repl",
 				"sql",
 				"html",
 				"query", -- treesitter query language
@@ -104,6 +104,22 @@ return {
 			endwise = { enable = true },
 			context_commentstring = { enable = true },
 			rainbow = { enable = true, query = "rainbow-parens" },
+			refactor = {
+				highlight_definitions = {
+					enable = true,
+					clear_on_cursor_move = true,
+				},
+				navigation = {
+					enable = true,
+					keymaps = {
+						goto_definition = "gnd",
+						list_definitions = "gnD",
+						list_definitions_toc = "gO",
+						goto_next_usage = "<a-*>",
+						goto_previous_usage = "<a-#>",
+					},
+				},
+			},
 			query_linter = { enable = true, use_virtual_text = true, lint_events = { "BufWrite", "CursorHold" } },
 		},
 		config = function(_, opts)

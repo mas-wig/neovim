@@ -119,7 +119,6 @@ return {
 		dependencies = {
 			"theHamsta/nvim-dap-virtual-text",
 			"rcarriga/nvim-dap-ui",
-			"LiadOz/nvim-dap-repl-highlights",
 		},
 		init = function()
 			require("setup.plugins.nvim-dap").init()

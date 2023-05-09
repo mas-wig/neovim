@@ -61,8 +61,11 @@ return function()
 				return vim_item
 			end,
 		},
-		experimental = { ghost_text = true },
-		filetype = { { "sql", "mysql", "txt", "sh" }, { window = { documentation = false } } },
+		experimental = { ghost_text = false },
+		filetype = {
+			{ "sql", "mysql", "txt", "sh" },
+			{ experimental = { ghost_text = false }, window = { documentation = false } },
+		},
 		mapping = {
 			["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 			["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),

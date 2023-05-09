@@ -7,6 +7,7 @@ return function()
 
 	require("luasnip.loaders.from_vscode").lazy_load({
 		paths = { "./after/snippets/" },
+		exclude = { "html", "css" },
 	})
 
 	vim.api.nvim_create_autocmd("InsertLeave", {
