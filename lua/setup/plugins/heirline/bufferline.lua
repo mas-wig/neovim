@@ -73,57 +73,58 @@ local function format_filename(filename, char_limit)
 	return string.rep(" ", padding_left) .. trim_filename(filename, char_limit) .. string.rep(" ", padding_right)
 end
 
-local TablinePicker = {
-	condition = function(self)
-		return self._show_picker
-	end,
-	init = function(self)
-		local bufname = vim.api.nvim_buf_get_name(self.bufnr)
-		bufname = vim.fn.fnamemodify(bufname, ":t")
-		local label = bufname:sub(1, 1)
-		local i = 2
-		while self._picker_labels[label] do
-			if i > #bufname then
-				break
-			end
-			label = bufname:sub(i, i)
-			i = i + 1
-		end
-		self._picker_labels[label] = self.bufnr
-		self.label = label
-	end,
-	provider = function(self)
-		return " " .. self.label .. " :"
-	end,
-	hl = { fg = "yellow2" },
-}
-
 local TablineBufnr = {
-	condition = function(self)
-		return not self._show_picker
-	end,
-	provider = function(self)
-		return " " .. tostring(self.bufnr) .. " "
-	end,
-	hl = function(self)
-		if not self.is_active then
-			return { fg = "purple" }
-		else
-			if vim.bo.modified then
-				return {
-					fg = "black",
-					bg = "green3",
-					bold = true,
-				}
+	{
+		condition = function(self)
+			return not self._show_picker
+		end,
+		provider = function(self)
+			return " " .. tostring(self.bufnr) .. " "
+		end,
+		hl = function(self)
+			if not self.is_active then
+				return { fg = "purple" }
 			else
-				return {
-					fg = "black",
-					bg = "purple",
-					bold = true,
-				}
+				if vim.bo.modified then
+					return {
+						fg = "black",
+						bg = "green3",
+						bold = true,
+					}
+				else
+					return {
+						fg = "black",
+						bg = "purple",
+						bold = true,
+					}
+				end
 			end
-		end
-	end,
+		end,
+	},
+	{
+		condition = function(self)
+			return self._show_picker
+		end,
+		init = function(self)
+			local bufname = vim.api.nvim_buf_get_name(self.bufnr)
+			bufname = vim.fn.fnamemodify(bufname, ":t")
+			local label = bufname:sub(1, 1)
+			local i = 2
+			while self._picker_labels[label] do
+				if i > #bufname then
+					break
+				end
+				label = bufname:sub(i, i)
+				i = i + 1
+			end
+			self._picker_labels[label] = self.bufnr
+			self.label = label
+		end,
+		provider = function(self)
+			return " " .. self.label .. " "
+		end,
+		hl = { fg = "black", bg = "yellow2", bold = true },
+	},
 }
 
 local TablineFileName = {
@@ -202,7 +203,6 @@ local TablineFileNameBlock = {
 		end,
 		name = "heirline_tabline_buffer_callback",
 	},
-	TablinePicker,
 	TablineFileFlags,
 	TablineFileName,
 	TablineBufnr,
@@ -280,6 +280,6 @@ local session = {
 	},
 }
 
-local TabLine = { BufferLineOffset, session, BufferLine}
+local TabLine = { BufferLineOffset, session, BufferLine }
 
 return TabLine

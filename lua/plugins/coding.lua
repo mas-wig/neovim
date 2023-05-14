@@ -1,7 +1,7 @@
 return {
 	{
 		"echasnovski/mini.comment",
-		event = "VeryLazy",
+		event = "BufRead",
 		opts = {
 			hooks = {
 				pre = function()

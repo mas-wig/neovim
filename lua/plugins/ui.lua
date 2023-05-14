@@ -70,8 +70,7 @@ return {
 		"lukas-reineke/indent-blankline.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {
-			-- char = "▏",
-			char = "│",
+			char = "▏",
 			filetype_exclude = {
 				"toggleterm",
 				"alpha",
@@ -97,9 +96,8 @@ return {
 		version = false, -- wait till new 0.7.0 release to put it back on semver
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
-			-- symbol = "▏",
-			symbol = "│",
-			options = { try_as_border = true },
+			symbol = "▏",
+			options = { try_as_border = true, border = "both", indent_at_cursor = true },
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("FileType", {

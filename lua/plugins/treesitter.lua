@@ -97,7 +97,12 @@ return {
 				"http", -- http requests as format, used for rest.nvim
 			},
 			sync_install = false,
-			highlight = { enable = true },
+			highlight = {
+				enable = true,
+				disable = function(_, bufnr)
+					return vim.api.nvim_buf_line_count(bufnr) > 7000
+				end,
+			},
 			textsubjects = { enable = true, keymaps = { [","] = "textsubjects-smart" } },
 			indent = { enable = true },
 			autotag = { enable = true, filetypes = { "html", "jsx", "tsx", "xml" } },

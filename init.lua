@@ -1,6 +1,5 @@
-if vim.version().minor >= 9 then
-	vim.loader.enable()
-end
+vim.loader.enable()
+
 local function safeRequire(module)
 	local success, req = pcall(require, module)
 	if success then
