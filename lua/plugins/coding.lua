@@ -100,6 +100,7 @@ return {
 		"stevearc/overseer.nvim",
 		lazy = true,
 		opts = {
+			templates = { "builtin", "go.go-run" },
 			component_aliases = {
 				default_neotest = {
 					"on_output_summarize",

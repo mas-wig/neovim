@@ -19,5 +19,4 @@ end
 vim.opt_local.foldmethod = "expr"
 vim.opt_local.foldexpr = "v:lua.YamlFolds()"
 
-
 vim.opt_local.spell = false

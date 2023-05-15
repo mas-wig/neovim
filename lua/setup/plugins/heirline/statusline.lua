@@ -210,8 +210,8 @@ statusline.macroRecording = {
 statusline.overseer = {
 	condition = function()
 		local ok, _ = pcall(require, "overseer")
-		if not ok then
-			return false
+		if ok then
+			return true
 		end
 	end,
 	init = function(self)
@@ -252,9 +252,9 @@ statusline.overseer = {
 		end,
 		provider = function(self)
 			local success_count = 0
-			local success_tasks = self.tasks.list_tasks({ status = self.STATUS.SUCCESS })
+			local success_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.SUCCESS })
 			if success_tasks then
-				if self.neotest then
+				if self.go_test then
 					success_count = self.go_test["passed"]
 				else
 					success_count = #success_tasks
@@ -274,9 +274,9 @@ statusline.overseer = {
 		end,
 		provider = function(self)
 			local failed_count = 0
-			local failed_tasks = self.tasks.list_tasks({ status = self.STATUS.FAILURE })
+			local failed_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.FAILURE })
 			if failed_tasks then
-				if self.neotest then
+				if self.go_test then
 					failed_count = self.go_test["failed"]
 				else
 					failed_count = #failed_tasks
@@ -296,9 +296,9 @@ statusline.overseer = {
 		end,
 		provider = function(self)
 			local running_count = 0
-			local running_tasks = self.tasks.list_tasks({ status = self.STATUS.RUNNING })
+			local running_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.RUNNING })
 			if running_tasks then
-				if self.neotest then
+				if self.go_test then
 					running_count = self.go_test["running"]
 				else
 					running_count = #running_tasks
@@ -318,9 +318,9 @@ statusline.overseer = {
 		end,
 		provider = function(self)
 			local running_count = 0
-			local running_tasks = self.tasks.list_tasks({ status = self.STATUS.CANCELED })
+			local cenceled_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.CANCELED })
 			if running_tasks then
-				running_count = #running_tasks
+				running_count = #cenceled_tasks
 			end
 			self.color = self.colors["CANCELED"]
 			return "CANCELED " .. running_count
