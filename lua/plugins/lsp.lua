@@ -10,7 +10,6 @@ return {
 		},
 		config = function(_, opts)
 			require("setup.plugins.lspconfig").setup()
-			require("setup.plugins.lspconfig.keymaps")
 			require("setup.plugins.lspconfig").diagnostics()
 
 			local servers = require("setup.plugins.lspconfig.server")

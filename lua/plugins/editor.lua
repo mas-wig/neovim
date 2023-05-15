@@ -145,4 +145,28 @@ return {
 			},
 		},
 	},
+	{
+		"AckslD/muren.nvim",
+		keys = {
+			{
+				"<leader>sl",
+				"<cmd>MurenToggle<cr>",
+				desc = "Replace local buffer (Muren)",
+			},
+		},
+		opts = {
+			patterns_width = 50,
+			patterns_height = 10,
+			options_width = 30,
+			preview_height = 10,
+			order = {
+				"buffer",
+				-- "dir",
+				"files",
+				"two_step",
+				"all_on_line",
+				"preview",
+			},
+		},
+	},
 }

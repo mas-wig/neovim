@@ -80,6 +80,7 @@ return {
 							filetype = {
 								"nofile",
 								"terminal",
+								"term",
 								"quickfix",
 							},
 						})
@@ -167,10 +168,5 @@ return {
 				end,
 			},
 		})
-
-		vim.api.nvim_create_user_command("HeirlineResetStatusline", function()
-			vim.o.statusline = "%{%v:lua.require'heirline'.eval_statusline()%}"
-		end, {})
-		vim.opt_local.winbar = "%{%v:lua.require'heirline'.eval_winbar()%}"
 	end,
 }

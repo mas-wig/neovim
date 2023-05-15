@@ -32,6 +32,7 @@
   "mini.comment": { "branch": "main", "commit": "6fbcd1294fa516dafc97e25e2f316de851f680d3" },
   "mini.indentscope": { "branch": "main", "commit": "f60e9b51a6214c73a170ffc5445ce91560981031" },
   "mini.surround": { "branch": "main", "commit": "ea2e9c4cdbddc826dc6eeac69b035f8220f65de5" },
+  "muren.nvim": { "branch": "main", "commit": "c1b8324c81630ee73c5c045e328e71a8627b060f" },
   "navigator.lua": { "branch": "master", "commit": "b9931d5c01c323a8c5dd619a6bb9aebb3aa88b56" },
   "neo-tree.nvim": { "branch": "v2.x", "commit": "541f5c92d2492041afb354e2df6e74809094b051" },
   "neotest": { "branch": "master", "commit": "42cf226457c61abe6fca081e959d69e2325cf08f" },

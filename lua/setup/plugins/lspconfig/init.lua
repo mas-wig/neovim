@@ -18,6 +18,8 @@ M.diagnostics = function()
 end
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
+
+        require("setup.plugins.lspconfig.keymaps").on_attach(client,bufnr)
 		if client.name == "gopls" then
 			client.server_capabilities.document_formatting = false
 			client.server_capabilities.documentFormattingProvider = false
