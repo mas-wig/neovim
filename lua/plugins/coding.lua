@@ -58,28 +58,28 @@ return {
 		end,
 	},
 
-	{
-		"VidocqH/lsp-lens.nvim",
-		event = "LspAttach",
-		config = function()
-			require("lsp-lens").setup({
-				enable = true,
-				include_declaration = true, -- Reference include declaration
-				sections = { -- Enable / Disable specific request
-					definition = true,
-					references = true,
-					implementation = true,
-				},
-				ignore_filetype = {
-					"prisma",
-					"html",
-					"css",
-					"sql",
-					"md",
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"VidocqH/lsp-lens.nvim",
+	-- 	event = "LspAttach",
+	-- 	config = function()
+	-- 		require("lsp-lens").setup({
+	-- 			enable = true,
+	-- 			include_declaration = true, -- Reference include declaration
+	-- 			sections = { -- Enable / Disable specific request
+	-- 				definition = true,
+	-- 				references = true,
+	-- 				implementation = true,
+	-- 			},
+	-- 			ignore_filetype = {
+	-- 				"prisma",
+	-- 				"html",
+	-- 				"css",
+	-- 				"sql",
+	-- 				"md",
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	{
 		"nvim-neotest/neotest",

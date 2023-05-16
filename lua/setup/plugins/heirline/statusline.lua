@@ -252,7 +252,8 @@ statusline.overseer = {
 		end,
 		provider = function(self)
 			local success_count = 0
-			local success_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.SUCCESS })
+			local success_tasks =
+				self.tasks.list_tasks({ recent_first = true, unique = true, status = self.STATUS.SUCCESS })
 			if success_tasks then
 				if self.go_test then
 					success_count = self.go_test["passed"]
