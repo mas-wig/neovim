@@ -1,5 +1,5 @@
 return require("navigator").setup({
-	border = "rounded",
+	border = "single",
 	ts_fold = false,
 	default_mapping = false,
 	transparency = 100,

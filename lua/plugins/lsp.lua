@@ -11,7 +11,6 @@ return {
 		config = function(_, opts)
 			require("setup.plugins.lspconfig").setup()
 			require("setup.plugins.lspconfig").diagnostics()
-
 			local servers = require("setup.plugins.lspconfig.server")
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -32,7 +31,7 @@ return {
 			local have_mason, mlsp = pcall(require, "mason-lspconfig")
 			local available = have_mason and mlsp.get_available_servers() or {}
 			local ensure_installed = {}
-			for server, server_opts in pairs(require("setup.plugins.lspconfig.server")) do
+			for server, server_opts in pairs(servers) do
 				if server_opts then
 					server_opts = server_opts == true and {} or server_opts
 					if server_opts.mason == false or not vim.tbl_contains(available, server) then
@@ -53,6 +52,7 @@ return {
 		"williamboman/mason.nvim",
 		cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonInstallAll" },
 		lazy = true,
+		build = ":MasonUpdate",
 		config = function()
 			require("setup.plugins.mason")()
 		end,
@@ -60,6 +60,15 @@ return {
 
 	{
 		"jose-elias-alvarez/null-ls.nvim",
+		dependencies = {
+			{
+				"jay-babu/mason-null-ls.nvim",
+				opts = {
+					ensure_installed = { "prettierd", "autopep8", "clang_format", "staticcheck", "refactoring" },
+					automatic_installation = true,
+				},
+			},
+		},
 		event = "LspAttach",
 		config = function()
 			require("setup.plugins.null-ls")()

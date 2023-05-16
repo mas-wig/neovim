@@ -1,7 +1,6 @@
 return function()
-	local ensure_installed = { "stylua", "prettier" }
 	require("mason").setup({
-		ensure_installed = ensure_installed,
+		PATH = "prepend",
 		ui = {
 			icons = {
 				package_pending = " ",
