@@ -207,140 +207,140 @@ statusline.macroRecording = {
 	},
 }
 
-statusline.overseer = {
-	condition = function()
-		local ok, _ = pcall(require, "overseer")
-		if ok then
-			return true
-		end
-	end,
-	init = function(self)
-		self.overseer = require("overseer")
-		self.neotest = require("neotest")
-		self.go_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
-		self.tasks = self.overseer.task_list
-		self.STATUS = self.overseer.constants.STATUS
-	end,
-	static = {
-		symbols = {
-			["FAILURE"] = "FAILED",
-			["CANCELED"] = "CANCELED",
-			["SUCCESS"] = "PASSED",
-			["RUNNING"] = "RUNNING",
-		},
-		colors = {
-			["FAILURE"] = "red",
-			["CANCELED"] = "gray",
-			["SUCCESS"] = "green",
-			["RUNNING"] = "yellow",
-		},
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function()
-			return "[ "
-		end,
-		hl = { fg = "white", bold = true },
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function(self)
-			local success_count = 0
-			local success_tasks =
-				self.tasks.list_tasks({ recent_first = true, unique = true, status = self.STATUS.SUCCESS })
-			if success_tasks then
-				if self.go_test then
-					success_count = self.go_test["passed"]
-				else
-					success_count = #success_tasks
-				end
-			end
-			self.color = self.colors["SUCCESS"]
-			return "SUCCESS " .. success_count .. " "
-		end,
-		hl = function(self)
-			return { fg = self.color }
-		end,
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function(self)
-			local failed_count = 0
-			local failed_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.FAILURE })
-			if failed_tasks then
-				if self.go_test then
-					failed_count = self.go_test["failed"]
-				else
-					failed_count = #failed_tasks
-				end
-			end
-			self.color = self.colors["FAILURE"]
-			return "FAILED " .. failed_count .. " "
-		end,
-		hl = function(self)
-			return { fg = self.color }
-		end,
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function(self)
-			local running_count = 0
-			local running_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.RUNNING })
-			if running_tasks then
-				if self.go_test then
-					running_count = self.go_test["running"]
-				else
-					running_count = #running_tasks
-				end
-			end
-			self.color = self.colors["RUNNING"]
-			return "RUNNING " .. running_count .. " "
-		end,
-		hl = function(self)
-			return { fg = self.color }
-		end,
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function(self)
-			local running_count = 0
-			local cenceled_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.CANCELED })
-			if running_tasks then
-				running_count = #cenceled_tasks
-			end
-			self.color = self.colors["CANCELED"]
-			return "CANCELED " .. running_count
-		end,
-		hl = function(self)
-			return { fg = self.color }
-		end,
-	},
-
-	{
-		condition = function(self)
-			return #self.tasks.list_tasks() > 0
-		end,
-		provider = function()
-			return " ]"
-		end,
-		hl = { fg = "white", bold = true },
-	},
-}
+-- statusline.overseer = {
+-- 	condition = function()
+-- 		local ok, _ = pcall(require, "overseer")
+-- 		if ok then
+-- 			return true
+-- 		end
+-- 	end,
+-- 	init = function(self)
+-- 		self.overseer = require("overseer")
+-- 		self.neotest = require("neotest")
+-- 		self.go_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
+-- 		self.tasks = self.overseer.task_list
+-- 		self.STATUS = self.overseer.constants.STATUS
+-- 	end,
+-- 	static = {
+-- 		symbols = {
+-- 			["FAILURE"] = "FAILED",
+-- 			["CANCELED"] = "CANCELED",
+-- 			["SUCCESS"] = "PASSED",
+-- 			["RUNNING"] = "RUNNING",
+-- 		},
+-- 		colors = {
+-- 			["FAILURE"] = "red",
+-- 			["CANCELED"] = "gray",
+-- 			["SUCCESS"] = "green",
+-- 			["RUNNING"] = "yellow",
+-- 		},
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function()
+-- 			return "[ "
+-- 		end,
+-- 		hl = { fg = "white", bold = true },
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function(self)
+-- 			local success_count = 0
+-- 			local success_tasks =
+-- 				self.tasks.list_tasks({ recent_first = true, unique = true, status = self.STATUS.SUCCESS })
+-- 			if success_tasks then
+-- 				if self.go_test then
+-- 					success_count = self.go_test["passed"]
+-- 				else
+-- 					success_count = #success_tasks
+-- 				end
+-- 			end
+-- 			self.color = self.colors["SUCCESS"]
+-- 			return "SUCCESS " .. success_count .. " "
+-- 		end,
+-- 		hl = function(self)
+-- 			return { fg = self.color }
+-- 		end,
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function(self)
+-- 			local failed_count = 0
+-- 			local failed_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.FAILURE })
+-- 			if failed_tasks then
+-- 				if self.go_test then
+-- 					failed_count = self.go_test["failed"]
+-- 				else
+-- 					failed_count = #failed_tasks
+-- 				end
+-- 			end
+-- 			self.color = self.colors["FAILURE"]
+-- 			return "FAILED " .. failed_count .. " "
+-- 		end,
+-- 		hl = function(self)
+-- 			return { fg = self.color }
+-- 		end,
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function(self)
+-- 			local running_count = 0
+-- 			local running_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.RUNNING })
+-- 			if running_tasks then
+-- 				if self.go_test then
+-- 					running_count = self.go_test["running"]
+-- 				else
+-- 					running_count = #running_tasks
+-- 				end
+-- 			end
+-- 			self.color = self.colors["RUNNING"]
+-- 			return "RUNNING " .. running_count .. " "
+-- 		end,
+-- 		hl = function(self)
+-- 			return { fg = self.color }
+-- 		end,
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function(self)
+-- 			local running_count = 0
+-- 			local cenceled_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.CANCELED })
+-- 			if running_tasks then
+-- 				running_count = #cenceled_tasks
+-- 			end
+-- 			self.color = self.colors["CANCELED"]
+-- 			return "CANCELED " .. running_count
+-- 		end,
+-- 		hl = function(self)
+-- 			return { fg = self.color }
+-- 		end,
+-- 	},
+--
+-- 	{
+-- 		condition = function(self)
+-- 			return #self.tasks.list_tasks() > 0
+-- 		end,
+-- 		provider = function()
+-- 			return " ]"
+-- 		end,
+-- 		hl = { fg = "white", bold = true },
+-- 	},
+-- }
 
 statusline.lspstatus = {
 	condition = require("heirline.conditions").lsp_attached,

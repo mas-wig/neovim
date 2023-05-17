@@ -105,7 +105,7 @@ return {
 					spacer,
 					statusline.macroRecording,
 					spacer,
-					statusline.overseer,
+					-- statusline.overseer,
 					{ provider = "%=" },
 					statusline.lazy,
 					spacer,
