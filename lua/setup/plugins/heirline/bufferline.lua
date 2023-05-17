@@ -247,6 +247,39 @@ local BufferLineOffset = {
 	end,
 }
 
-local TabLine = { BufferLineOffset, BufferLine }
+local session = {
+	update = { "User", pattern = "PersistedStateChange" },
+	{
+		condition = function(self)
+			return not require("heirline.conditions").buffer_matches({
+				filetype = self.filetypes,
+			})
+		end,
+		{
+			provider = function()
+				if require("resession").is_loading() then
+					return "  "
+				else
+					return "  "
+				end
+			end,
+			hl = function()
+				if vim.g.persisting then
+					return { fg = "green2", bg = "bg" }
+				else
+					return { fg = "red", bg = "bg" }
+				end
+			end,
+			on_click = {
+				callback = function()
+					vim.cmd("SessionToggle")
+				end,
+				name = "toggle_session",
+			},
+		},
+	},
+}
+
+local TabLine = { BufferLineOffset, session, BufferLine }
 
 return TabLine

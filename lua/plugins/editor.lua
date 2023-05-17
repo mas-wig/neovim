@@ -13,10 +13,25 @@ return {
 					require("neo-tree")
 				end
 			end
-			require("setup.plugins.neotree").init()
 		end,
+		keys = {
+			{
+				"<C-n>",
+				function()
+					require("neo-tree.command").execute({ toggle = true })
+				end,
+				description = "Explorer NeoTree (root dir)",
+			},
+			{
+				"<leader>E",
+				function()
+					require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+				end,
+				description = "Explorer NeoTree (cwd)",
+			},
+		},
 		config = function()
-			require("setup.plugins.neotree").setup()
+			require("setup.plugins.neotree")
 		end,
 	},
 

@@ -58,14 +58,55 @@ return {
 				return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 			end
 			return {
+				autosave = {
+					enabled = true,
+					interval = 60,
+					notify = false,
+				},
 				buf_filter = function(bufnr)
 					return is_valid(bufnr)
 				end,
 				tab_buf_filter = function(tabpage, bufnr)
 					return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
 				end,
-				extensions = { bodrex = {} },
+				extensions = { bodrex = { enable_in_tab = true } },
 			}
+		end,
+		init = function()
+			require("legendary").commands({
+				itemgroup = "Resession",
+				desc = "Remember me daddy......",
+				commands = {
+					{
+						":ResessionList",
+						function()
+							require("resession").list()
+						end,
+						desc = "List Session",
+					},
+					{
+						":ResessionDelete",
+						function()
+							require("resession").delete()
+						end,
+						desc = "Delete Session",
+					},
+					{
+						":ResessionLoad",
+						function()
+							require("resession").load()
+						end,
+						desc = "Load Session",
+					},
+					{
+						":ResessionSave",
+						function()
+							require("resession").save()
+						end,
+						desc = "Save Session",
+					},
+				},
+			})
 		end,
 	},
 }

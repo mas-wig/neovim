@@ -177,7 +177,7 @@ return {
 			function(event)
 				local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
 				if not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype) then
-					local save = require("resession").save
+					local save = require("resession").save_all
 					save("Last Session")
 					save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
 				end
