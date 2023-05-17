@@ -38,10 +38,8 @@ return {
 
 	{
 		"kevinhwang91/nvim-ufo",
-		event = { "BufReadPre", "BufReadPost", "BufNewFile" },
-		dependencies = {
-			{ "kevinhwang91/promise-async", lazy = true },
-		},
+		event = "VeryLazy",
+		dependencies = { "kevinhwang91/promise-async" },
 		config = function()
 			require("setup.plugins.nvim-ufo")
 		end,

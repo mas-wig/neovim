@@ -14,19 +14,6 @@ return {
 	-- },
 
 	{
-		name = "PersistedHooks",
-		{
-			"User",
-			function(session)
-				require("persisted").save()
-				vim.api.nvim_input("<ESC>:%bd!<CR>")
-				require("persisted").stop()
-			end,
-			opts = { pattern = "PersistedTelescopeLoadPre" },
-		},
-	},
-
-	{
 		name = "ReturnToLastEditingPosition",
 		{
 			"BufReadPost",
@@ -115,52 +102,36 @@ return {
 		},
 	},
 	-- Code Folding and cursor
+
 	{
-		name = "CodeFolding",
+		name = "auto_views",
+		clear = true,
 		{
-			"BufWinLeave",
-			function()
-				local ignoredFts = {
-					"TelescopePrompt",
-					"DressingSelect",
-					"DressingInput",
-					"toggleterm",
-					"gitcommit",
-					"replacer",
-					"harpoon",
-					"help",
-					"qf",
-				}
-				if vim.tbl_contains(ignoredFts, vim.bo.filetype) or vim.bo.buftype ~= "" or not vim.bo.modifiable then
-					return
+			{ "BufWinLeave", "BufWritePost", "WinLeave" },
+			function(event)
+				if vim.b[event.buf].view_activated then
+					vim.cmd.mkview({ mods = { emsg_silent = true } })
 				end
-				return vim.cmd.mkview(1)
 			end,
-			opts = { pattern = "?*" },
 		},
 		{
-			"BufWinEnter",
-			function()
-				local ignoredFts = {
-					"TelescopePrompt",
-					"DressingSelect",
-					"DressingInput",
-					"toggleterm",
-					"gitcommit",
-					"replacer",
-					"harpoon",
-					"help",
-					"qf",
-				}
-				if vim.tbl_contains(ignoredFts, vim.bo.filetype) or vim.bo.buftype ~= "" or not vim.bo.modifiable then
-					return
+			{ "BufWinEnter" },
+			function(event)
+				if not vim.b[event.buf].view_activated then
+					local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+					local buftype = vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+					local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+					if
+						buftype == ""
+						and filetype
+						and filetype ~= ""
+						and not vim.tbl_contains(ignore_filetypes, filetype)
+					then
+						vim.b[event.buf].view_activated = true
+						vim.cmd.loadview({ mods = { emsg_silent = true } })
+					end
 				end
-
-				pcall(function()
-					vim.cmd.loadview(1)
-				end)
 			end,
-			opts = { pattern = "?*" },
 		},
 	},
 
@@ -180,6 +151,7 @@ return {
 	-- Save File
 	{
 		name = "SaveFile",
+		clear = true,
 		{
 			{ "BufWinLeave", "BufLeave", "QuitPre", "FocusLost", "InsertLeave" },
 			opts = { pattern = "?*" },
@@ -193,6 +165,72 @@ return {
 					and vim.bo.filetype ~= "gitcommit"
 				then
 					vim.cmd.update(filepath)
+				end
+			end,
+		},
+	},
+	{
+		name = "SaveSession",
+		clear = true,
+		{
+			{ "VimLeavePre" },
+			function(event)
+				local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+				if not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype) then
+					local save = require("resession").save
+					save("Last Session")
+					save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
+				end
+			end,
+		},
+	},
+
+	{
+		name = "AlphaSetup",
+		clear = true,
+		desc = "Disable status and tablines for alpha",
+		{
+			{ "User", "BufEnter" },
+			function(event)
+				if
+					(
+						(event.event == "User" and event.file == "AlphaReady")
+						or (
+							event.event == "BufEnter"
+							and vim.api.nvim_get_option_value("filetype", { buf = event.buf }) == "alpha"
+						)
+					) and not vim.g.before_alpha
+				then
+					vim.g.before_alpha =
+						{ showtabline = vim.opt.showtabline:get(), laststatus = vim.opt.laststatus:get() }
+					vim.opt.showtabline, vim.opt.laststatus = 0, 0
+				elseif
+					vim.g.before_alpha
+					and event.event == "BufEnter"
+					and vim.api.nvim_get_option_value("buftype", { buf = event.buf }) ~= "nofile"
+				then
+					vim.opt.laststatus, vim.opt.showtabline =
+						vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
+					vim.g.before_alpha = nil
+				end
+			end,
+		},
+		{
+			{ "VimEnter" },
+			function()
+				local should_skip = false
+				if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
+					should_skip = true
+				else
+					for _, arg in pairs(vim.v.argv) do
+						if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
+							should_skip = true
+							break
+						end
+					end
+				end
+				if not should_skip then
+					require("alpha").start(true, require("alpha").default_config)
 				end
 			end,
 		},

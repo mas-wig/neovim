@@ -48,22 +48,24 @@ return {
 	},
 
 	{
-		"olimorris/persisted.nvim", -- Session management
+		"stevearc/resession.nvim",
 		priority = 100,
-		opts = {
-			save_dir = Sessiondir .. "/",
-			use_git_branch = true,
-			silent = true,
-			-- autoload = true,
-			should_autosave = function()
-				if vim.bo.filetype == "alpha" or vim.bo.filetype == "oil" or vim.bo.filetype == "lazy" then
+		opts = function()
+			local function is_valid(bufnr)
+				if not bufnr or bufnr < 1 then
 					return false
 				end
-				return true
-			end,
-		},
-		init = function()
-			require("setup.plugins.persisted")()
+				return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
+			end
+			return {
+				buf_filter = function(bufnr)
+					return is_valid(bufnr)
+				end,
+				tab_buf_filter = function(tabpage, bufnr)
+					return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
+				end,
+				extensions = { bodrex = {} },
+			}
 		end,
 	},
 }

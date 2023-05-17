@@ -28,6 +28,7 @@ return require("ufo").setup({
 					end)
 			end
 	end,
+
 	fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
 		local newVirtText = {}
 		local suffix = ("  📌 %d Line Folded"):format(endLnum - lnum)
