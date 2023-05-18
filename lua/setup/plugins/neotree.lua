@@ -9,6 +9,23 @@ return require("neo-tree").setup({
 			hide_dotfiles = true,
 			hide_gitignored = true,
 			hide_hidden = true,
+			hide_by_name = {
+				".DS_Store",
+				"thumbs.db",
+				"node_modules",
+				"tmp",
+			},
+			hide_by_pattern = {
+				"*.meta",
+			},
+			always_show = {
+				".gitignored",
+				".env",
+			},
+			never_show = {
+				".DS_Store",
+				"thumbs.db",
+			},
 		},
 	},
 	event_handlers = {
@@ -57,23 +74,6 @@ return require("neo-tree").setup({
 		},
 		git_status = {
 			symbols = require("setup.ui.icons").git,
-		},
-	},
-	filtered_items = {
-		hide_by_name = {
-			".DS_Store",
-			"thumbs.db",
-			"node_modules",
-		},
-		hide_by_pattern = {
-			"*.meta",
-		},
-		always_show = {
-			".gitignored",
-		},
-		never_show = {
-			".DS_Store",
-			"thumbs.db",
 		},
 	},
 })

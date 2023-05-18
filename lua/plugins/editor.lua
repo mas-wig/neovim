@@ -20,14 +20,14 @@ return {
 				function()
 					require("neo-tree.command").execute({ toggle = true })
 				end,
-				description = "Explorer NeoTree (root dir)",
+				desc= "Explorer NeoTree (root dir)",
 			},
 			{
 				"<leader>E",
 				function()
 					require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
 				end,
-				description = "Explorer NeoTree (cwd)",
+				desc = "Explorer NeoTree (cwd)",
 			},
 		},
 		config = function()
