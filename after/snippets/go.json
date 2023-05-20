@@ -268,5 +268,419 @@
 		"prefix": "sort",
 		"body": "type ${1:SortBy} []${2:Type}\n\nfunc (a $1) Len() int           { return len(a) }\nfunc (a $1) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }\nfunc (a $1) Less(i, j int) bool { ${3:return a[i] < a[j]} }",
 		"description": "Snippet for a custom sort.Sort interface implementation, for a given slice type."
+	},
+	"gh": {
+		"prefix": "gh",
+		"body": ["func ${1:Handler} (c *gin.Context) {", "\t$0", "}"],
+		"description": "Gin handler"
+	},
+	"gg": {
+		"prefix": "gg",
+		"body": ["router.GET(\"${1:path}\", ${2:handler})"],
+		"description": "Gin GET route"
+	},
+	"gp": {
+		"prefix": "gp",
+		"body": ["router.POST(\"${1:path}\", ${2:handler})"],
+		"description": "Gin POST route"
+	},
+	"gmw": {
+		"prefix": "gmw",
+		"body": ["func ${1:Middleware} (c *gin.Context) {", "\t$0", "}"],
+		"description": "Gin middleware"
+	},
+	"gj": {
+		"prefix": "gj",
+		"body": [
+			"c.JSON(${1:status}, gin.H{",
+			"\t\"message\": \"${2:message}\",",
+			"\t\"data\": ${3:data}",
+			"})"
+		],
+		"description": "Gin JSON response"
+	},
+	"gja": {
+		"prefix": "gja",
+		"body": [
+			"c.JSON(${1:status}, gin.H{",
+			"\t\"message\": \"${2:message}\",",
+			"\t\"data\": ${3:data},",
+			"\t\"additional\": ${4:additionalData}",
+			"})"
+		],
+		"description": "Gin JSON response with additional data"
+	},
+	"gjerr": {
+		"prefix": "gjerr",
+		"body": [
+			"c.JSON(${1:status}, gin.H{",
+			"\t\"error\": \"${2:error}\",",
+			"\t\"message\": \"${3:message}\"",
+			"})"
+		],
+		"description": "Gin JSON error response"
+	},
+	"gu": {
+		"prefix": "gu",
+		"body": [
+			"var ${1:inputStruct} ${2:InputStruct}",
+			"if err := c.ShouldBindJSON(&${1:inputStruct}); err != nil {",
+			"\tc.JSON(http.StatusBadRequest, gin.H{",
+			"\t\t\"error\": \"Bad Request\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin unmarshal JSON input"
+	},
+	"gv": {
+		"prefix": "gv",
+		"body": [
+			"var ${1:value} ${2:type}",
+			"if err := c.ShouldBindQuery(&${1:value}); err != nil {",
+			"\tc.JSON(http.StatusBadRequest, gin.H{",
+			"\t\t\"error\": \"Bad Request\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin get query value"
+	},
+	"gup": {
+		"prefix": "gup",
+		"body": [
+			"var ${1:inputStruct} ${2:InputStruct}",
+			"if err := c.ShouldBindUri(&${1:inputStruct}); err != nil {",
+			"\tc.JSON(http.StatusBadRequest, gin.H{",
+			"\t\t\"error\": \"Bad Request\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin unmarshal URI parameter"
+	},
+	"gfile": {
+		"prefix": "gfile",
+		"body": [
+			"file, err := c.FormFile(\"${1:file}\")",
+			"if err != nil {",
+			"\tc.JSON(http.StatusBadRequest, gin.H{",
+			"\t\t\"error\": \"Bad Request\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin handle uploaded file"
+	},
+	"gdir": {
+		"prefix": "gdir",
+		"body": [
+			"dir, err := os.Open(\"${1:path}\")",
+			"if err != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin open directory"
+	},
+	"gstatic": {
+		"prefix": "gstatic",
+		"body": ["router.Static(\"/${1:route}\", \"${2:directory}\")"],
+		"description": "Gin serve static files"
+	},
+	"gred": {
+		"prefix": "gred",
+		"body": [
+			"redisClient := redis.NewClient(&redis.Options{",
+			"\tAddr:     \"${1:localhost}:${2:6379}\",",
+			"\tPassword: \"${3:password}\",",
+			"\tDB:       ${4:0},",
+			"})"
+		],
+		"description": "Gin Redis client initialization"
+	},
+	"gpush": {
+		"prefix": "gpush",
+		"body": [
+			"err := redisClient.Publish(\"${1:channel}\", \"${2:message}\").Err()",
+			"if err != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": err.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin Redis publish message"
+	},
+	"gsubscribe": {
+		"prefix": "gsubscribe",
+		"body": [
+			"pubsub := redisClient.Subscribe(\"${1:channel}\")",
+			"defer pubsub.Close()",
+			"for msg := range pubsub.Channel() {",
+			"\tmessage := msg.Payload",
+			"\tc.JSON(http.StatusOK, gin.H{",
+			"\t\t\"message\": message",
+			"\t})",
+			"}"
+		],
+		"description": "Gin Redis subscribe to channel"
+	},
+	"gdb": {
+		"prefix": "gdb",
+		"body": [
+			"db, err := gorm.Open(\"${1:database}\", \"${2:connectionString}\")",
+			"if err != nil {",
+			"\tpanic(\"Failed to connect to database\")",
+			"}",
+			"defer db.Close()",
+			"$0"
+		],
+		"description": "Gin GORM database connection"
+	},
+	"gmodel": {
+		"prefix": "gmodel",
+		"body": [
+			"type ${1:Model} struct {",
+			"\tID        uint       `gorm:\"primaryKey\" json:\"id\"`",
+			"\t${2:Field} ${3:Type} `gorm:\"${4:column_name}\" json:\"${4:field_name}\"`",
+			"\tCreatedAt time.Time  `gorm:\"autoCreateTime\" json:\"created_at\"`",
+			"\tUpdatedAt time.Time  `gorm:\"autoUpdateTime\" json:\"updated_at\"`",
+			"}"
+		],
+		"description": "Gin GORM model struct"
+	},
+	"gdbcreate": {
+		"prefix": "gdbcreate",
+		"body": [
+			"db.Create(&${1:model})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM create record"
+	},
+	"gdbfind": {
+		"prefix": "gdbfind",
+		"body": [
+			"db.First(&${1:model}, ${2:id})",
+			"if db.Error != nil {",
+			"\tif errors.Is(db.Error, gorm.ErrRecordNotFound) {",
+			"\t\tc.JSON(http.StatusNotFound, gin.H{",
+			"\t\t\t\"error\": \"Not Found\",",
+			"\t\t\t\"message\": \"${1:model} not found\"",
+			"\t\t})",
+			"\t} else {",
+			"\t\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\t\"message\": db.Error.Error()",
+			"\t\t})",
+			"\t}",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM find record"
+	},
+	"gdbupdate": {
+		"prefix": "gdbupdate",
+		"body": [
+			"db.Save(&${1:model})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM update record"
+	},
+	"gdbdelete": {
+		"prefix": "gdbdelete",
+		"body": [
+			"db.Delete(&${1:model})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM delete record"
+	},
+	"gdbquery": {
+		"prefix": "gdbquery",
+		"body": [
+			"var ${1:results} []${2:Model}",
+			"db.${3:Where}(${4:condition}).Find(&${1:results})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM query records"
+	},
+	"gdbjoin": {
+		"prefix": "gdbjoin",
+		"body": [
+			"db.Model(&${1:Model}).Joins(\"JOIN ${2:table} ON ${3:join_condition}\")",
+			"\t.Select(\"${4:columns}\")",
+			"\t.Where(${5:condition})",
+			"\t.Find(&${6:results})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM join query"
+	},
+	"gdbraw": {
+		"prefix": "gdbraw",
+		"body": [
+			"db.Raw(\"${1:query}\")",
+			"\t.Scan(&${2:result})",
+			"if db.Error != nil {",
+			"\tc.JSON(http.StatusInternalServerError, gin.H{",
+			"\t\t\"error\": \"Internal Server Error\",",
+			"\t\t\"message\": db.Error.Error()",
+			"\t})",
+			"\treturn",
+			"}",
+			"$0"
+		],
+		"description": "Gin GORM raw query"
+	},
+	"gdbtx": {
+		"prefix": "gdbtx",
+		"body": [
+			"tx := db.Begin()",
+			"if tx.Error != nil {",
+			"\tpanic(\"Failed to start transaction\")",
+			"}",
+			"defer func() {",
+			"\tif r := recover(); r != nil {",
+			"\t\ttx.Rollback()",
+			"\t\tpanic(r)",
+			"\t} else if tx.Error != nil {",
+			"\t\ttx.Rollback()",
+			"\t} else {",
+			"\t\ttx.Commit()",
+			"\t}",
+			"}()",
+			"$0"
+		],
+		"description": "Gin GORM transaction"
+	},
+	"gdbmigrate": {
+		"prefix": "gdbmigrate",
+		"body": [
+			"err := db.AutoMigrate(&${1:Model})",
+			"if err != nil {",
+			"\tpanic(\"Failed to perform database migration\")",
+			"}"
+		],
+		"description": "Gin GORM database migration"
+	},
+	"gjwt": {
+		"prefix": "gjwt",
+		"body": [
+			"func generateToken(userID uint) (string, error) {",
+			"\ttoken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{",
+			"\t\t\"user_id\": userID,",
+			"\t\t\"exp\":     time.Now().Add(time.Hour * 24).Unix(),",
+			"\t})",
+			"\ttokenString, err := token.SignedString([]byte(\"${1:secret_key}\"))",
+			"\tif err != nil {",
+			"\t\treturn \"\", err",
+			"\t}",
+			"\treturn tokenString, nil",
+			"}"
+		],
+		"description": "Gin JWT token generation"
+	},
+	"gjwtmiddleware": {
+		"prefix": "gjwtmw",
+		"body": [
+			"func authMiddleware() gin.HandlerFunc {",
+			"\treturn func(c *gin.Context) {",
+			"\t\ttokenString := c.GetHeader(\"Authorization\")",
+			"\t\tif tokenString == \"\" {",
+			"\t\t\tc.JSON(http.StatusUnauthorized, gin.H{",
+			"\t\t\t\t\"error\":   \"Unauthorized\",",
+			"\t\t\t\t\"message\": \"Missing authorization token\"",
+			"\t\t\t})",
+			"\t\t\tc.Abort()",
+			"\t\t\treturn",
+			"\t\t}",
+			"\t\ttokenString = strings.Replace(tokenString, \"Bearer \", \"\", 1)",
+			"\t\ttoken, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {",
+			"\t\t\treturn []byte(\"${1:secret_key}\"), nil",
+			"\t\t})",
+			"\t\tif err != nil {",
+			"\t\t\tc.JSON(http.StatusUnauthorized, gin.H{",
+			"\t\t\t\t\"error\":   \"Unauthorized\",",
+			"\t\t\t\t\"message\": err.Error()",
+			"\t\t\t})",
+			"\t\t\tc.Abort()",
+			"\t\t\treturn",
+			"\t\t}",
+			"\t\tclaims, ok := token.Claims.(jwt.MapClaims)",
+			"\t\tif !ok || !token.Valid {",
+			"\t\t\tc.JSON(http.StatusUnauthorized, gin.H{",
+			"\t\t\t\t\"error\":   \"Unauthorized\",",
+			"\t\t\t\t\"message\": \"Invalid token\"",
+			"\t\t\t})",
+			"\t\t\tc.Abort()",
+			"\t\t\treturn",
+			"\t\t}",
+			"\t\tuserID := uint(claims[\"user_id\"].(float64))",
+			"\t\t// Add user ID to context for further processing",
+			"\t\tc.Set(\"user_id\", userID)",
+			"\t\tc.Next()",
+			"\t}",
+			"}"
+		],
+		"description": "Gin JWT authentication middleware"
+	},
+	"grender": {
+		"prefix": "grender",
+		"body": [
+			"c.HTML(http.StatusOK, \"${1:template_file}\", gin.H{",
+			"\t\"title\":   \"${2:Page Title}\",",
+			"\t\"content\": \"${3:Page Content}\",",
+			"})"
+		],
+		"description": "Gin render HTML template"
 	}
 }
