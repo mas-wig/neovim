@@ -1,0 +1,249 @@
+{
+  "Select Query": {
+    "prefix": "select",
+    "body": ["SELECT * FROM $1;", "$2"],
+    "description": "Create a SELECT query"
+  },
+  "Insert Query": {
+    "prefix": "insert",
+    "body": ["INSERT INTO $1 (column1, column2) VALUES ('$2', '$3');", "$4"],
+    "description": "Create an INSERT query"
+  },
+  "Update Query": {
+    "prefix": "update",
+    "body": ["UPDATE $1 SET column1 = '$2' WHERE condition;", "$3"],
+    "description": "Create an UPDATE query"
+  },
+  "Delete Query": {
+    "prefix": "delete",
+    "body": ["DELETE FROM $1 WHERE condition;", "$2"],
+    "description": "Create a DELETE query"
+  },
+  "Create Table": {
+    "prefix": "create-table",
+    "body": [
+      "CREATE TABLE $1 (",
+      "  column1 datatype,",
+      "  column2 datatype,",
+      "  $2",
+      ");",
+      "$3"
+    ],
+    "description": "Create a new table"
+  },
+  "Drop Table": {
+    "prefix": "drop-table",
+    "body": ["DROP TABLE $1;", "$2"],
+    "description": "Drop an existing table"
+  },
+  "Alter Table - Add Column": {
+    "prefix": "alter-add-column",
+    "body": ["ALTER TABLE $1", "ADD COLUMN $2 datatype;", "$3"],
+    "description": "Add a new column to an existing table"
+  },
+  "Alter Table - Modify Column": {
+    "prefix": "alter-modify-column",
+    "body": ["ALTER TABLE $1", "MODIFY COLUMN $2 datatype;", "$3"],
+    "description": "Modify an existing column in a table"
+  },
+  "Alter Table - Drop Column": {
+    "prefix": "alter-drop-column",
+    "body": ["ALTER TABLE $1", "DROP COLUMN $2;", "$3"],
+    "description": "Drop a column from an existing table"
+  },
+  "Create Index": {
+    "prefix": "create-index",
+    "body": ["CREATE INDEX $1 ON $2 (column1, column2);", "$3"],
+    "description": "Create an index on a table"
+  },
+  "Drop Index": {
+    "prefix": "drop-index",
+    "body": ["DROP INDEX $1;", "$2"],
+    "description": "Drop an existing index"
+  },
+  "Create View": {
+    "prefix": "create-view",
+    "body": ["CREATE VIEW $1 AS", "SELECT column1, column2", "FROM $2;", "$3"],
+    "description": "Create a new view"
+  },
+  "Drop View": {
+    "prefix": "drop-view",
+    "body": ["DROP VIEW $1;", "$2"],
+    "description": "Drop an existing view"
+  },
+  "Create Stored Procedure": {
+    "prefix": "create-procedure",
+    "body": [
+      "CREATE PROCEDURE $1",
+      "AS",
+      "BEGIN",
+      "  -- Procedure logic here",
+      "END;",
+      "$2"
+    ],
+    "description": "Create a new stored procedure"
+  },
+  "Drop Stored Procedure": {
+    "prefix": "drop-procedure",
+    "body": ["DROP PROCEDURE $1;", "$2"],
+    "description": "Drop an existing stored procedure"
+  },
+  "Create Function": {
+    "prefix": "create-function",
+    "body": [
+      "CREATE FUNCTION $1",
+      "RETURNS datatype",
+      "AS",
+      "BEGIN",
+      "  -- Function logic here",
+      "END;",
+      "$2"
+    ],
+    "description": "Create a new function"
+  },
+  "Drop Function": {
+    "prefix": "drop-function",
+    "body": ["DROP FUNCTION $1;", "$2"],
+    "description": "Drop an existing function"
+  },
+  "Begin Transaction": {
+    "prefix": "begin-transaction",
+    "body": ["BEGIN TRANSACTION;", "$1"],
+    "description": "Begin a new transaction"
+  },
+  "Commit Transaction": {
+    "prefix": "commit-transaction",
+    "body": ["COMMIT;", "$1"],
+    "description": "Commit the current transaction"
+  },
+  "Rollback Transaction": {
+    "prefix": "rollback-transaction",
+    "body": ["ROLLBACK;", "$1"],
+    "description": "Rollback the current transaction"
+  },
+  "Create Database": {
+    "prefix": "create-database",
+    "body": ["CREATE DATABASE $1;", "$2"],
+    "description": "Create a new database"
+  },
+  "Drop Database": {
+    "prefix": "drop-database",
+    "body": ["DROP DATABASE $1;", "$2"],
+    "description": "Drop an existing database"
+  },
+  "Use Database": {
+    "prefix": "use-database",
+    "body": ["USE $1;", "$2"],
+    "description": "Switch to a different database"
+  },
+  "Create User": {
+    "prefix": "create-user",
+    "body": ["CREATE USER $1 IDENTIFIED BY '$2';", "$3"],
+    "description": "Create a new user"
+  },
+  "Drop User": {
+    "prefix": "drop-user",
+    "body": ["DROP USER $1;", "$2"],
+    "description": "Drop an existing user"
+  },
+  "Grant Permissions": {
+    "prefix": "grant-permissions",
+    "body": ["GRANT $1 ON $2 TO $3;", "$4"],
+    "description": "Grant permissions to a user or role"
+  },
+  "Revoke Permissions": {
+    "prefix": "revoke-permissions",
+    "body": ["REVOKE $1 ON $2 FROM $3;", "$4"],
+    "description": "Revoke permissions from a user or role"
+  },
+  "Create Trigger": {
+    "prefix": "create-trigger",
+    "body": [
+      "CREATE TRIGGER $1",
+      "$2",
+      "AFTER INSERT ON $3",
+      "FOR EACH ROW",
+      "BEGIN",
+      "  -- Trigger logic here",
+      "END;",
+      "$4"
+    ],
+    "description": "Create a new trigger"
+  },
+  "Drop Trigger": {
+    "prefix": "drop-trigger",
+    "body": ["DROP TRIGGER $1;", "$2"],
+    "description": "Drop an existing trigger"
+  },
+  "Create Index - Unique": {
+    "prefix": "create-index-unique",
+    "body": ["CREATE UNIQUE INDEX $1 ON $2 (column1, column2);", "$3"],
+    "description": "Create a unique index on a table"
+  },
+  "Create Table - Primary Key": {
+    "prefix": "create-table-pk",
+    "body": [
+      "CREATE TABLE $1 (",
+      "  id int PRIMARY KEY,",
+      "  column1 datatype,",
+      "  column2 datatype",
+      ");",
+      "$2"
+    ],
+    "description": "Create a new table with a primary key"
+  },
+  "Create Table - Foreign Key": {
+    "prefix": "create-table-fk",
+    "body": [
+      "CREATE TABLE $1 (",
+      "  id int PRIMARY KEY,",
+      "  column1 datatype,",
+      "  column2 datatype,",
+      "  foreign_key_id int,",
+      "  FOREIGN KEY (foreign_key_id) REFERENCES foreign_table(id)",
+      ");",
+      "$2"
+    ],
+    "description": "Create a new table with a foreign key"
+  },
+  "Inner Join": {
+    "prefix": "inner-join",
+    "body": [
+      "SELECT *",
+      "FROM table1",
+      "INNER JOIN table2 ON table1.column = table2.column;",
+      "$1"
+    ],
+    "description": "Perform an INNER JOIN"
+  },
+  "Left Join": {
+    "prefix": "left-join",
+    "body": [
+      "SELECT *",
+      "FROM table1",
+      "LEFT JOIN table2 ON table1.column = table2.column;",
+      "$1"
+    ],
+    "description": "Perform a LEFT JOIN"
+  },
+  "Right Join": {
+    "prefix": "right-join",
+    "body": [
+      "SELECT *",
+      "FROM table1",
+      "RIGHT JOIN table2 ON table1.column = table2.column;",
+      "$1"
+    ],
+    "description": "Perform a RIGHT JOIN"
+  },
+  "Full Outer Join": {
+    "prefix": "full-outer-join",
+    "body": [
+      "SELECT *",
+      "FROM table1",
+      "FULL OUTER JOIN table2 ON table1.column = table2.column;",
+      "$1"
+    ],
+    "description": "Perform a FULL OUTER JOIN"
+  }
+}

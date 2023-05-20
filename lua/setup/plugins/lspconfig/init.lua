@@ -18,11 +18,24 @@ M.diagnostics = function()
 end
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
-
-        require("setup.plugins.lspconfig.keymaps").on_attach(client,bufnr)
+		require("setup.plugins.lspconfig.keymaps").on_attach(client, bufnr)
 		if client.name == "gopls" then
 			client.server_capabilities.document_formatting = false
 			client.server_capabilities.documentFormattingProvider = false
+			require("legendary").keymaps({
+				{
+					itemgroup = "Golang",
+					description = "Go me daddy...",
+					icon = "🚀 ",
+					keymaps = {
+						{ "<leader>ly", "<cmd>GoModTidy<cr>", desc = "Go Mod Tidy" },
+						{ "<leader>lc", "<cmd>GoCoverage<Cr>", desc = "Go Test Coverage" },
+						{ "<leader>lt", "<cmd>GoTest<Cr>", desc = "Go Test" },
+						{ "<leader>lR", "<cmd>GoRun<Cr>", desc = "Go Run" },
+						{ "<leader>dT", "<cmd>lua require('dap-go').debug_test()<cr>", desc = "Go Debug Test" },
+					},
+				},
+			})
 		end
 
 		if client.server_capabilities.documentSymbolProvider then

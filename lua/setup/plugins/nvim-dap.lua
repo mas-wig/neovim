@@ -7,38 +7,147 @@ M.init = function()
 			description = "Debugging functionality...",
 			icon = "",
 			keymaps = {
-				{ "<leader>dR", "<cmd>lua require'dap'.run_to_cursor()<cr>", description = "Run to Cursor" },
+				{
+					"<leader>dR",
+					function()
+						require("dap").run_to_cursor()
+					end,
+					desc = "Run to Cursor",
+				},
 				{
 					"<leader>dE",
-					"<cmd>lua require'dapui'.eval(vim.fn.input '[Expression] > ')<cr>",
-					description = "Evaluate Input",
+					function()
+						require("dapui").eval(vim.fn.input("[Expression] > "))
+					end,
+					desc = "Evaluate Input",
 				},
 				{
 					"<leader>dC",
-					"<cmd>lua require'dap'.set_breakpoint(vim.fn.input '[Condition] > ')<cr>",
-					description = "Conditional Breakpoint",
+					function()
+						require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
+					end,
+					desc = "Conditional Breakpoint",
 				},
-				{ "<leader>dU", "<cmd>lua require'dapui'.toggle()<cr>", description = "Toggle UI" },
-				{ "<leader>db", "<cmd>lua require'dap'.step_back()<cr>", description = "Step Back" },
-				{ "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", description = "Continue" },
-				{ "<leader>dd", "<cmd>lua require'dap'.disconnect()<cr>", description = "Disconnect" },
-				{ "<leader>de", "<cmd>lua require'dapui'.eval()<cr>", description = "Evaluate" },
-				{ "<leader>dg", "<cmd>lua require'dap'.session()<cr>", description = "Get Session" },
-				{ "<leader>dh", "<cmd>lua require'dap.ui.widgets'.hover()<cr>", description = "Hover Variables" },
-				{ "<leader>dS", "<cmd>lua require'dap.ui.widgets'.scopes()<cr>", description = "Scopes" },
-				{ "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", description = "Step Into" },
-				{ "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", description = "Step Over" },
-				{ "<leader>dp", "<cmd>lua require'dap'.pause.toggle()<cr>", description = "Pause" },
-				{ "<leader>dq", "<cmd>lua require'dap'.close()<cr>", description = "Quit" },
-				{ "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", description = "Toggle Repl" },
-				{ "<leader>ds", "<cmd>lua require'dap'.continue()<cr>", description = "Start" },
+				{
+					"<leader>dU",
+					function()
+						require("dapui").toggle()
+					end,
+					desc = "Toggle UI",
+				},
+				{
+					"<leader>db",
+					function()
+						require("dap").step_back()
+					end,
+					desc = "Step Back",
+				},
+				{
+					"<leader>dc",
+					function()
+						require("dap").continue()
+					end,
+					desc = "Continue",
+				},
+				{
+					"<leader>dd",
+					function()
+						require("dap").disconnect()
+					end,
+					desc = "Disconnect",
+				},
+				{
+					"<leader>de",
+					function()
+						require("dapui").eval()
+					end,
+					mode = { "n", "v" },
+					desc = "Evaluate",
+				},
+				{
+					"<leader>dg",
+					function()
+						require("dap").session()
+					end,
+					desc = "Get Session",
+				},
+				{
+					"<leader>dh",
+					function()
+						require("dap.ui.widgets").hover()
+					end,
+					desc = "Hover Variables",
+				},
+				{
+					"<leader>dS",
+					function()
+						require("dap.ui.widgets").scopes()
+					end,
+					desc = "Scopes",
+				},
+				{
+					"<leader>di",
+					function()
+						require("dap").step_into()
+					end,
+					desc = "Step Into",
+				},
+				{
+					"<leader>do",
+					function()
+						require("dap").step_over()
+					end,
+					desc = "Step Over",
+				},
+				{
+					"<leader>dp",
+					function()
+						require("dap").pause.toggle()
+					end,
+					desc = "Pause",
+				},
+				{
+					"<leader>dq",
+					function()
+						require("dap").close()
+					end,
+					desc = "Quit",
+				},
+				{
+					"<leader>dr",
+					function()
+						require("dap").repl.toggle()
+					end,
+					desc = "Toggle REPL",
+				},
+				{
+					"<leader>ds",
+					function()
+						require("dap").continue()
+					end,
+					desc = "Start",
+				},
 				{
 					"<leader>dt",
-					"<cmd>lua require'dap'.toggle_breakpoint()<cr>",
-					description = "Toggle Breakpoint",
+					function()
+						require("dap").toggle_breakpoint()
+					end,
+					desc = "Toggle Breakpoint",
 				},
-				{ "<leader>dx", "<cmd>lua require'dap'.terminate()<cr>", description = "Terminate" },
-				{ "<leader>du", "<cmd>lua require'dap'.step_out()<cr>", description = "Step Out" },
+				{
+					"<leader>dx",
+					function()
+						require("dap").terminate()
+					end,
+					desc = "Terminate",
+				},
+				{
+					"<leader>du",
+					function()
+						require("dap").step_out()
+					end,
+					desc = "Step Out",
+				},
 				-- Floating dap windows --
 				{
 

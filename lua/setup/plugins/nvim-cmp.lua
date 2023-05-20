@@ -6,6 +6,13 @@ return function()
 		return
 	end
 
+	local duplicates = {
+		buffer = 1,
+		path = 1,
+		nvim_lsp = 0,
+		luasnip = 1,
+	}
+
 	cmp.setup({
 		completion = {
 			completeopt = "menu,menuone,noinsert",
@@ -31,32 +38,29 @@ return function()
 		sorting = {
 			comparators = {
 				require("cmp_fuzzy_buffer.compare"),
-				compare.offset,
-				compare.recently_used, -- higher
 				compare.score,
-				compare.kind, -- higher (prioritize snippets)
-				compare.locality,
-				compare.exact, -- lower
+				compare.recently_used,
+				compare.offset,
+				compare.exact,
+				compare.kind,
+				compare.sort_text,
 				compare.length,
 				compare.order,
 			},
 		},
 		sources = cmp.config.sources({
-			{ name = "luasnip", priority = 100, max_item_count = 4 },
-			{ name = "rg", priority = 95 },
-			{ name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 10 },
-			{ name = "path", priority = 20 },
-			{ name = "buffer", priority = 10, keyword_length = 3, max_item_count = 5 },
+			{ name = "luasnip", priority = 100, max_item_count = 4, group_index = 1 },
+			{ name = "rg", priority = 95, max_item_count = 2, group_index = 1 },
+			{ name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 10, group_index = 1 },
+			{ name = "path", priority = 20, group_index = 2 },
+			{ name = "buffer", priority = 10, keyword_length = 3, max_item_count = 5, group_index = 2 },
 		}),
 		formatting = {
 			format = function(entry, vim_item)
+				local duplicates_default = 0
 				local cmp_kinds = require("setup.ui.icons").kind
 				local menu = entry.source.name
-
-				if menu == "luasnip" or menu == "nvim_lsp" then
-					vim_item.dup = 0
-				end
-
+				vim_item.dup = duplicates[menu] or duplicates_default
 				vim_item.kind = (cmp_kinds[vim_item.kind] or "") .. vim_item.kind
 				return vim_item
 			end,
