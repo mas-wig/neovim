@@ -4,15 +4,15 @@ return {
 		event = "VimEnter",
 		opts = {
 			style = "night",
-			transparent = false,
+			transparent = true,
 			terminal_colors = true,
 			styles = {
 				comments = { italic = true },
 				keywords = { italic = true },
 				functions = { italic = true, bold = true },
 				variables = { italic = true },
-				sidebars = "normal",
-				floats = "normal", -- style for floating windows
+				sidebars = "transparent",
+				floats = "transparent", -- style for floating windows
 			},
 			sidebars = { "qf", "help", "lazy", "neo-tree", "TelescopePrompt" },
 			hide_inactive_statusline = false,

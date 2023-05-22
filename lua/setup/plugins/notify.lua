@@ -1,6 +1,7 @@
 require("notify").setup({
 	timeout = 2000,
 	top_down = true,
+	background_colour = "#000000",
 	icons = require("setup.ui.icons").diagnostics,
 	max_width = function()
 		return math.floor(vim.o.columns * 0.75)

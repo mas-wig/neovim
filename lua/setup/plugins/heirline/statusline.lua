@@ -24,7 +24,7 @@ return require("heirline.utils").insert({
 			return self.mode_color_map[mode]
 		end,
 	},
-	hl = { bg = "bg" },
+	hl = { bg = "none" },
 	spacer,
 	-------------------------------------------------
 	-- Vim Mode
@@ -388,6 +388,6 @@ return require("heirline.utils").insert({
 			return { fg = "yellow" }
 		end,
 	},
-    spacer
+	spacer,
 	-------------------------------------------------
 })

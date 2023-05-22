@@ -5,6 +5,7 @@ return {
 	white2 = "#ffffff",
 	darker_black = "#16161e",
 	bg = "#1a1b26",
+	bg2 = "#44475a",
 	black = "#000000",
 	grey = "#40486a",
 	red = "#f7768e",

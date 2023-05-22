@@ -79,8 +79,6 @@ opt.iskeyword:append("-")
 opt.nrformats:append("unsigned")
 opt.nrformats:remove({ "bin", "hex" })
 
-Sessiondir = 
-
 -- Create folders for our backups, undos, swaps and sessions if they don't exist
 vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
 vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
