@@ -141,130 +141,126 @@ return {
 		-- Bufferline
 		{
 			utils.make_buflist(
-				utils.surround(
-					{ " ", " " },
-					_,
-					--                 function(self)
-					-- 	if self.is_active then
-					-- 		return utils.get_highlight("TabLineSel").bg
-					-- 	else
-					-- 		return utils.get_highlight("TabLine").bg
-					-- 	end
-					-- end,
+				utils.surround({ " ", " " }, function(self)
+					if self.is_active then
+						return utils.get_highlight("TabLineSel").bg
+					else
+						return utils.get_highlight("TabLine").bg
+					end
+				end, {
 					{
+						init = function(self)
+							self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+						end,
+						hl = function(self)
+							if not self.is_active then
+								return { fg = "cyan", bg = "bg" }
+							else
+								return { fg = "pink", bg = "bg2" }
+							end
+						end,
+						on_click = {
+							callback = function(_, minwid, _, button)
+								if button == "m" then -- close on mouse middle click
+									vim.api.nvim_buf_delete(minwid, { force = false })
+								else
+									vim.api.nvim_win_set_buf(0, minwid)
+								end
+							end,
+							minwid = function(self)
+								return self.bufnr
+							end,
+							name = "heirline_tabline_buffer_callback",
+						},
+
+						-- Flag
 						{
-							init = function(self)
-								self.filename = vim.api.nvim_buf_get_name(self.bufnr)
+							condition = function(self)
+								return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
+									or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
+							end,
+							provider = function(self)
+								if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
+									return "  "
+								else
+									return " "
+								end
+							end,
+							hl = { fg = "blue" },
+						},
+
+						-- Filename
+						{
+							provider = function(self)
+								local filename = self.filename
+								filename = filename == "" and " Untitled "
+									or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
+								return filename
 							end,
 							hl = function(self)
 								if not self.is_active then
-									return { fg = "cyan", bg = "bg" }
+									return { bold = false }
 								else
-									return { fg = "pink", bg = "bg2" }
+									return { bold = true }
 								end
 							end,
-							on_click = {
-								callback = function(_, minwid, _, button)
-									if button == "m" then -- close on mouse middle click
-										vim.api.nvim_buf_delete(minwid, { force = false })
-									else
-										vim.api.nvim_win_set_buf(0, minwid)
-									end
-								end,
-								minwid = function(self)
-									return self.bufnr
-								end,
-								name = "heirline_tabline_buffer_callback",
-							},
-
-							-- Flag
-							{
-								condition = function(self)
-									return not vim.api.nvim_buf_get_option(self.bufnr, "modifiable")
-										or vim.api.nvim_buf_get_option(self.bufnr, "readonly")
-								end,
-								provider = function(self)
-									if vim.api.nvim_buf_get_option(self.bufnr, "buftype") == "terminal" then
-										return "  "
-									else
-										return " "
-									end
-								end,
-								hl = { fg = "blue" },
-							},
-
-							-- Filename
-							{
-								provider = function(self)
-									local filename = self.filename
-									filename = filename == "" and " Untitled "
-										or format_filename(vim.fn.fnamemodify(filename, ":t"), 18)
-									return filename
-								end,
-								hl = function(self)
-									if not self.is_active then
-										return { bold = false }
-									else
-										return { bold = true }
-									end
-								end,
-							},
-
-							-- Bufnr dan picker
-							{
-								condition = function(self)
-									return not self._show_picker
-								end,
-								provider = function(self)
-									return " " .. tostring(self.bufnr) .. " "
-								end,
-								hl = function(self)
-									if not self.is_active then
-										return { fg = "purple" }
-									else
-										if vim.bo.modified then
-											return {
-												fg = "black",
-												bg = "green3",
-												bold = true,
-											}
-										else
-											return {
-												fg = "black",
-												bg = "purple",
-												bold = true,
-											}
-										end
-									end
-								end,
-							},
-							{
-								condition = function(self)
-									return self._show_picker
-								end,
-								init = function(self)
-									local bufname = vim.api.nvim_buf_get_name(self.bufnr)
-									bufname = vim.fn.fnamemodify(bufname, ":t")
-									local label = bufname:sub(1, 1)
-									local i = 2
-									while self._picker_labels[label] do
-										if i > #bufname then
-											break
-										end
-										label = bufname:sub(i, i)
-										i = i + 1
-									end
-									self._picker_labels[label] = self.bufnr
-									self.label = label
-								end,
-								provider = function(self)
-									return " " .. self.label .. " "
-								end,
-								hl = { fg = "black", bg = "yellow2", bold = true },
-							},
 						},
-					}
-				),
+
+						-- Bufnr dan picker
+						{
+							condition = function(self)
+								return not self._show_picker
+							end,
+							provider = function(self)
+								return " " .. tostring(self.bufnr) .. " "
+							end,
+							hl = function(self)
+								if not self.is_active then
+									return { fg = "purple" }
+								else
+									if vim.bo.modified then
+										return {
+											fg = "black",
+											bg = "green3",
+											bold = true,
+										}
+									else
+										return {
+											fg = "black",
+											bg = "purple",
+											bold = true,
+										}
+									end
+								end
+							end,
+						},
+						{
+							condition = function(self)
+								return self._show_picker
+							end,
+							init = function(self)
+								local bufname = vim.api.nvim_buf_get_name(self.bufnr)
+								bufname = vim.fn.fnamemodify(bufname, ":t")
+								local label = bufname:sub(1, 1)
+								local i = 2
+								while self._picker_labels[label] do
+									if i > #bufname then
+										break
+									end
+									label = bufname:sub(i, i)
+									i = i + 1
+								end
+								self._picker_labels[label] = self.bufnr
+								self.label = label
+								vim.cmd("setlocal showtabline =2")
+							end,
+							provider = function(self)
+								return " " .. self.label .. " "
+							end,
+							hl = { fg = "black", bg = "yellow2", bold = true },
+						},
+					},
+				}),
 				{ provider = "  ", hl = { fg = "gray" } },
 				{ provider = "  ", hl = { fg = "gray" } }
 			),

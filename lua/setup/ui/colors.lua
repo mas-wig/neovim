@@ -1,4 +1,5 @@
 return {
+	none = "NONE",
 	grey2 = "#6272a4",
 	fold = "#ffffff",
 	white = "#c0caf5",

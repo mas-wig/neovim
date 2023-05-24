@@ -62,7 +62,6 @@ return {
 			"gitcommit",
 			"rust",
 			"java",
-			"solidity",
 			"diff",
 			"go",
 			"bibtex",
@@ -74,6 +73,7 @@ return {
 			"json",
 			"jsonc",
 			"sql",
+			"solidity",
 			"html",
 			"query", -- treesitter query language
 			"http", -- http requests as format, used for rest.nvim

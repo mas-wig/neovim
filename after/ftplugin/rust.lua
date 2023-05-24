@@ -1,4 +1,5 @@
 vim.opt_local.commentstring = "//%s"
+vim.opt.showtabline = 2
 vim.opt_local.shiftwidth = 4
 vim.opt_local.softtabstop = 4
 vim.opt_local.smartindent = true

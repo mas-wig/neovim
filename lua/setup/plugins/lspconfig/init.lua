@@ -16,12 +16,11 @@ M.diagnostics = function()
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 	end
 end
+
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
 		require("setup.plugins.lspconfig.keymaps").on_attach(client, bufnr)
 		if client.name == "gopls" then
-			client.server_capabilities.document_formatting = false
-			client.server_capabilities.documentFormattingProvider = false
 			require("legendary").keymaps({
 				{
 					itemgroup = "Golang",
@@ -47,25 +46,33 @@ M.setup = function()
 				group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
 				buffer = bufnr,
 			})
-			vim.api.nvim_create_autocmd("BufWritePre", {
+			return vim.api.nvim_create_autocmd("BufWritePre", {
 				group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
 				buffer = bufnr,
 				callback = function()
-					local success, result = pcall(vim.lsp.buf.format, {
+					local buf = vim.api.nvim_get_current_buf()
+					local ft = vim.bo[buf].filetype
+					local have_nls = package.loaded["null-ls"]
+						and (#require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") > 0)
+
+					vim.lsp.buf.format({
+						bufnr = buf,
 						filter = function(client)
-							return client.name == "null-ls"
+							if have_nls then
+								return client.name == "null-ls"
+							end
+							return client.name ~= "null-ls"
 						end,
-						bufnr = vim.fn.bufnr(),
-						timeout_ms = 5000,
-						async = true,
 					})
-					if not success then
-						return
-					else
-						return result
-					end
 				end,
 			})
+		else
+			return vim.cmd([[
+                augroup FormatAutogroup
+                autocmd!
+                autocmd BufWritePost * FormatWrite
+                augroup END
+            ]])
 		end
 	end)
 end

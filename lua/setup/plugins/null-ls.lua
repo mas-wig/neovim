@@ -11,11 +11,9 @@ return function()
 					"4",
 				},
 			}),
-			null_ls.builtins.formatting.prettierd,
+			null_ls.builtins.formatting.prettier,
 			null_ls.builtins.formatting.autopep8,
 			null_ls.builtins.formatting.clang_format,
-			-- null_ls.builtins.diagnostics.staticcheck,
-			null_ls.builtins.code_actions.refactoring,
 		},
 	})
 end

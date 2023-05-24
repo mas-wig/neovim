@@ -28,15 +28,17 @@ local buftype = {
 }
 
 return {
-	{condition = function()
-		return conditions.buffer_matches({
-			buftype = buftype,
-			filetype = filetype,
-		})
-	end,
-	init = function()
-		vim.opt_local.winbar = nil
-	end},
+	{
+		condition = function()
+			return conditions.buffer_matches({
+				buftype = buftype,
+				filetype = filetype,
+			})
+		end,
+		init = function()
+			vim.opt_local.winbar = nil
+		end,
+	},
 	----------------------------------------------------------
 	-- Navic
 	----------------------------------------------------------
@@ -157,7 +159,7 @@ return {
 		},
 		{
 			provider = function()
-				return "  " .. string.gsub(vim.fn.expand("%:h"), "/", " / ")
+				return "  " .. string.gsub(vim.fn.expand("%"), "/", " / ")
 			end,
 			hl = { fg = "yellow3", bold = true },
 		},

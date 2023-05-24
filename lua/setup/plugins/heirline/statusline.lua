@@ -83,7 +83,7 @@ return require("heirline.utils").insert({
 			return " %2(" .. self.mode_names[self.mode] .. "%)"
 		end,
 		hl = function(self)
-			return { fg = self:mode_color(), bg = "bg", bold = true }
+			return { fg = self:mode_color(),  bold = true }
 		end,
 		update = {
 			"ModeChanged",

@@ -14,6 +14,18 @@ return {
 	-- },
 
 	{
+		name = "GoImport",
+		clear = true,
+		{
+			"BufWritePre",
+			function()
+				vim.cmd("GoImport")
+			end,
+			opts = { pattern = "*.go" },
+		},
+	},
+
+	{
 		name = "ReturnToLastEditingPosition",
 		{
 			"BufReadPost",
@@ -134,19 +146,6 @@ return {
 			end,
 		},
 	},
-
-	-- {
-	-- 	name = "ShowTabLine",
-	-- 	{
-	-- 		{ "BufWinEnter" },
-	-- 		function()
-	-- 			if vim.bo.filetype ~= "alpha" then
-	-- 				vim.opt.showtabline = 2
-	-- 			end
-	-- 		end,
-	-- 		pattern = { opts = { "*" } },
-	-- 	},
-	-- },
 
 	-- Save File
 	{
