@@ -19,7 +19,6 @@ local opts = {
 	clipboard = "unnamedplus",
 	completeopt = "menu,menuone,noselect",
 	cursorlineopt = "screenline,number",
-	dictionary = "/usr/share/dict/words",
 	confirm = true,
 	cursorline = true,
 	expandtab = true,
@@ -39,7 +38,6 @@ local opts = {
 	scrolloff = 10,
 	shell = "/usr/bin/zsh",
 	matchtime = 1, -- deci-seconds (higher amount feels laggy)
-	sessionoptions = { "buffers", "curdir", "folds", "globals", "tabpages", "winpos", "winsize" },
 	shiftround = true, -- Round indent
 	shiftwidth = 4, -- Size of an indent
 	showmode = false, -- Dont show mode since we have a statusline
@@ -83,5 +81,4 @@ opt.nrformats:remove({ "bin", "hex" })
 vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
 vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
 vim.cmd("silent call mkdir(stdpath('data').'/swaps', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/sessions', 'p', '0700')")
 vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])

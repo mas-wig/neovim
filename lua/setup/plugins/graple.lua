@@ -37,7 +37,7 @@ M.init = function()
 					desc = "Graple select name",
 				},
 				{
-					"<leader>jp",
+					"<leader>p",
 					function()
 						require("grapple").popup_tags()
 					end,
@@ -87,7 +87,7 @@ M.setup = function()
 			border = "rounded",
 		},
 		integrations = {
-			resession = true,
+			resession = false,
 		},
 	})
 end
