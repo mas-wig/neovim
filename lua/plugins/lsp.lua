@@ -64,7 +64,7 @@ return {
 			{
 				"jay-babu/mason-null-ls.nvim",
 				opts = {
-					ensure_installed = { "prettierd", "autopep8", "clang_format", "staticcheck", "refactoring" },
+					ensure_installed = { "clang_format" },
 					automatic_installation = true,
 				},
 			},

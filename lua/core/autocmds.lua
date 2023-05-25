@@ -14,18 +14,6 @@ return {
 	-- },
 
 	{
-		name = "GoImport",
-		clear = true,
-		{
-			"BufWritePre",
-			function()
-				vim.cmd("GoImport")
-			end,
-			opts = { pattern = "*.go" },
-		},
-	},
-
-	{
 		name = "ReturnToLastEditingPosition",
 		{
 			"BufReadPost",
@@ -215,6 +203,17 @@ return {
 				if not should_skip then
 					require("alpha").start(true, require("alpha").default_config)
 				end
+			end,
+		},
+	},
+	{
+		name = "FormatterGroup",
+		clear = true,
+		{
+			{ "BufWritePost" },
+			opts = { pattern = "*" },
+			function()
+				vim.cmd("FormatWrite")
 			end,
 		},
 	},

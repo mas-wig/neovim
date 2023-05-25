@@ -98,6 +98,18 @@ formatter.setup({
 			end,
 		},
 
+		["go"] = {
+			function()
+				return {
+					exe = "goimports",
+					args = {
+                        "-v",
+						util.escape_path(util.get_current_buffer_file_path()),
+					},
+					stdin = true,
+				}
+			end,
+		},
 		["javascriptreact"] = {
 			function()
 				return {
