@@ -83,7 +83,7 @@ return require("heirline.utils").insert({
 			return " %2(" .. self.mode_names[self.mode] .. "%)"
 		end,
 		hl = function(self)
-			return { fg = self:mode_color(),  bold = true }
+			return { fg = self:mode_color(), bold = true }
 		end,
 		update = {
 			"ModeChanged",
@@ -158,6 +158,25 @@ return require("heirline.utils").insert({
 	},
 	spacer,
 
+	-------------------------------------------------
+	-- Graple recording
+	-------------------------------------------------
+	{
+		condition = function()
+			if require("grapple").exists then
+				return true
+			end
+		end,
+		provider = function()
+			local key = require("grapple").key()
+			if key == nil then
+				return false
+			end
+			return "[  " .. tostring(key) .. " ]"
+		end,
+		hl = { fg = "pink" },
+	},
+	spacer,
 	-------------------------------------------------
 	-- Macro recording
 	-------------------------------------------------

@@ -37,8 +37,11 @@ return {
 			tabline = require("setup.plugins.heirline.tabline"),
 			statusline = require("setup.plugins.heirline.statusline"),
 			statuscolumn = require("setup.plugins.heirline.statuscolumn"),
-			winbar = require("setup.plugins.heirline.winbar"),
-			opts = { colors = require("setup.ui.colors") },
+			winbar = require("setup.plugins.heirline.winbar").winbar,
+			opts = {
+				colors = require("setup.ui.colors"),
+				disable_winbar_cb = require("setup.plugins.heirline.winbar").disable_winbar_cb,
+			},
 		})
 	end,
 }

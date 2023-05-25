@@ -49,81 +49,39 @@ return {
 
 	{
 		"stevearc/resession.nvim",
-		priority = 100,
-		opts = function()
-			local function is_valid(bufnr)
-				if not bufnr or bufnr < 1 then
-					return false
-				end
-				return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
-			end
-			return {
-				autosave = {
-					enabled = true,
-					interval = 60,
-					notify = false,
-				},
-				buf_filter = function(bufnr)
-					return is_valid(bufnr)
-				end,
-				tab_buf_filter = function(tabpage, bufnr)
-					return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
-				end,
-				extensions = { bodrex = { enable_in_tab = true } },
-			}
+		config = function()
+			require("setup.plugins.resession").setup()
 		end,
 		init = function()
-			require("legendary").commands({
-				itemgroup = "Resession",
-				desc = "Remember me daddy......",
-				commands = {
-					{
-						":ResessionList",
-						function()
-							require("resession").list()
-						end,
-						desc = "List Session",
-					},
-					{
-						":ResessionDelete",
-						function()
-							require("resession").delete()
-						end,
-						desc = "Delete Session",
-					},
-					{
-						":ResessionLoad",
-						function()
-							require("resession").load()
-						end,
-						desc = "Load Session",
-					},
-					{
-						":ResessionSave",
-						function()
-							require("resession").save()
-						end,
-						desc = "Save Session",
-					},
-				},
-			})
+			require("setup.plugins.resession").init()
 		end,
 	},
 
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	event = { "BufRead", "BufNewFile" },
+	-- 	opts = {
+	-- 		max_time = 50,
+	-- 		max_count = 4,
+	-- 		disable_mouse = true,
+	-- 		hint = true,
+	-- 		allow_different_key = false,
+	-- 		resetting_keys = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "c", "d", "x", "X", "p", "P" },
+	-- 		restricted_keys = { "h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>" },
+	-- 		hint_keys = { "k", "j", "^", "$", "a", "i", "d", "y", "c", "l" },
+	-- 		disabled_keys = { "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>" },
+	-- 		disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason" },
+	-- 	},
+	-- },
+
 	{
-		"m4xshen/hardtime.nvim",
+		"cbochs/grapple.nvim",
 		event = { "BufRead", "BufNewFile" },
-		opts = {
-			max_time = 50,
-			max_count = 4,
-			disable_mouse = true,
-			hint = true,
-			allow_different_key = false,
-			resetting_keys = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "c", "d", "x", "X", "p", "P" },
-			restricted_keys = { "h", "j", "k", "l", "-", "+", "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>" },
-			hint_keys = { "k", "j", "^", "$", "a", "i", "d", "y", "c", "l" },
-			disabled_keys = { "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>" },
-			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason" },
-		},
+		init = function()
+			require("setup.plugins.graple").init()
+		end,
+		config = function()
+			require("setup.plugins.graple").setup()
+		end,
 	},
 }

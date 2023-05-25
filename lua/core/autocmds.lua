@@ -169,22 +169,6 @@ return {
 		},
 	},
 	{
-		name = "SaveSession",
-		clear = true,
-		{
-			{ "VimLeavePre" },
-			function(event)
-				local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
-				if not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype) then
-					local save = require("resession").save_all
-					save("Last Session")
-					save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
-				end
-			end,
-		},
-	},
-
-	{
 		name = "AlphaSetup",
 		clear = true,
 		desc = "Disable status and tablines for alpha",

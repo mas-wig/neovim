@@ -9,7 +9,7 @@ function JsonFolds()
 	elseif level > 0 then
 		return "a" .. level
 	elseif level < 0 then
-		return "s" .. -level
+		return "s" .. level
 	end
 end
 
