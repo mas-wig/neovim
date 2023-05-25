@@ -1,19 +1,20 @@
 return {
 	{
-		"echasnovski/mini.comment",
-		event = "BufRead",
-		opts = {
-			hooks = {
-				pre = function()
-					require("ts_context_commentstring.internal").update_commentstring({})
-				end,
-			},
-		},
+		"numToStr/Comment.nvim",
+		event = "VeryLazy",
+		opts = function()
+			return {
+				toggler = {
+					line = "<leader>/",
+					block = "gbc",
+				},
+				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+			}
+		end,
 		config = function(_, opts)
-			require("mini.comment").setup(opts)
+			require("Comment").setup(opts)
 		end,
 	},
-
 	{
 		"tpope/vim-dadbod",
 		lazy = true,
