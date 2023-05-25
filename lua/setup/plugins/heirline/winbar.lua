@@ -152,31 +152,17 @@ return {
 		-- File location
 		----------------------------------------------------------
 		{
-			{
-				provider = function()
-					return "[ "
-				end,
-				hl = { fg = "white", bold = true },
-			},
-			{
-				provider = function()
-					return "  " .. string.gsub(vim.fn.expand("%"), "/", " / ")
-				end,
-				hl = { fg = "yellow3", bold = true },
-			},
-			{
-				provider = function()
-					return " ]"
-				end,
-				hl = { fg = "white", bold = true },
-			},
+			provider = function()
+				return "[   " .. string.gsub(vim.fn.expand("%:p:."), "/", " / ") .. " ]"
+			end,
+			hl = { fg = "yellow3", bold = true },
 		},
 		spacer,
 	},
 	disable_winbar_cb = function(args)
 		return conditions.buffer_matches({
 			buftype = buftype,
-			filetype =filetype
+			filetype = filetype,
 		}, args.buf)
 	end,
 }

@@ -44,14 +44,14 @@ M.init = function()
 					desc = "Graple popup tags",
 				},
 				{
-					"[j",
+					"<S-Tab>",
 					function()
 						require("grapple").cycle_backward()
 					end,
 					desc = "Graple tag prev",
 				},
 				{
-					"]j",
+					"<Tab>",
 					function()
 						require("grapple").cycle_forward()
 					end,

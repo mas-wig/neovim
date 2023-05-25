@@ -71,6 +71,7 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			char = "▏",
+			context_char = "▏",
 			filetype_exclude = {
 				"toggleterm",
 				"alpha",
@@ -86,9 +87,13 @@ return {
 				"Trouble",
 				"lazy",
 			},
+			use_treesitter = true,
 			show_trailing_blankline_indent = false,
 			show_current_context = false,
 		},
+		config = function(_, opts)
+			require("indent_blankline").setup(opts)
+		end,
 	},
 
 	{
@@ -98,6 +103,9 @@ return {
 		opts = {
 			symbol = "▏",
 			options = { try_as_border = true, border = "both", indent_at_cursor = true },
+			draw = {
+				delay = 10,
+			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("FileType", {
