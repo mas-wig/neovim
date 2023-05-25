@@ -10,7 +10,7 @@ M.init = function()
 				{
 					"<leader>jm",
 					function()
-						require("grapple").toggle()
+						vim.cmd("GrappleToggle")
 					end,
 					desc = "GrapleToggle Anon",
 				},
@@ -19,7 +19,7 @@ M.init = function()
 					function()
 						vim.ui.input({ prompt = " Graple name " }, function(name)
 							if name ~= nil then
-								return require("grapple").toggle({ key = name })
+								vim.cmd("GrappleToggle key=" .. name)
 							end
 						end)
 					end,
@@ -30,7 +30,7 @@ M.init = function()
 					function()
 						vim.ui.input({ prompt = " Graple select " }, function(name)
 							if name ~= nil then
-								return require("grapple").select({ key = name })
+								vim.cmd("GrappleSelect key=" .. name)
 							end
 						end)
 					end,
@@ -73,11 +73,9 @@ end
 
 M.setup = function()
 	require("grapple").setup({
-		scope = require("grapple.scope").fallback({
-			require("grapple").resolvers.lsp_fallback,
-			require("grapple").resolvers.git_fallback,
-			require("grapple").resolvers.static,
-		}),
+		scope = require("grapple.scope").resolver(function()
+			return vim.fn.getcwd()
+		end, { cache = "DirChanged" }),
 		popup_options = {
 			relative = "editor",
 			width = 75,

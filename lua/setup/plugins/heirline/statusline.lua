@@ -172,9 +172,15 @@ return require("heirline.utils").insert({
 			if key == nil then
 				return false
 			end
-			return "[  " .. tostring(key) .. " ]"
+			return "[   " .. tostring(key) .. " ]"
 		end,
-		hl = { fg = "pink" },
+		update = {
+			"CursorHold",
+			callback = vim.schedule_wrap(function()
+				vim.cmd("redrawstatus")
+			end),
+		},
+		hl = { fg = "pink", bold = true },
 	},
 	spacer,
 	-------------------------------------------------
@@ -396,12 +402,12 @@ return require("heirline.utils").insert({
 	-- Last file modified
 	{
 		provider = function()
-			if vim.o.filetype == "alpha" then
-				return ""
-			else
-				local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-				return "[ " .. tostring((ftime > 0) and os.date("%x %X", ftime)) .. " ]"
+			local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
+			local modified = tostring((ftime > 0) and os.date("%x %X", ftime))
+			if not modified then
+				return false
 			end
+			return "[ " .. modified .. " ]"
 		end,
 		hl = function()
 			return { fg = "yellow" }
