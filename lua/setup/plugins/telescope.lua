@@ -16,9 +16,6 @@ M.init = function()
 				{
 					"<C-p>",
 					t.lazy_required_fn("telescope.builtin", "find_files", {
-						prompt_title = false,
-						results_title = false,
-						dynamic_preview_title = false,
 						hidden = true,
 					}),
 					description = "Find files",
@@ -57,14 +54,12 @@ end
 
 M.setup = function()
 	local ok, telescope = pcall(require, "telescope")
-	local actions = require("telescope.actions")
-	local actions_layout = require("telescope.actions.layout")
 
 	if not ok then
 		return
 	end
 
-	local config = {
+	telescope.setup({
 		defaults = {
 			winblend = 0,
 			borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
@@ -149,9 +144,8 @@ M.setup = function()
 				layout_config = { width = 0.55, height = 0.55 },
 			},
 		},
-	}
+	})
 
-	telescope.setup(config)
 	telescope.load_extension("fzf")
 	telescope.load_extension("lazygit")
 end

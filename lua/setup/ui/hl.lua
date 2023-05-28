@@ -123,16 +123,17 @@ return {
 	MasonMutedBlock = { fg = cl.light_grey, bg = cl.one_bg },
 
 	-- Telescope
-	TelescopePromptPrefix = { fg = cl.red, bg = cl.none },
-	TelescopeNormal = { bg = cl.none },
-	TelescopePreviewTitle = { fg = cl.black, bg = cl.green },
-	TelescopeSelection = { bg = cl.none, fg = cl.white },
+	TelescopePromptTitle = { fg = cl.black, bg = cl.red },
+	TelescopeSelection = { bg = cl.black2, fg = cl.white },
 	TelescopeResultsDiffAdd = { fg = cl.green },
 	TelescopeResultsDiffChange = { fg = cl.yellow },
 	TelescopeResultsDiffDelete = { fg = cl.red },
 	TelescopeBorder = { fg = cl.one_bg3 },
 	TelescopePromptBorder = { fg = cl.one_bg3 },
-	TelescopeResultsTitle = { fg = cl.black, bg = cl.none },
+	TelescopeResultsTitle = { fg = cl.black, bg = cl.green },
+	TelescopePreviewTitle = { fg = cl.black, bg = cl.blue },
+	TelescopePromptPrefix = { fg = cl.red, bg = cl.black },
+	TelescopeNormal = { bg = cl.none },
 	TelescopePromptNormal = { bg = cl.none },
 
 	-- Syntax
