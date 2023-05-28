@@ -8,22 +8,25 @@ return {
 	DiagnosticVirtualTextHint = { bg = cl.none, fg = cl.blue },
 
 	-- Neotree
-	NeoTreeIndentMarker = { bg = cl.none, fg = cl.cyan },
-	NeoTreeWinSeparator = { bg = cl.none, fg = cl.yellow },
-	NeoTreeDirectoryIcon = { fg = cl.yellow, bg = cl.none },
+	NeoTreeIndentMarker = { fg = cl.cyan },
+	NeoTreeWinSeparator = { fg = cl.line },
+	NeoTreeDirectoryIcon = { fg = cl.yellow },
 
 	-- Line Number
 	LineNr = { fg = cl.cyan, bold = true },
 	CursorLineNr = { fg = cl.purple, bold = true },
 
 	-- General
-	WinSeparator = { fg = cl.purple, bold = false },
+	NvimInternalError = { fg = cl.red },
+	WinSeparator = { fg = cl.line },
 	Pmenu = { bg = cl.one_bg },
 	PmenuSbar = { bg = cl.one_bg },
 	PmenuSel = { bg = cl.pmenu_bg, fg = cl.black },
 	PmenuThumb = { bg = cl.grey },
 	MatchParen = { link = "MatchWord" },
 	Comment = { fg = cl.grey_fg },
+	FloatBorder = { fg = cl.blue },
+	NormalFloat = { bg = cl.darker_black },
 
 	-- Navic
 	NavicText = { fg = cl.cyan, bg = cl.none },
@@ -179,4 +182,11 @@ return {
 	["@lsp.type.type"] = { link = "@type" },
 	["@lsp.type.typeParamater"] = { link = "TypeDef" },
 	["@lsp.type.variable"] = { link = "@variable" },
+
+	-- Which-key
+	WhichKey = { fg = cl.blue },
+	WhichKeySeparator = { fg = cl.light_grey },
+	WhichKeyDesc = { fg = cl.red },
+	WhichKeyGroup = { fg = cl.green },
+	WhichKeyValue = { fg = cl.green },
 }

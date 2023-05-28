@@ -52,7 +52,7 @@ M.setup = function()
 		autochdir = true,
 		highlights = {
 			FloatBorder = {
-				guifg = require("setup.ui.colors").purple,
+				guifg = require("setup.ui.colors").line,
 				guibg = "none",
 			},
 		},
