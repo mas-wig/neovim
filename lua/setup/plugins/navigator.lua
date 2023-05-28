@@ -5,6 +5,8 @@ return require("navigator").setup({
 	transparency = 100,
 	lsp_signature_help = false,
 	lsp = {
+		code_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
+		code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
 		disable_lsp = "all",
 		format_on_save = false,
 		document_highlight = true,
