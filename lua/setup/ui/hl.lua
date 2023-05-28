@@ -26,7 +26,7 @@ return {
 	MatchParen = { link = "MatchWord" },
 	Comment = { fg = cl.grey_fg },
 	FloatBorder = { fg = cl.blue },
-	NormalFloat = { bg = cl.darker_black },
+	NormalFloat = { bg = cl.none },
 
 	-- Navic
 	NavicText = { fg = cl.cyan, bg = cl.none },
