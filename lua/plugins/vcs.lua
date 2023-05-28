@@ -7,10 +7,11 @@ return {
 		end,
 	},
 	{
-		"pwntester/octo.nvim",
-		cmd = "Octo",
-		config = function ()
-		  require("setup.plugins.octo")
-		end,
+		"kdheepak/lazygit.nvim",
+		cmd = { "LazyGit", "LazyGitCurrentFile", "LazyGitConfig", "LazyGitFilter", "LazyGitFilterCurrentFile" },
+		keys = {
+			{ "<leader>gG", "<cmd>LazyGit<cr>", desc = "Open LayzGit (Root)" },
+			{ "<leader>gg", "<cmd>:LazyGitCurrentFile<cr>", desc = "Open LayzGit (Root)" },
+		},
 	},
 }

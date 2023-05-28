@@ -96,14 +96,6 @@ map("n", "<leader>uc", function()
 	Util.toggle("conceallevel", false, { 0, conceallevel })
 end, { desc = "Toggle Conceal" })
 
--- lazygit
-map("n", "<leader>gg", function()
-	Util.float_term({ "lazygit" }, { cwd = require("setup.utils").get_root() })
-end, { desc = "Lazygit (root dir)" })
-map("n", "<leader>gG", function()
-	Util.float_term({ "lazygit" })
-end, { desc = "Lazygit (cwd)" })
-
 local function termcodes(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end

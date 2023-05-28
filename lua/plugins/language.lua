@@ -70,19 +70,4 @@ return {
 			})
 		end,
 	},
-
-	{
-		"simrat39/rust-tools.nvim",
-		ft = { "rust" },
-		config = function()
-			return require("rust-tools").setup({
-				on_attach = function()
-					require("setup.plugins.lspconfig").setup()
-					require("setup.plugins.lspconfig.keymaps")
-				end,
-				inlay_hints = { auto = false },
-				hover_actions = { border = "rounded" },
-			})
-		end,
-	},
 }

@@ -8,7 +8,6 @@ return {
 			{ "hrsh7th/cmp-path", lazy = true },
 			{ "hrsh7th/cmp-cmdline", lazy = true },
 			{ "saadparwaiz1/cmp_luasnip", lazy = true },
-			{ "tzachar/cmp-fuzzy-buffer", dependencies = { "tzachar/fuzzy.nvim" }, lazy = true },
 			{ "hrsh7th/cmp-nvim-lsp", lazy = true },
 			{ "dmitmel/cmp-cmdline-history", lazy = true },
 		},

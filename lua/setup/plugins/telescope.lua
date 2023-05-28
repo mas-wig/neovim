@@ -153,6 +153,7 @@ M.setup = function()
 
 	telescope.setup(config)
 	telescope.load_extension("fzf")
+	telescope.load_extension("lazygit")
 end
 
 return M

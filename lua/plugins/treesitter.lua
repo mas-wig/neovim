@@ -21,7 +21,7 @@ return {
 		{ "windwp/nvim-autopairs", config = true },
 		{
 			"nvim-treesitter/nvim-treesitter-context",
-			opts = { max_lines = 1, trim_scope = "outer", min_window_height = 0 },
+			opts = { max_lines = 3, trim_scope = "outer", min_window_height = 0 },
 		},
 		{
 			"nvim-treesitter/nvim-treesitter-textobjects",

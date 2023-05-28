@@ -33,20 +33,20 @@ function M.get()
 				end,
 				desc = "⚡️ Hover",
 			},
-			{
-				"g0",
-				function()
-					require("navigator.symbols").document_symbols()
-				end,
-				desc = "⚡️ Document Symbols",
-			},
-			{
-				"gW",
-				function()
-					require("navigator.workspace").workspace_symbol_live()
-				end,
-				desc = "⚡️ Workspace Symbols Live",
-			},
+			-- {
+			-- 	"g0",
+			-- 	function()
+			-- 		require("navigator.symbols").document_symbols()
+			-- 	end,
+			-- 	desc = "⚡️ Document Symbols",
+			-- },
+			-- {
+			-- 	"gW",
+			-- 	function()
+			-- 		require("navigator.workspace").workspace_symbol_live()
+			-- 	end,
+			-- 	desc = "⚡️ Workspace Symbols Live",
+			-- },
 			{
 				"gd",
 				function()
@@ -83,27 +83,27 @@ function M.get()
 				end,
 				desc = "⚡️ Type Definition Preview",
 			},
-			{
-				"<Leader>gt",
-				function()
-					require("navigator.treesitter").buf_ts()
-				end,
-				desc = "⚡️ Buf TS",
-			},
-			{
-				"<Leader>gT",
-				function()
-					require("navigator.treesitter").bufs_ts()
-				end,
-				desc = "⚡️ Bufs TS",
-			},
-			{
-				"<Leader>ct",
-				function()
-					require("navigator.ctags").ctags()
-				end,
-				desc = "⚡️ Ctags",
-			},
+			-- {
+			-- 	"<Leader>gt",
+			-- 	function()
+			-- 		require("navigator.treesitter").buf_ts()
+			-- 	end,
+			-- 	desc = "⚡️ Buf TS",
+			-- },
+			-- {
+			-- 	"<Leader>gT",
+			-- 	function()
+			-- 		require("navigator.treesitter").bufs_ts()
+			-- 	end,
+			-- 	desc = "⚡️ Bufs TS",
+			-- },
+			-- {
+			-- 	"<Leader>ct",
+			-- 	function()
+			-- 		require("navigator.ctags").ctags()
+			-- 	end,
+			-- 	desc = "⚡️ Ctags",
+			-- },
 			{
 				"<leader>ca",
 				mode = "n",
@@ -205,13 +205,13 @@ function M.get()
 				end,
 				desc = "⚡️ Goto Previous Usage",
 			},
-			{
-				"<Leader>k",
-				function()
-					require("navigator.dochighlight").hi_symbol()
-				end,
-				desc = "⚡️ HI Symbol",
-			},
+			-- {
+			-- 	"<Leader>k",
+			-- 	function()
+			-- 		require("navigator.dochighlight").hi_symbol()
+			-- 	end,
+			-- 	desc = "⚡️ HI Symbol",
+			-- },
 			{
 				"<leader>wa",
 				function()

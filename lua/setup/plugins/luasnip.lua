@@ -5,10 +5,10 @@ return function()
 		region_check_events = "CursorMoved",
 	})
 
-	require("luasnip.loaders.from_vscode").lazy_load({
-		paths = { "./after/snippets/" },
-		exclude = { "html", "css" },
-	})
+	-- require("luasnip.loaders.from_vscode").lazy_load({
+	-- 	paths = { "./after/snippets/" },
+	-- 	exclude = { "html", "css" },
+	-- })
 
 	vim.api.nvim_create_autocmd("InsertLeave", {
 		callback = function()

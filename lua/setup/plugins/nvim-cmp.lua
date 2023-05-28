@@ -24,11 +24,11 @@ return function()
 				winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,Search:None,CursorLine:PmenuSel",
 				side_padding = 1,
 			},
-			-- documentation = false,
-			documentation = {
-				border = "rounded",
-				winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-			},
+			documentation = false,
+			-- documentation = {
+			-- 	border = "rounded",
+			-- 	winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+			-- },
 		},
 		snippet = {
 			expand = function(args)
@@ -37,7 +37,6 @@ return function()
 		},
 		sorting = {
 			comparators = {
-				require("cmp_fuzzy_buffer.compare"),
 				compare.score,
 				compare.recently_used,
 				compare.offset,

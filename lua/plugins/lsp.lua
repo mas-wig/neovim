@@ -59,23 +59,6 @@ return {
 	},
 
 	{
-		"jose-elias-alvarez/null-ls.nvim",
-		dependencies = {
-			{
-				"jay-babu/mason-null-ls.nvim",
-				opts = {
-					ensure_installed = { "clang_format" },
-					automatic_installation = true,
-				},
-			},
-		},
-		event = "LspAttach",
-		config = function()
-			require("setup.plugins.null-ls")()
-		end,
-	},
-
-	{
 		"ray-x/navigator.lua",
 		branch = "master",
 		event = { "BufReadPre", "BufNewFile" },

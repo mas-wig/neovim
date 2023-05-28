@@ -80,7 +80,7 @@ return {
 		"m4xshen/hardtime.nvim",
 		event = { "BufRead", "BufNewFile" },
 		opts = {
-			max_time = 50,
+			max_time = 10,
 			max_count = 4,
 			disable_mouse = true,
 			hint = true,

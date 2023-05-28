@@ -1,18 +1,4 @@
 return {
-	-- {
-	-- 	name = "ConcealAttributes",
-	-- 	{
-	-- 		{ "BufEnter", "BufWritePost", "TextChanged", "InsertLeave" },
-	-- 		function()
-	-- 			local bufnr = vim.api.nvim_get_current_buf()
-	-- 			require("setup.utils.functions").ConcealHTML(bufnr)
-	-- 		end,
-	-- 		opts = {
-	-- 			pattern = { "*.html" },
-	-- 		},
-	-- 	},
-	-- },
-
 	{
 		name = "ReturnToLastEditingPosition",
 		{
@@ -102,7 +88,6 @@ return {
 		},
 	},
 	-- Code Folding and cursor
-
 	{
 		name = "auto_views",
 		clear = true,
@@ -152,56 +137,6 @@ return {
 					and vim.bo.filetype ~= "gitcommit"
 				then
 					vim.cmd.update(filepath)
-				end
-			end,
-		},
-	},
-	{
-		name = "AlphaSetup",
-		clear = true,
-		desc = "Disable status and tablines for alpha",
-		{
-			{ "User", "BufEnter" },
-			function(event)
-				if
-					(
-						(event.event == "User" and event.file == "AlphaReady")
-						or (
-							event.event == "BufEnter"
-							and vim.api.nvim_get_option_value("filetype", { buf = event.buf }) == "alpha"
-						)
-					) and not vim.g.before_alpha
-				then
-					vim.g.before_alpha =
-						{ showtabline = vim.opt.showtabline:get(), laststatus = vim.opt.laststatus:get() }
-					vim.opt.showtabline, vim.opt.laststatus = 0, 0
-				elseif
-					vim.g.before_alpha
-					and event.event == "BufEnter"
-					and vim.api.nvim_get_option_value("buftype", { buf = event.buf }) ~= "nofile"
-				then
-					vim.opt.laststatus, vim.opt.showtabline =
-						vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
-					vim.g.before_alpha = nil
-				end
-			end,
-		},
-		{
-			{ "VimEnter" },
-			function()
-				local should_skip = false
-				if vim.fn.argc() > 0 or vim.fn.line2byte(vim.fn.line("$")) ~= -1 or not vim.o.modifiable then
-					should_skip = true
-				else
-					for _, arg in pairs(vim.v.argv) do
-						if arg == "-b" or arg == "-c" or vim.startswith(arg, "+") or arg == "-S" then
-							should_skip = true
-							break
-						end
-					end
-				end
-				if not should_skip then
-					require("alpha").start(true, require("alpha").default_config)
 				end
 			end,
 		},

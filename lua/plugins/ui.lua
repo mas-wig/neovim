@@ -89,48 +89,11 @@ return {
 			},
 			use_treesitter = true,
 			show_trailing_blankline_indent = false,
-			show_current_context = false,
+			show_current_context = true,
+			show_current_context_start = true,
 		},
 		config = function(_, opts)
 			require("indent_blankline").setup(opts)
-		end,
-	},
-
-	{
-		"echasnovski/mini.indentscope",
-		version = false, -- wait till new 0.7.0 release to put it back on semver
-		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			symbol = "▏",
-			options = { try_as_border = true, border = "both", indent_at_cursor = true },
-			draw = {
-				delay = 10,
-			},
-		},
-		init = function()
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = {
-					"toggleterm",
-					"alpha",
-					"terminal",
-					"help",
-					"dashboard",
-					"Trouble",
-					"octo",
-					"mason",
-					"dbui",
-					"help",
-					"neo-tree",
-					"Trouble",
-					"lazy",
-				},
-				callback = function()
-					vim.b.miniindentscope_disable = true
-				end,
-			})
-		end,
-		config = function(_, opts)
-			require("mini.indentscope").setup(opts)
 		end,
 	},
 
@@ -140,19 +103,6 @@ return {
 		lazy = true,
 		config = function()
 			require("setup.plugins.noice")
-		end,
-	},
-
-	{
-		"goolord/alpha-nvim",
-		event = "VimEnter",
-		init = function()
-			if vim.o.filetype == "alpha" then
-				vim.opt.laststatus = 0
-			end
-		end,
-		config = function()
-			require("setup.plugins.aplha")()
 		end,
 	},
 }
