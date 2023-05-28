@@ -7,7 +7,7 @@ return require("navigator").setup({
 	lsp = {
 		disable_lsp = "all",
 		format_on_save = false,
-		document_highlight = false,
+		document_highlight = true,
 		diagnostic = {
 			underline = true,
 			update_in_insert = false,
@@ -20,7 +20,8 @@ return require("navigator").setup({
 			severity_sort = true,
 		},
 		diagnostic_virtual_text = true,
-		diagnostic_scrollbar_sign = true,
+		-- diagnostic_scrollbar_sign = true,
+		diagnostic_scrollbar_sign = { "▃", "▆", "█" },
 		diagnostic_update_in_insert = false,
 		disply_diagnostic_qf = false,
 	},
