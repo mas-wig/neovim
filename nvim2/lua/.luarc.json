@@ -1,0 +1,4 @@
+{
+	"workspace.checkThirdParty": false,
+	"diagnostics.disable": ["undefined-global", "different-requires"]
+}
