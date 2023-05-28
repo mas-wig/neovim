@@ -217,9 +217,10 @@ return {
 			end,
 			hl = function(self)
 				if self.has_sign then
-					return self.sign.name
+					if self.sign.name == "GitSignsAdd" then
+						return { hl = "red" }
+					end
 				end
-				return "HeirlineStatusColumn"
 			end,
 			on_click = {
 				name = "gitsigns_click",

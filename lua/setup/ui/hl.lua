@@ -12,11 +12,9 @@ return {
 	NeoTreeWinSeparator = { fg = cl.line },
 	NeoTreeDirectoryIcon = { fg = cl.yellow },
 
-	-- Line Number
-	LineNr = { fg = cl.cyan, bold = true },
-	CursorLineNr = { fg = cl.purple, bold = true },
-
 	-- General
+	LineNr = { fg = cl.cyan, bold = true },
+	CursorLineNr = { fg = cl.white },
 	NvimInternalError = { fg = cl.red },
 	WinSeparator = { fg = cl.line },
 	Pmenu = { bg = cl.one_bg },
@@ -68,18 +66,7 @@ return {
 	CmpItemKindTypeParameter = { fg = cl.base08 },
 	CmpItemKindCopilot = { fg = cl.green },
 
-	GitSignsAdd = { fg = cl.green },
-	GitSignsChange = { fg = cl.yellow },
-	GitSignsDelete = { fg = cl.red },
-
 	TreesitterContext = { bg = cl.none },
-
-	["@variable"] = { fg = cl.base05 },
-	["@punctuation.bracket"] = { fg = cl.purple },
-	["@method.call"] = { fg = cl.red },
-	["@function.call"] = { fg = cl.blue },
-	["@constant"] = { fg = cl.orange },
-	["@parameter"] = { fg = cl.orange },
 
 	-- Dev Icon Highlight
 	DevIconDefault = { fg = cl.red },
@@ -182,6 +169,12 @@ return {
 	["@lsp.type.type"] = { link = "@type" },
 	["@lsp.type.typeParamater"] = { link = "TypeDef" },
 	["@lsp.type.variable"] = { link = "@variable" },
+	["@variable"] = { fg = cl.base05 },
+	["@punctuation.bracket"] = { fg = cl.purple },
+	["@method.call"] = { fg = cl.red },
+	["@function.call"] = { fg = cl.blue },
+	["@constant"] = { fg = cl.orange },
+	["@parameter"] = { fg = cl.orange },
 
 	-- Which-key
 	WhichKey = { fg = cl.blue },
@@ -190,5 +183,20 @@ return {
 	WhichKeyGroup = { fg = cl.green },
 	WhichKeyValue = { fg = cl.green },
 
-	-- Navigator
+	-- Notify
+	NotifyERRORBorder = { fg = cl.red },
+	NotifyERRORIcon = { fg = cl.red },
+	NotifyERRORTitle = { fg = cl.red },
+	NotifyWARNBorder = { fg = cl.orange },
+	NotifyWARNIcon = { fg = cl.orange },
+	NotifyWARNTitle = { fg = cl.orange },
+	NotifyINFOBorder = { fg = cl.green },
+	NotifyINFOIcon = { fg = cl.green },
+	NotifyINFOTitle = { fg = cl.green },
+	NotifyDEBUGBorder = { fg = cl.grey },
+	NotifyDEBUGIcon = { fg = cl.grey },
+	NotifyDEBUGTitle = { fg = cl.grey },
+	NotifyTRACEBorder = { fg = cl.purple },
+	NotifyTRACEIcon = { fg = cl.purple },
+	NotifyTRACETitle = { fg = cl.purple },
 }
