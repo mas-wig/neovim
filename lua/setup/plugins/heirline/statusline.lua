@@ -210,9 +210,7 @@ return require("heirline.utils").insert({
 	--Lazy
 	{
 		condition = function()
-			if require("lazy.status").has_updates() then
-				return true
-			end
+			require("lazy.status").has_updates()
 		end,
 		provider = function()
 			return "Lzy " .. require("lazy.status").updates()

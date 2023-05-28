@@ -122,7 +122,7 @@ return {
 	TelescopePromptBorder = { fg = cl.one_bg3 },
 	TelescopeResultsTitle = { fg = cl.black, bg = cl.green },
 	TelescopePreviewTitle = { fg = cl.black, bg = cl.blue },
-	TelescopePromptPrefix = { fg = cl.red, bg = cl.black },
+	TelescopePromptPrefix = { fg = cl.red, bg = cl.none },
 	TelescopeNormal = { bg = cl.none },
 	TelescopePromptNormal = { bg = cl.none },
 

@@ -37,47 +37,12 @@ return {
 	},
 	{
 		"akinsho/toggleterm.nvim",
-		cmd = "ToggleTerm",
+		cmd = { "ToggleTerm", "TermExec", "TermSelect", "ToggleTermToggleAll" },
 		init = function()
-			require("legendary").keymaps({
-				{
-					itemgroup = "ToggleTerm",
-					description = "Term me Daddy",
-					icon = "🔭",
-					keymaps = {
-						{ "<A-i>", "<cmd>ToggleTerm direction=float<cr>", desc = "Open Float Term" },
-						{ "<A-v>", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Open Vert Term" },
-						{ "<A-h>", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open Horz Term" },
-						{
-							"<A-i>",
-							{
-								n = "<cmd>ToggleTerm direction=float<cr>",
-								t = "<cmd>ToggleTerm direction=float<cr>",
-							},
-							desc = "Open Float Term",
-						},
-						{
-							"<A-v>",
-							{
-								n = "<cmd>ToggleTerm direction=vertical<cr>",
-								t = "<cmd>ToggleTerm direction=vertical<cr>",
-							},
-							desc = "Open Vert Term",
-						},
-						{
-							"<A-h>",
-							{
-								n = "<cmd>ToggleTerm direction=horizontal<cr>",
-								t = "<cmd>ToggleTerm direction=horizontal<cr>",
-							},
-							desc = "Open Horz Term",
-						},
-					},
-				},
-			})
+			require("setup.plugins.toggleterm").init()
 		end,
 		config = function()
-			require("setup.plugins.toggleterm")
+			require("setup.plugins.toggleterm").setup()
 		end,
 	},
 
