@@ -1,5 +1,5 @@
 return require("navigator").setup({
-	border = "single",
+	border = "rounded",
 	ts_fold = false,
 	default_mapping = false,
 	transparency = 100,
@@ -7,7 +7,7 @@ return require("navigator").setup({
 	lsp = {
 		disable_lsp = "all",
 		format_on_save = false,
-		document_highlight = true,
+		document_highlight = false,
 		diagnostic = {
 			underline = true,
 			update_in_insert = false,
@@ -20,9 +20,9 @@ return require("navigator").setup({
 			severity_sort = true,
 		},
 		diagnostic_virtual_text = true,
-		diagnostic_scrollbar_sign = false,
-		diagnostic_update_in_insert = true,
-		disply_diagnostic_qf = true,
+		diagnostic_scrollbar_sign = true,
+		diagnostic_update_in_insert = false,
+		disply_diagnostic_qf = false,
 	},
 	icons = {
 		icons = true,

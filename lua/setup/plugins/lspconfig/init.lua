@@ -20,6 +20,7 @@ end
 M.setup = function()
 	return M.on_attach(function(client, bufnr)
 		require("setup.plugins.lspconfig.keymaps").on_attach(client, bufnr)
+		require("navigator.codeAction").code_action_prompt(bufnr)
 		if client.name == "gopls" then
 			require("legendary").keymaps({
 				{

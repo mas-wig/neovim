@@ -21,11 +21,11 @@ return {
 	WinSeparator = { fg = cl.line },
 	Pmenu = { bg = cl.one_bg },
 	PmenuSbar = { bg = cl.one_bg },
-	PmenuSel = { bg = cl.pmenu_bg, fg = cl.black },
+	PmenuSel = { bg = cl.dark_purple, fg = cl.black },
 	PmenuThumb = { bg = cl.grey },
 	MatchParen = { link = "MatchWord" },
 	Comment = { fg = cl.grey_fg },
-	FloatBorder = { fg = cl.blue },
+	FloatBorder = { fg = cl.line },
 	NormalFloat = { bg = cl.none },
 
 	-- Navic
@@ -189,4 +189,6 @@ return {
 	WhichKeyDesc = { fg = cl.red },
 	WhichKeyGroup = { fg = cl.green },
 	WhichKeyValue = { fg = cl.green },
+
+	-- Navigator
 }
