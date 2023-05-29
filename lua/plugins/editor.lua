@@ -155,7 +155,6 @@ return {
 			"ObsidianFollowLink",
 			"ObsidianTemplate",
 		},
-		event = { "BufReadPre " .. vim.fn.expand("~") .. "/Public/NOTES/**.md" },
 		dependencies = { "godlygeek/tabular", "preservim/vim-markdown" },
 		init = function()
 			require("setup.plugins.obsidian").init()

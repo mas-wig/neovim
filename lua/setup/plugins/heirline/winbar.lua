@@ -11,7 +11,6 @@ local filetype = {
 	"^neo--tree$",
 	"^neotest--summary$",
 	"^neo--tree--popup$",
-	"^NvimTree$",
 	"^toggleterm$",
 	"^netrw$",
 	"^TelescopePrompt$",
