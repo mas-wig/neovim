@@ -84,6 +84,7 @@ return {
 			disable = function(_, bufnr)
 				return vim.api.nvim_buf_line_count(bufnr) > 7000
 			end,
+			additional_vim_regex_highlighting = { "markdown" },
 		},
 		textsubjects = { enable = true, keymaps = { [","] = "textsubjects-smart" } },
 		indent = { enable = true },

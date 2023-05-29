@@ -138,4 +138,30 @@ return {
 			},
 		},
 	},
+
+	{
+		"epwalsh/obsidian.nvim",
+		ft = { "md" },
+		cmd = {
+			"ObsidianBacklinks",
+			"ObsidianToday",
+			"ObsidianYesterday",
+			"ObsidianOpen",
+			"ObsidianNew",
+			"ObsidianSearch",
+			"ObsidianQuickSwitch",
+			"ObsidianLink",
+			"ObsidianLinkNew",
+			"ObsidianFollowLink",
+			"ObsidianTemplate",
+		},
+		event = { "BufReadPre " .. vim.fn.expand("~") .. "/Public/NOTES/**.md" },
+		dependencies = { "godlygeek/tabular", "preservim/vim-markdown" },
+		init = function()
+			require("setup.plugins.obsidian").init()
+		end,
+		config = function()
+			require("setup.plugins.obsidian").setup()
+		end,
+	},
 }

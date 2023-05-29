@@ -49,7 +49,6 @@ return function()
 		},
 		sources = cmp.config.sources({
 			{ name = "luasnip", priority = 100, max_item_count = 4, group_index = 1 },
-			{ name = "rg", priority = 95, max_item_count = 2, group_index = 1 },
 			{ name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 10, group_index = 1 },
 			{ name = "path", priority = 20, group_index = 2 },
 			{ name = "buffer", priority = 10, keyword_length = 3, max_item_count = 5, group_index = 2 },
