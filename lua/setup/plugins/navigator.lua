@@ -9,7 +9,7 @@ return require("navigator").setup({
 		code_lens_action = { enable = true, sign = true, sign_priority = 40, virtual_text = true },
 		disable_lsp = "all",
 		format_on_save = false,
-		document_highlight = true,
+		document_highlight = false,
 		diagnostic = {
 			underline = true,
 			update_in_insert = false,

@@ -1,7 +1,7 @@
 local M = {}
 M.setup = function()
 	return require("obsidian").setup({
-		daily_notes = { folder = "dailies" },
+		daily_notes = { folder = "Dailies" },
 		dir = "~/Public/NOTES/",
 		completion = { nvim_cmp = true },
 		note_id_func = function(title)
@@ -54,23 +54,11 @@ M.init = function()
 					desc = "Create new Notes with name",
 				},
 				{
-					"<leader>mt",
+					"<leader>mo",
 					function()
-						vim.ui.input({ prompt = "Move note to project folder " }, function(name)
-							if name ~= nil then
-								vim.cmd(
-									"!mv "
-										.. vim.fn.expand("%:p")
-										.. " "
-										.. vim.fn.expand("~")
-										.. "/Public/NOTES/projects/"
-										.. name
-								)
-								vim.cmd("bd!")
-							end
-						end)
+						vim.cmd("Neotree dir=~/Public/NOTES/")
 					end,
-					desc = "Move to poject folder",
+					desc = "Neotree project folder",
 				},
 			},
 		},

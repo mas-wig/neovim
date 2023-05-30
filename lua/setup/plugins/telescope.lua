@@ -88,6 +88,7 @@ M.setup = function()
 			sorting_strategy = "ascending",
 			file_ignore_patterns = {
 				"node_modules",
+				".obsidian/*",
 				-- "assets",
 				".git/*",
 				"^target",
