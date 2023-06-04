@@ -24,6 +24,7 @@ return {
 						position = "current",
 						action = "focus",
 						source = "filesystem",
+						reveal = true,
 					})
 				end,
 				desc = "Explorer NeoTree (root dir)",
