@@ -19,29 +19,8 @@ return {
 		{ "windwp/nvim-ts-autotag", config = true },
 		{ "HiPhish/nvim-ts-rainbow2" },
 		{ "windwp/nvim-autopairs", config = true },
-		{
-			"nvim-treesitter/nvim-treesitter-context",
-			opts = { max_lines = 3, trim_scope = "outer", min_window_height = 0 },
-		},
-		{
-			"nvim-treesitter/nvim-treesitter-textobjects",
-			init = function()
-				local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
-				local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-				local enabled = false
-				if opts.textobjects then
-					for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-						if opts.textobjects[mod] and opts.textobjects[mod].enable then
-							enabled = true
-							break
-						end
-					end
-				end
-				if not enabled then
-					require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-				end
-			end,
-		},
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		{ "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 3 } },
 	},
 	opts = {
 		ensure_installed = {

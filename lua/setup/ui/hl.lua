@@ -11,6 +11,8 @@ return {
 	NeoTreeIndentMarker = { fg = cl.cyan },
 	NeoTreeWinSeparator = { fg = cl.line },
 	NeoTreeDirectoryIcon = { fg = cl.yellow },
+	NeoTreeFloatTitle = { fg = cl.black, bg = cl.green },
+	NeoTreeFloatBorder = { fg = cl.red, bg = cl.none },
 
 	-- General
 	LineNr = { fg = cl.cyan, bold = true },
@@ -129,6 +131,7 @@ return {
 	-- Syntax
 	Boolean = { fg = cl.base09 },
 	Character = { fg = cl.base08 },
+
 	Conditional = { fg = cl.base0E },
 	Constant = { fg = cl.base08 },
 	Define = { fg = cl.base0E, sp = "none" },

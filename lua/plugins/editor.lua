@@ -18,7 +18,13 @@ return {
 			{
 				"<C-n>",
 				function()
-					require("neo-tree.command").execute({ toggle = true, dir = os.getenv("PWD") })
+					require("neo-tree.command").execute({
+						toggle = true,
+						dir = os.getenv("PWD"),
+						position = "current",
+						action = "focus",
+						source = "filesystem",
+					})
 				end,
 				desc = "Explorer NeoTree (root dir)",
 			},

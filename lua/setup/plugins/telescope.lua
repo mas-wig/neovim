@@ -89,6 +89,8 @@ M.setup = function()
 			file_ignore_patterns = {
 				"node_modules",
 				".obsidian/*",
+				"src",
+				"vendors",
 				-- "assets",
 				".git/*",
 				"^target",

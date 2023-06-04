@@ -1,5 +1,6 @@
 return require("neo-tree").setup({
 	hide_root_node = true,
+	popup_border_style = "single",
 	filesystem = {
 		follow_current_file = true,
 		hijack_netrw_behavior = "open_current",
@@ -12,7 +13,7 @@ return require("neo-tree").setup({
 			hide_by_name = {
 				".DS_Store",
 				"thumbs.db",
-				"node_modules",
+				-- "node_modules",
 				"tmp",
 			},
 			hide_by_pattern = {

@@ -16,9 +16,9 @@ return {
 		name = "FiletypeOptions",
 		{
 			"FileType",
-			":setlocal shiftwidth=4 tabstop=4",
+			":setlocal shiftwidth=2 tabstop=2",
 			opts = {
-				pattern = { "ledger" },
+				pattern = { "html" },
 			},
 		},
 		{
@@ -39,22 +39,6 @@ return {
 			":if &buftype == 'quickfix' | setlocal nocursorline | setlocal number | endif",
 			opts = {
 				pattern = { "*" },
-			},
-		},
-	},
-	{
-		name = "ChangeMappingsInTerminal",
-		{
-			"TermOpen",
-			function()
-				if vim.bo.filetype == "" or vim.bo.filetype == "toggleterm" then
-					local opts = { silent = false, buffer = 0 }
-					vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
-					vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
-				end
-			end,
-			opts = {
-				pattern = "term://*",
 			},
 		},
 	},

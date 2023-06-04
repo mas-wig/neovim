@@ -154,7 +154,7 @@ return {
 			provider = function()
 				return "[   " .. string.gsub(vim.fn.expand("%:p:."), "/", " / ") .. " ]"
 			end,
-			hl = { fg = "yellow3", bold = true },
+			hl = { fg = "yellow", bold = true },
 		},
 		spacer,
 	},

@@ -204,7 +204,6 @@ return require("heirline.utils").insert({
 			hl = { fg = "pink" },
 		},
 	},
-	spacer,
 	align,
 	-------------------------------------------------
 	-- lsp status
@@ -267,10 +266,10 @@ return require("heirline.utils").insert({
 				return "%" .. self.tabnr .. "T " .. self.tabpage .. " %T"
 			end,
 			hl = function(self)
-				if not self.is_active then
-					return { bg = "none" }
+				if self.is_active then
+					return { bg = require("heirline.utils").get_highlight("TabLineSel").bg, bold = true, fg = "black" }
 				else
-					return "TabLineSel"
+					return { bg = "none" }
 				end
 			end,
 		}),
