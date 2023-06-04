@@ -1,5 +1,5 @@
 return require("neo-tree").setup({
-	hide_root_node = false,
+	hide_root_node = true,
 	popup_border_style = "single",
 	filesystem = {
 		follow_current_file = true,
