@@ -13,7 +13,7 @@ return {
 	NeoTreeDirectoryIcon = { fg = cl.yellow },
 	NeoTreeFloatTitle = { fg = cl.black, bg = cl.green },
 	NeoTreeFloatBorder = { fg = cl.red, bg = cl.none },
-
+	NeoTreeRootName = { fg = cl.orange },
 	-- General
 	LineNr = { fg = cl.cyan, bold = true },
 	CursorLineNr = { fg = cl.white },

@@ -63,6 +63,9 @@ return require("neo-tree").setup({
 	default_component_configs = {
 		indent = {
 			with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+			with_markers = true,
+			indent_marker = "│",
+			last_indent_marker = "└",
 			expander_collapsed = "",
 			expander_expanded = "",
 			expander_highlight = "NeoTreeExpander",
