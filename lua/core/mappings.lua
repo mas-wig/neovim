@@ -48,6 +48,7 @@ map(
 map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
 map("n", "<leader>bd", "<cmd>bd!<cr>", { desc = "Next buffer", silent = true })
+map("n", "<leader>bD", "<cmd>%bd|e#|bd#<cr>", { desc = "Delete all buffers", silent = true })
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 
