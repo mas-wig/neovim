@@ -92,7 +92,6 @@ return {
 			map("]]", "next")
 			map("[[", "prev")
 
-			-- also set it after loading ftplugins, since a lot overwrite [[ and ]]
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function()
 					local buffer = vim.api.nvim_get_current_buf()

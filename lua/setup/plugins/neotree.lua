@@ -1,5 +1,5 @@
 return require("neo-tree").setup({
-	hide_root_node = true,
+	hide_root_node = false,
 	popup_border_style = "single",
 	filesystem = {
 		follow_current_file = true,
@@ -43,7 +43,7 @@ return require("neo-tree").setup({
 		},
 	},
 	source_selector = {
-		winbar = true,
+		winbar = false, -- set true jika lu mau set winbar git, buffers dll
 		content_layout = "center",
 		sources = {
 			{
