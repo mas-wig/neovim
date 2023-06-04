@@ -66,6 +66,7 @@ return require("neo-tree").setup({
 			expander_collapsed = "",
 			expander_expanded = "",
 			expander_highlight = "NeoTreeExpander",
+			indent_size = 3,
 		},
 		icon = {
 			folder_closed = require("setup.ui.icons").ui.Folder,
