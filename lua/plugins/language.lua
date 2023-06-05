@@ -17,7 +17,6 @@ return {
 				goimport = "goimports",
 				lsp_on_attach = function()
 					require("setup.plugins.lspconfig").setup()
-					require("setup.plugins.lspconfig.keymaps")
 				end,
 				lsp_cfg = { capabilities = capabilities },
 				lsp_document_formatting = true,
