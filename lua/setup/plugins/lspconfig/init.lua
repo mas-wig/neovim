@@ -21,13 +21,16 @@ M.setup = function()
 	return M.on_attach(function(client, bufnr)
 		local lsp_exclude = { "html", "css", "jsonls" }
 		for _, lsp_name in pairs(lsp_exclude) do
-			if client.name ~= lsp_name and client.server_capabilities.documentSymbolProvider then
+			if client.name ~= lsp_name then
 				require("navigator.codeAction").code_action_prompt(bufnr)
-				require("navigator.dochighlight").documentHighlight(bufnr)
 				require("setup.plugins.lspconfig.keymaps").on_attach(client, bufnr)
+			end
+			if client.server_capabilities.documentSymbolProvider then
 				require("nvim-navic").attach(client, bufnr)
 			end
 		end
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
 	end)
 end
 return M

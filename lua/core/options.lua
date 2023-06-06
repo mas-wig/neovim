@@ -8,7 +8,7 @@ if vim.version().minor >= 9 then
 end
 
 local opts = {
-	wrap = false,
+	wrap = true,
 	breakindent = false,
 	linebreak = true,
 	textwidth = 80,

@@ -19,7 +19,6 @@ return {
 		{ "windwp/nvim-ts-autotag", config = true },
 		{ "HiPhish/nvim-ts-rainbow2" },
 		{ "windwp/nvim-autopairs", config = true },
-		{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		{ "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 3 } },
 	},
 	opts = {

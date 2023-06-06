@@ -2,12 +2,8 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "williamboman/mason-lspconfig.nvim", lazy = true },
-		},
-		opts = {
-			setup = {},
-		},
+		dependencies = { "williamboman/mason-lspconfig.nvim" },
+		opts = { setup = {} },
 		config = function(_, opts)
 			require("setup.plugins.lspconfig").setup()
 			require("setup.plugins.lspconfig").diagnostics()
