@@ -91,7 +91,6 @@ M.setup = function()
 				".obsidian/*",
 				"src",
 				"vendors",
-				-- "assets",
 				".git/*",
 				"^target",
 				"%.aux",

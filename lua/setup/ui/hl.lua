@@ -9,7 +9,7 @@ return {
 
 	-- Neotree
 	NeoTreeIndentMarker = { fg = cl.cyan },
-	NeoTreeWinSeparator = { fg = cl.line },
+	NeoTreeWinSeparator = { fg = cl.green },
 	NeoTreeDirectoryIcon = { fg = cl.yellow },
 	NeoTreeFloatTitle = { fg = cl.black, bg = cl.green },
 	NeoTreeFloatBorder = { fg = cl.red, bg = cl.none },
@@ -18,7 +18,7 @@ return {
 	LineNr = { fg = cl.blue },
 	CursorLineNr = { fg = cl.red, bold = true },
 	NvimInternalError = { fg = cl.red },
-	WinSeparator = { fg = cl.line },
+	WinSeparator = { fg = cl.green },
 	Pmenu = { bg = cl.one_bg },
 	PmenuSbar = { bg = cl.one_bg },
 	PmenuSel = { bg = cl.dark_purple, fg = cl.black },

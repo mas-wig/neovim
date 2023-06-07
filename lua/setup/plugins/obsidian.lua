@@ -7,13 +7,13 @@ M.setup = function()
 		note_id_func = function(title)
 			local suffix = ""
 			if title ~= nil then
-				suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+				suffix = title:gsub(" ", "_"):gsub("[^A-Za-z0-9-]", "")
 			else
 				for _ = 1, 4 do
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
 			end
-			return tostring(os.time()) .. "-" .. suffix
+			return tostring(os.date("%d-%m-%Y")) .. "_" .. suffix
 		end,
 		disable_frontmatter = false,
 		note_frontmatter_func = function(note)
@@ -43,15 +43,16 @@ M.init = function()
 			icon = "🔭",
 			keymaps = {
 				{
-					"<leader>mn",
+					"<leader>fn",
 					function()
 						vim.ui.input({ prompt = " Note Name" }, function(name)
 							if name ~= nil then
-								vim.cmd("ObsidianNew " .. name)
+								vim.cmd("ObsidianLinkNew " .. name)
 							end
 						end)
 					end,
 					desc = "Create new Notes with name",
+					mode = { "v" },
 				},
 				{
 					"<leader>n",
@@ -60,12 +61,15 @@ M.init = function()
 							toggle = true,
 							dir = vim.fn.expand("~") .. "/Public/NOTES",
 							position = "left",
-							action = "focus",
 							source = "filesystem",
-							reveal = true,
 						})
 					end,
 					desc = "Explorer NeoTree (root dir)",
+				},
+				{
+					"<leader>fl",
+					"<cmd>ObsidianFollowLink<CR>",
+					desc = "Obsidian Folow Link",
 				},
 			},
 		},
