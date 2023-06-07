@@ -19,7 +19,7 @@ return {
 	CursorLineNr = { fg = cl.red, bold = true },
 	NvimInternalError = { fg = cl.red },
 	WinSeparator = { fg = cl.green },
-	Pmenu = { bg = cl.one_bg },
+	Pmenu = { fg = cl.line },
 	PmenuSbar = { bg = cl.one_bg },
 	PmenuSel = { bg = cl.dark_purple, fg = cl.black },
 	PmenuThumb = { bg = cl.grey },
