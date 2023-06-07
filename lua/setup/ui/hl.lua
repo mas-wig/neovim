@@ -15,8 +15,8 @@ return {
 	NeoTreeFloatBorder = { fg = cl.red, bg = cl.none },
 	NeoTreeRootName = { fg = cl.orange },
 	-- General
-	LineNr = { fg = cl.cyan, bold = true },
-	CursorLineNr = { fg = cl.white },
+	LineNr = { fg = cl.blue },
+	CursorLineNr = { fg = cl.red, bold = true },
 	NvimInternalError = { fg = cl.red },
 	WinSeparator = { fg = cl.line },
 	Pmenu = { bg = cl.one_bg },
@@ -151,4 +151,8 @@ return {
 	NotifyTRACEBorder = { fg = cl.purple },
 	NotifyTRACEIcon = { fg = cl.purple },
 	NotifyTRACETitle = { fg = cl.purple },
+
+	GitSignsAdd = { fg = cl.green },
+	GitSignsChange = { fg = cl.yellow },
+	GitSignsDelete = { fg = cl.red },
 }

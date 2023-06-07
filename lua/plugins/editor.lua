@@ -30,11 +30,18 @@ return {
 				desc = "Explorer NeoTree (root dir)",
 			},
 			{
-				"<leader>E",
+				"<leader>n",
 				function()
-					require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
+					require("neo-tree.command").execute({
+						toggle = true,
+						dir = os.getenv("PWD"),
+						position = "current",
+						action = "focus",
+						source = "git_status",
+						reveal = true,
+					})
 				end,
-				desc = "Explorer NeoTree (cwd)",
+				desc = "Explorer NeoTree (Git)",
 			},
 		},
 		config = function()
