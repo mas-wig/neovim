@@ -30,7 +30,7 @@ return {
 				desc = "Explorer NeoTree (root dir)",
 			},
 			{
-				"<leader>n",
+				"<leader>N",
 				function()
 					require("neo-tree.command").execute({
 						toggle = true,

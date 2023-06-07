@@ -54,11 +54,18 @@ M.init = function()
 					desc = "Create new Notes with name",
 				},
 				{
-					"<leader>mo",
+					"<leader>n",
 					function()
-						vim.cmd("Neotree dir=~/Public/NOTES/")
+						require("neo-tree.command").execute({
+							toggle = true,
+							dir = vim.fn.expand("~") .. "/Public/NOTES",
+							position = "current",
+							action = "focus",
+							source = "filesystem",
+							reveal = true,
+						})
 					end,
-					desc = "Neotree project folder",
+					desc = "Explorer NeoTree (root dir)",
 				},
 			},
 		},
