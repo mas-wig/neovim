@@ -3,7 +3,7 @@ return {
 	comment = "#565f89",
 	white = "#c0caf5",
 	darker_black = "#16161e",
-	black = "#1a1b26", --  nvim bg
+	black = "#000000", --  nvim bg
 	black2 = "#1f2336",
 	one_bg = "#24283b",
 	one_bg2 = "#414868",
@@ -21,6 +21,7 @@ return {
 	nord_blue = "#80a8fd",
 	blue = "#7aa2f7",
 	yellow = "#e0af68",
+	yellow2 = "#cafc03",
 	sun = "#EBCB8B",
 	purple = "#bb9af7",
 	dark_purple = "#9d7cd8",

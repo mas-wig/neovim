@@ -21,7 +21,7 @@ return function()
 			completion = {
 				scrollbar = false,
 				border = "rounded",
-				winhighlight = "Normal:CmpMenu,FloatBorder:Pmenu,Search:None,CursorLine:PmenuSel",
+				winhighlight = "Normal:CmpMenu,FloatBorder:Pmenu,CursorLine:PmenuSel",
 				side_padding = 1,
 			},
 			documentation = false,
