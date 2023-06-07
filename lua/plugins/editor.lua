@@ -141,6 +141,7 @@ return {
 	},
 	{
 		"nvim-pack/nvim-spectre",
+		config = true,
 		keys = {
 			{
 				"<leader>sr",
@@ -148,6 +149,14 @@ return {
 					require("spectre").open()
 				end,
 				desc = "Replace in files (Spectre)",
+			},
+			{
+				"<leader>sw",
+				function()
+					require("spectre").open_visual()
+				end,
+				desc = "Select Current Word (Spectre)",
+				mode = { "v" },
 			},
 		},
 	},

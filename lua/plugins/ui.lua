@@ -49,6 +49,15 @@ return {
 				return vim.ui.input(...)
 			end
 		end,
+		opts = {
+			input = {
+				title_pos = "center",
+				border = "single",
+			},
+		},
+		config = function(_, opts)
+			require("dressing").setup(opts)
+		end,
 	},
 
 	{
