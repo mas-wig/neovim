@@ -59,7 +59,7 @@ M.init = function()
 						require("neo-tree.command").execute({
 							toggle = true,
 							dir = vim.fn.expand("~") .. "/Public/NOTES",
-							position = "current",
+							position = "left",
 							action = "focus",
 							source = "filesystem",
 							reveal = true,
