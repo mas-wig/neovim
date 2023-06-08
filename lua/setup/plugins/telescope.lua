@@ -17,6 +17,7 @@ M.init = function()
 					"<C-p>",
 					t.lazy_required_fn("telescope.builtin", "find_files", {
 						hidden = true,
+						cwd = os.getenv("PWD"),
 					}),
 					description = "Find files",
 				},
@@ -46,6 +47,22 @@ M.init = function()
 						{ prompt_title = "Buffer List", path_display = { "smart" } }
 					),
 					description = "List buffers",
+				},
+				{
+					"<leader>fn",
+					t.lazy_required_fn("telescope.builtin", "find_files", {
+						cwd = vim.fn.expand("~") .. "/Public/NOTES",
+					}),
+					description = "Find notes",
+				},
+				{
+					"<Leader>gn",
+					t.lazy_required_fn("telescope.builtin", "live_grep", {
+						prompt_title = "Search Notes LG",
+						cwd = vim.fn.expand("~") .. "/Public/NOTES",
+						path_display = { "smart" },
+					}),
+					description = "Search LG Notes",
 				},
 			},
 		},

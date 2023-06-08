@@ -177,7 +177,6 @@ return {
 			"ObsidianFollowLink",
 			"ObsidianTemplate",
 		},
-		dependencies = { "godlygeek/tabular", "preservim/vim-markdown" },
 		init = function()
 			require("setup.plugins.obsidian").init()
 		end,

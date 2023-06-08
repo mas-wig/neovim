@@ -11,7 +11,7 @@ formatter.setup({
 		["css"] = { require("formatter.filetypes.css").prettier },
 		["rust"] = { require("formatter.filetypes.rust").rustfmt },
 		["php"] = { require("formatter.filetypes.php").php_cs_fixer },
-		-- ["sql"] = { require("formatter.filetypes.sql").pgformat },
+		["markdown"] = { require("formatter.filetypes.markdown").prettierd },
 		["json"] = { require("formatter.filetypes.json").prettier },
 		["go"] = { require("formatter.filetypes.go").goimports },
 	},

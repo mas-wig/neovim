@@ -38,9 +38,7 @@ return require("neo-tree").setup({
 		},
 	},
 	window = {
-		mappings = {
-			["<space>"] = "none",
-		},
+		position = "current",
 	},
 	source_selector = {
 		winbar = false, -- set true jika lu mau set winbar git, buffers dll
