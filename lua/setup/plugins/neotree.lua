@@ -37,9 +37,6 @@ return require("neo-tree").setup({
 			end,
 		},
 	},
-	window = {
-		position = "current",
-	},
 	source_selector = {
 		winbar = false, -- set true jika lu mau set winbar git, buffers dll
 		content_layout = "center",
@@ -77,6 +74,14 @@ return require("neo-tree").setup({
 		},
 		git_status = {
 			symbols = require("setup.ui.icons").git,
+		},
+	},
+	window = {
+		position = "current",
+		-- width = 40,
+		mapping_options = {
+			noremap = true,
+			nowait = true,
 		},
 	},
 })
