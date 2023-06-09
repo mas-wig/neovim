@@ -12,7 +12,7 @@ require("jfind").setup({
 		"tmp",
 		"assets",
 		"dist",
-		"public",
+		-- "public",
 		"*.iml",
 		"*.meta",
 	},
@@ -21,5 +21,5 @@ require("jfind").setup({
 	maxHeight = 20,
 	tmux = true,
 	formatPaths = true,
-	key = "<c-p>",
+	key = "<c-f>",
 })

@@ -186,7 +186,7 @@ return {
 	},
 	{
 		"jake-stewart/jfind.nvim",
-		keys = { { "<c-p>", desc = "Find Files" } },
+		keys = { { "<c-f>", desc = "Find Files" } },
 		config = function()
 			require("setup.plugins.jfind")
 		end,

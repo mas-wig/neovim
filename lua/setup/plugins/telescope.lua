@@ -13,14 +13,14 @@ M.init = function()
 					"<cmd>Telescope current_buffer_fuzzy_find<cr>",
 					desc = "Buffer Search",
 				},
-				-- {
-				-- 	"<C-p>",
-				-- 	t.lazy_required_fn("telescope.builtin", "find_files", {
-				-- 		hidden = true,
-				-- 		cwd = os.getenv("PWD"),
-				-- 	}),
-				-- 	description = "Find files",
-				-- },
+				{
+					"<C-p>",
+					t.lazy_required_fn("telescope.builtin", "find_files", {
+						hidden = true,
+						cwd = os.getenv("PWD"),
+					}),
+					description = "Find files",
+				},
 				{
 					"<C-g>",
 					t.lazy_required_fn(
@@ -155,12 +155,6 @@ M.setup = function()
 				fuzzy = false,
 				override_generic_sorter = true,
 				override_file_sorter = true,
-				case_mode = "smart_case",
-			},
-			persisted = {
-				prompt_title = false,
-				results_title = false,
-				layout_config = { width = 0.55, height = 0.55 },
 			},
 		},
 	})
