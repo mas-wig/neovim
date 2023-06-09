@@ -74,7 +74,7 @@ end
 M.setup = function()
 	require("grapple").setup({
 		scope = require("grapple.scope").resolver(function()
-			return vim.fn.getcwd()
+			return os.getenv("PWD")
 		end, { cache = "DirChanged" }),
 		popup_options = {
 			relative = "editor",

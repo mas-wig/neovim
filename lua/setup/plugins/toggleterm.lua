@@ -55,30 +55,27 @@ M.init = function()
 			description = "Term me Daddy",
 			icon = "🔭",
 			keymaps = {
-				{ "<A-i>", "<cmd>ToggleTerm direction=float<cr>", desc = "Open Float Term" },
-				{ "<A-v>", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Open Vert Term" },
-				{ "<A-h>", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Open Horz Term" },
 				{
 					"<A-i>",
 					{
-						n = "<cmd>ToggleTerm direction=float<cr>",
-						t = "<cmd>ToggleTerm direction=float<cr>",
+						n = "<cmd>ToggleTerm direction=float cwd='" .. os.getenv("PWD") .. "'<cr>",
+						t = "<cmd>ToggleTerm direction=float  cwd='" .. os.getenv("PWD") .. "'<cr>",
 					},
 					desc = "Open Float Term",
 				},
 				{
 					"<A-v>",
 					{
-						n = "<cmd>ToggleTerm direction=vertical<cr>",
-						t = "<cmd>ToggleTerm direction=vertical<cr>",
+						n = "<cmd>ToggleTerm direction=vertical cwd='" .. os.getenv("PWD") .. "'<cr>",
+						t = "<cmd>ToggleTerm direction=vertical  cwd='" .. os.getenv("PWD") .. "'<cr>",
 					},
 					desc = "Open Vert Term",
 				},
 				{
 					"<A-h>",
 					{
-						n = "<cmd>ToggleTerm direction=horizontal<cr>",
-						t = "<cmd>ToggleTerm direction=horizontal<cr>",
+						n = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
+						t = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
 					},
 					desc = "Open Horz Term",
 				},

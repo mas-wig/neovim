@@ -24,11 +24,11 @@ return function()
 				winhighlight = "Normal:CmpMenu,FloatBorder:Pmenu,CursorLine:PmenuSel",
 				side_padding = 1,
 			},
-			documentation = false,
-			-- documentation = {
-			-- 	border = "rounded",
-			-- 	winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-			-- },
+			-- documentation = false,
+			documentation = {
+				border = "rounded",
+				winhighlight = "Normal:CmpMenu,FloatBorder:Pmenu",
+			},
 		},
 		snippet = {
 			expand = function(args)
