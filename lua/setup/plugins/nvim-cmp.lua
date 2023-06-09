@@ -1,7 +1,7 @@
 return function()
 	local ok, cmp = pcall(require, "cmp")
 	local compare = require("cmp.config.compare")
-
+	local cmp_buffer = require("cmp_buffer")
 	if not ok then
 		return
 	end
@@ -36,7 +36,11 @@ return function()
 			end,
 		},
 		sorting = {
+			priority_weight = 2,
 			comparators = {
+				function(...)
+					return cmp_buffer:compare_locality(...)
+				end,
 				compare.score,
 				compare.recently_used,
 				compare.offset,
@@ -49,9 +53,29 @@ return function()
 		},
 		sources = cmp.config.sources({
 			{ name = "luasnip", priority = 100, max_item_count = 4, group_index = 1 },
-			{ name = "nvim_lsp", priority = 90, keyword_length = 3, max_item_count = 10, group_index = 1 },
+			{
+				name = "buffer",
+				priority = 90,
+				max_item_count = 5,
+				group_index = 1,
+				option = {
+					keyword_length = 2,
+					indexing_interval = 200,
+					indexing_batch_size = 1500,
+					max_indexed_line_length = 1024 * 30, -- Size buffer pada kilo byte
+					keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|[A-Za-z]\w*\%([\-.]\w*\)*\)]],
+					get_bufnrs = function() -- jika file melebihi 1 mb maka indexing tidak akan dilakukan sepenuhnya
+						local buf = vim.api.nvim_get_current_buf()
+						local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+						if byte_size > 1024 * 100 then -- 1 Megabyte max
+							return {}
+						end
+						return { buf }
+					end,
+				},
+			},
+			{ name = "nvim_lsp", priority = 80, keyword_length = 3, max_item_count = 10, group_index = 1 },
 			{ name = "path", priority = 20, group_index = 2 },
-			{ name = "buffer", priority = 10, keyword_length = 3, max_item_count = 5, group_index = 2 },
 		}),
 		formatting = {
 			format = function(entry, vim_item)
@@ -63,7 +87,7 @@ return function()
 				return vim_item
 			end,
 		},
-		experimental = { ghost_text = false },
+		experimental = { ghost_text = true },
 		filetype = {
 			{ "sql", "mysql", "txt", "sh" },
 			{ experimental = { ghost_text = false }, window = { documentation = false } },
