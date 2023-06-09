@@ -113,7 +113,10 @@ local function termcodes(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-map("t", "<c-x>", termcodes("<c-\\><c-n>"), { desc = "Enter Normal Mode" })
+map("t", "<c-x>", function()
+	termcodes("<c-\\><c-n>")
+	vim.cmd("silent! quit")
+end, { desc = "Enter Normal Mode" })
 
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
@@ -126,7 +129,6 @@ end
 map("n", "<leader>cF", function()
 	Util.ChangeFiletype()
 end, { desc = "Change FileType" })
-map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 
 -- windows
 map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
