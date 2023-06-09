@@ -184,4 +184,11 @@ return {
 			require("setup.plugins.obsidian").setup()
 		end,
 	},
+	{
+		"jake-stewart/jfind.nvim",
+		keys = { { "<c-p>", desc = "Find Files" } },
+		config = function()
+			require("setup.plugins.jfind")
+		end,
+	},
 }

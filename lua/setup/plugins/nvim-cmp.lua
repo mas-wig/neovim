@@ -17,6 +17,12 @@ return function()
 		completion = {
 			completeopt = "menu,menuone,noinsert",
 		},
+		matching = {
+			disallow_fuzzy_matching = false,
+			disallow_partial_matching = false,
+			disallow_prefix_unmatching = false,
+			disallow_partial_fuzzy_matching = false,
+		},
 		window = {
 			completion = {
 				scrollbar = false,
@@ -36,18 +42,13 @@ return function()
 			end,
 		},
 		sorting = {
-			priority_weight = 2,
+			priority_weight = 0.8,
 			comparators = {
-				function(...)
-					return cmp_buffer:compare_locality(...)
-				end,
-				compare.score,
-				compare.recently_used,
+				compare.scopes, -- treesitter scope
+				compare.locality,
+				compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
 				compare.offset,
-				compare.exact,
-				compare.kind,
-				compare.sort_text,
-				compare.length,
+				compare.recently_used,
 				compare.order,
 			},
 		},
@@ -59,11 +60,10 @@ return function()
 				max_item_count = 5,
 				group_index = 1,
 				option = {
-					keyword_length = 2,
+					keyword_length = 3,
 					indexing_interval = 200,
 					indexing_batch_size = 1500,
 					max_indexed_line_length = 1024 * 30, -- Size buffer pada kilo byte
-					keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|[A-Za-z]\w*\%([\-.]\w*\)*\)]],
 					get_bufnrs = function() -- jika file melebihi 1 mb maka indexing tidak akan dilakukan sepenuhnya
 						local buf = vim.api.nvim_get_current_buf()
 						local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))

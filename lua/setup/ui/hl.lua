@@ -140,7 +140,7 @@ return {
 	-- CMP
 	CmpItemAbbrDeprecated = { fg = cl.comment, bg = cl.none, strikethrough = true },
 	CmpItemAbbrMatch = { fg = cl.error, bold = true },
-	CmpItemAbbrMatchFuzzy = { fg = cl.black },
+	CmpItemAbbrMatchFuzzy = { fg = cl.yellow2 },
 	CmpItemKindText = { link = "@string" },
 	CmpItemKindMethod = { link = "@method" },
 	CmpItemKindFunction = { link = "@function" },

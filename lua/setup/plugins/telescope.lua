@@ -13,14 +13,14 @@ M.init = function()
 					"<cmd>Telescope current_buffer_fuzzy_find<cr>",
 					desc = "Buffer Search",
 				},
-				{
-					"<C-p>",
-					t.lazy_required_fn("telescope.builtin", "find_files", {
-						hidden = true,
-						cwd = os.getenv("PWD"),
-					}),
-					description = "Find files",
-				},
+				-- {
+				-- 	"<C-p>",
+				-- 	t.lazy_required_fn("telescope.builtin", "find_files", {
+				-- 		hidden = true,
+				-- 		cwd = os.getenv("PWD"),
+				-- 	}),
+				-- 	description = "Find files",
+				-- },
 				{
 					"<C-g>",
 					t.lazy_required_fn(
