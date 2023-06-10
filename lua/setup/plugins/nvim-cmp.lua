@@ -42,7 +42,7 @@ return function()
 			end,
 		},
 		sorting = {
-			priority_weight = 0.8,
+			priority_weight = 2,
 			comparators = {
 				compare.scopes, -- treesitter scope
 				compare.locality,

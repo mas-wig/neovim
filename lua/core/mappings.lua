@@ -118,6 +118,8 @@ map("t", "<c-x>", function()
 	vim.cmd("silent! quit")
 end, { desc = "Enter Normal Mode" })
 
+map("t", "<esc>", termcodes("<c-\\><c-n>"), { desc = "Enter Normal Mode" })
+
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
 

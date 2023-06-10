@@ -68,7 +68,7 @@ return {
 
 	-- Telescope
 	TelescopePromptTitle = { fg = cl.black, bg = cl.red, bold = true },
-	TelescopeSelection = { bg = cl.black2, fg = cl.white },
+	TelescopeSelection = { bg = cl.black2, fg = cl.yellow2, bold = true },
 	TelescopeResultsDiffAdd = { fg = cl.green },
 	TelescopeResultsDiffChange = { fg = cl.yellow },
 	TelescopeResultsDiffDelete = { fg = cl.red },
