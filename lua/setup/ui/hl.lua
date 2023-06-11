@@ -73,7 +73,7 @@ return {
 	TelescopeResultsDiffChange = { fg = cl.yellow },
 	TelescopeResultsDiffDelete = { fg = cl.red },
 	TelescopeBorder = { fg = cl.line },
-	TelescopePromptBorder = { fg = cl.red },
+	TelescopePromptBorder = { fg = cl.line },
 	TelescopeResultsTitle = { fg = cl.black, bg = cl.green, bold = true },
 	TelescopePreviewTitle = { fg = cl.black, bg = cl.other, bold = true },
 	TelescopePromptPrefix = { fg = cl.red, bg = cl.none, bold = true },
