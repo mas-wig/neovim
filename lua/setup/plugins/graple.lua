@@ -18,8 +18,10 @@ M.init = function()
 					"<leader>jt",
 					function()
 						vim.ui.input({ prompt = " Graple name " }, function(name)
+							local suffix = ""
 							if name ~= nil then
-								vim.cmd("GrappleToggle key=" .. name)
+								suffix = name:gsub(" ", "_"):gsub("[^A-Za-z0-9-]", ""):lower()
+								vim.cmd("GrappleToggle key=" .. suffix)
 							end
 						end)
 					end,
@@ -29,8 +31,10 @@ M.init = function()
 					"<leader>js",
 					function()
 						vim.ui.input({ prompt = " Graple select " }, function(name)
+							local suffix = ""
 							if name ~= nil then
-								vim.cmd("GrappleSelect key=" .. name)
+								suffix = name:gsub(" ", "_"):gsub("[^A-Za-z0-9-]", ""):lower()
+								vim.cmd("GrappleSelect key=" .. suffix)
 							end
 						end)
 					end,
