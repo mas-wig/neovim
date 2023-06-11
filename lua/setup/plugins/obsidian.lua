@@ -13,7 +13,7 @@ M.setup = function()
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
 			end
-			return tostring(os.date("%d-%m-%Y")) .. "_" .. suffix
+			return tostring(os.date("%d%m%Y")) .. "_" .. suffix
 		end,
 		disable_frontmatter = false,
 		note_frontmatter_func = function(note)
@@ -28,7 +28,7 @@ M.setup = function()
 			return out
 		end,
 		templates = {
-			subdir = "templates",
+			subdir = "Templates",
 			date_format = "%Y-%m-%d-%a",
 			time_format = "%H:%M",
 		},

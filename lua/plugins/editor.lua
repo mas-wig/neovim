@@ -186,7 +186,23 @@ return {
 	},
 	{
 		"jake-stewart/jfind.nvim",
-		keys = { { "<c-f>", desc = "Find Files" } },
+		keys = {
+			{
+				"<leader>ff",
+				function()
+					local jfind = require("jfind")
+					jfind.findFile({
+						formatPaths = true,
+						callback = {
+							[key.DEFAULT] = vim.cmd.edit,
+							[key.CTRL_S] = vim.cmd.split,
+							[key.CTRL_V] = vim.cmd.vsplit,
+						},
+					})
+				end,
+				desc = "Find File [<C-s> split] [<C-v> vert]",
+			},
+		},
 		config = function()
 			require("setup.plugins.jfind")
 		end,

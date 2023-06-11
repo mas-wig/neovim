@@ -68,14 +68,14 @@ return {
 
 	-- Telescope
 	TelescopePromptTitle = { fg = cl.black, bg = cl.red, bold = true },
-	TelescopeSelection = { bg = cl.black2, fg = cl.yellow2, bold = true },
+	TelescopeSelection = { bg = cl.black2, fg = cl.yellow2 },
 	TelescopeResultsDiffAdd = { fg = cl.green },
 	TelescopeResultsDiffChange = { fg = cl.yellow },
 	TelescopeResultsDiffDelete = { fg = cl.red },
-	TelescopeBorder = { fg = cl.one_bg3 },
-	TelescopePromptBorder = { fg = cl.one_bg3 },
+	TelescopeBorder = { fg = cl.line },
+	TelescopePromptBorder = { fg = cl.red },
 	TelescopeResultsTitle = { fg = cl.black, bg = cl.green, bold = true },
-	TelescopePreviewTitle = { fg = cl.black, bg = cl.blue, bold = true },
+	TelescopePreviewTitle = { fg = cl.black, bg = cl.other, bold = true },
 	TelescopePromptPrefix = { fg = cl.red, bg = cl.none, bold = true },
 	TelescopeNormal = { bg = cl.none },
 	TelescopePromptNormal = { bg = cl.none },
@@ -134,7 +134,7 @@ return {
 	NavicIconsEvent = { link = "@function" },
 	NavicIconsOperator = { link = "@operator" },
 	NavicIconsTypeParameter = { link = "@type" },
-	NavicText = { link = "@text" },
+	NavicText = { fg = cl.base0D },
 	NavicSeparator = { link = "@keyword" },
 
 	-- CMP
