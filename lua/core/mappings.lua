@@ -170,3 +170,5 @@ end, { desc = "Load a session" })
 map("n", "<leader>S.", function()
 	require("resession").load(vim.fn.getcwd(), { dir = "dirsession" })
 end, { desc = "Load current directory session" })
+
+map("n", "<leader>gp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true, desc = "Reselect Paste Text" })
