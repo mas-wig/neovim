@@ -16,38 +16,33 @@ M.init = function()
 				{
 					"<C-p>",
 					t.lazy_required_fn("telescope.builtin", "find_files", {
-						hidden = true,
 						cwd = os.getenv("PWD"),
 					}),
 					description = "Find files",
 				},
 				{
 					"<C-g>",
-					t.lazy_required_fn(
-						"telescope.builtin",
-						"live_grep",
-						{ prompt_title = "Open Files", path_display = { "shorten" }, grep_open_files = true }
-					),
-					description = "Find in open files",
+					function()
+						require("telescope").extensions.live_grep_args.live_grep_args()
+					end,
+					description = "Live Grep",
 				},
 				{
-					"<Leader>gb",
-					t.lazy_required_fn(
-						"telescope.builtin",
-						"live_grep",
-						{ prompt_title = "Search CWD", path_display = { "smart" } }
-					),
-					description = "Search CWD",
+					"<Leader>gw",
+					function()
+						require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
+					end,
+					description = "Grep word under cursor",
 				},
 				{
-					"<leader>bl",
-					t.lazy_required_fn(
-						"telescope.builtin",
-						"buffers",
-						{ prompt_title = "Buffer List", path_display = { "smart" } }
-					),
-					description = "List buffers",
+					"<leader>gw",
+					function()
+						require("telescope-live-grep-args.shortcuts").grep_visual_selection()
+					end,
+					description = "Grep Word Visual Select",
+					mode = { "v" },
 				},
+
 				{
 					"<leader>fn",
 					t.lazy_required_fn("telescope.builtin", "find_files", {
@@ -71,10 +66,12 @@ end
 
 M.setup = function()
 	local ok, telescope = pcall(require, "telescope")
-
 	if not ok then
 		return
 	end
+
+	local actions = require("telescope.actions")
+	local custom_actions = require("setup.utils.telescope")
 
 	telescope.setup({
 		defaults = {
@@ -118,23 +115,22 @@ M.setup = function()
 				".repro/*",
 				".DS_Store",
 			},
-			file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-			grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-			qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-			buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
-			file_sorter = require("telescope.sorters").get_fuzzy_file,
-			vimgrep_arguments = {
-				"rg",
-				"--color=never",
-				"--no-heading",
-				"--with-filename",
-				"--line-number",
-				"--hidden",
-				"--column",
-				"--smart-case",
-				"--trim",
-			},
 			mappings = {
+				i = {
+					["<ESC>"] = actions.close,
+					["<leader>"] = custom_actions.multi_selection_open,
+					["<C-x>"] = custom_actions.multi_selection_open_horizontal,
+					["<C-f>"] = custom_actions.multi_selection_open_vertical,
+					["<C-t>"] = custom_actions.multi_selection_open_tab,
+					["<C-v>"] = actions.select_vertical,
+					["<C-h>"] = actions.select_horizontal,
+					["<C-n>"] = actions.cycle_history_next,
+					["<C-p>"] = actions.cycle_history_prev,
+					["<C-j>"] = actions.move_selection_next,
+					["<C-k>"] = actions.move_selection_previous,
+					["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+					["<C-w>"] = actions.send_to_qflist + actions.open_qflist,
+				},
 				n = { ["q"] = require("telescope.actions").close },
 			},
 		},
@@ -156,9 +152,22 @@ M.setup = function()
 				override_generic_sorter = true,
 				override_file_sorter = true,
 			},
+			live_grep_args = {
+				auto_quoting = true,
+				default_mappings = {},
+				mappings = {
+					i = {
+						["<C-l>"] = require("telescope-live-grep-args.actions").quote_prompt(),
+						["<C-o>"] = custom_actions.insert_ignore_list,
+						["<C-n>"] = actions.cycle_history_next,
+						["<C-p>"] = actions.cycle_history_prev,
+					},
+				},
+			},
 		},
 	})
 
+	telescope.load_extension("live_grep_args")
 	telescope.load_extension("fzf")
 	telescope.load_extension("lazygit")
 end

@@ -85,11 +85,11 @@ M.setup = function()
 			width = 90,
 			height = 15,
 			style = "minimal",
-			focusable = false,
+			focusable = true,
 			border = "rounded",
 		},
 		integrations = {
-			resession = false,
+			resession = true,
 		},
 	})
 end

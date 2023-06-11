@@ -1,7 +1,5 @@
 return function()
 	local ok, cmp = pcall(require, "cmp")
-	local compare = require("cmp.config.compare")
-	local cmp_buffer = require("cmp_buffer")
 	if not ok then
 		return
 	end
@@ -44,12 +42,15 @@ return function()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				compare.scopes, -- treesitter scope
-				compare.locality,
-				compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-				compare.offset,
-				compare.recently_used,
-				compare.order,
+				cmp.config.compare.exact,
+				cmp.config.compare.offset,
+				cmp.config.compare.score,
+				cmp.config.compare.recently_used,
+				cmp.config.compare.locality,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
 			},
 		},
 		sources = cmp.config.sources({
