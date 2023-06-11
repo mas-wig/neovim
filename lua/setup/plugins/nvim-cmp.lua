@@ -42,14 +42,11 @@ return function()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				cmp.config.compare.exact,
-				cmp.config.compare.offset,
-				cmp.config.compare.score,
-				cmp.config.compare.recently_used,
+				cmp.config.compare.scopes, -- treesitter scope
 				cmp.config.compare.locality,
-				cmp.config.compare.kind,
-				cmp.config.compare.sort_text,
-				cmp.config.compare.length,
+				cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+				cmp.config.compare.offset,
+				cmp.config.compare.recently_used,
 				cmp.config.compare.order,
 			},
 		},
@@ -89,10 +86,6 @@ return function()
 			end,
 		},
 		experimental = { ghost_text = true },
-		filetype = {
-			{ "sql", "mysql", "txt", "sh" },
-			{ experimental = { ghost_text = false }, window = { documentation = false } },
-		},
 		mapping = {
 			["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
 			["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
@@ -157,5 +150,26 @@ return function()
 				},
 			},
 		}),
+	})
+
+	cmp.setup.filetype({ "go" }, {
+		sorting = {
+			priority_weight = 2,
+			comparators = {
+				cmp.config.compare.sort_text,
+				cmp.config.compare.offset,
+				cmp.config.compare.exact,
+				cmp.config.compare.score,
+				cmp.config.compare.recently_used,
+				cmp.config.compare.locality,
+				cmp.config.compare.kind,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
+			},
+		},
+	})
+
+	cmp.setup.filetype({ "sql", "mysql" }, {
+		{ experimental = { ghost_text = false }, window = { documentation = false } },
 	})
 end
