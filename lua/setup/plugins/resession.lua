@@ -30,7 +30,6 @@ return function()
 	vim.api.nvim_create_autocmd("VimLeavePre", {
 		group = vim.api.nvim_create_augroup("CfgResession", { clear = true }),
 		callback = function()
-			-- resession.save("Last Session [ " .. tostring(os.date("%Y-%m-%d %H:%M:%S")) .. " ]")
 			resession.save("Last Session")
 		end,
 	})
