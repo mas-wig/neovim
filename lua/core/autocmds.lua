@@ -23,13 +23,12 @@ return {
 		},
 		{
 			"FileType",
-			":setlocal wrap linebreak",
+			function()
+				vim.opt_local.wrap = false
+				vim.opt_local.textwidth = 0
+				vim.opt_local.wrapmargin = 0
+			end,
 			opts = { pattern = "markdown" },
-		},
-		{
-			"FileType",
-			":setlocal showtabline=0",
-			opts = { pattern = "alpha" },
 		},
 	},
 	{

@@ -11,8 +11,9 @@ formatter.setup({
 		["css"] = { require("formatter.filetypes.css").prettier },
 		["rust"] = { require("formatter.filetypes.rust").rustfmt },
 		["php"] = { require("formatter.filetypes.php").php_cs_fixer },
-		["markdown"] = { require("formatter.filetypes.markdown").prettierd },
+		-- ["markdown"] = { require("formatter.filetypes.markdown").prettierd },
 		["json"] = { require("formatter.filetypes.json").prettier },
 		["go"] = { require("formatter.filetypes.go").goimports },
+		["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
 	},
 })

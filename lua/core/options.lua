@@ -1,6 +1,5 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.g.markdown_recommended_style = 0
 
 if vim.version().minor >= 9 then
 	vim.opt.splitkeep = "screen"
@@ -22,7 +21,7 @@ local opts = {
 	confirm = true,
 	cursorline = true,
 	expandtab = true,
-	formatoptions = "jcroqlnt",
+	-- formatoptions = "jcroqlnt",
 	grepformat = "%f:%l:%c:%m",
 	grepprg = "rg , --vimgrep",
 	ignorecase = true,
@@ -82,3 +81,5 @@ vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
 vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
 vim.cmd("silent call mkdir(stdpath('data').'/swaps', 'p', '0700')")
 vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
+
+vim.g.table_mode_corner = "|"

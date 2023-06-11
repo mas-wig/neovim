@@ -181,6 +181,7 @@ return {
 			"ObsidianFollowLink",
 			"ObsidianTemplate",
 		},
+		dependencies = { "dhruvasagar/vim-table-mode", cmd = { "TableAddFormula", "Tableize", "TableModeToggle" } },
 		init = function()
 			require("setup.plugins.obsidian").init()
 		end,
@@ -210,5 +211,11 @@ return {
 		config = function()
 			require("setup.plugins.jfind")
 		end,
+	},
+
+	{
+		"andrewferrier/wrapping.nvim",
+		cmd = { "HardWrapMode", "SoftWrapMode", "ToggleWrapMode" },
+		opts = { create_commands = true },
 	},
 }
