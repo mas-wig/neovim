@@ -47,36 +47,8 @@ return {
 	},
 
 	{
-		"folke/persistence.nvim",
-		event = "BufReadPre",
-		opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
-		keys = {
-			{
-				"<leader>qs",
-				function()
-					require("persistence").load()
-				end,
-				desc = "Restore Session",
-			},
-			{
-				"<leader>ql",
-				function()
-					require("persistence").load({ last = true })
-				end,
-				desc = "Restore Last Session",
-			},
-			{
-				"<leader>qd",
-				function()
-					require("persistence").stop()
-				end,
-				desc = "Don't Save Current Session",
-			},
-		},
-	},
-
-	{
 		"m4xshen/hardtime.nvim",
+		enabled = false,
 		event = { "BufRead", "BufNewFile" },
 		opts = {
 			max_time = 10,
@@ -100,6 +72,13 @@ return {
 		end,
 		config = function()
 			require("setup.plugins.graple").setup()
+		end,
+	},
+	{
+		"stevearc/resession.nvim",
+		enabled = true,
+		config = function()
+			require("setup.plugins.resession")()
 		end,
 	},
 }
