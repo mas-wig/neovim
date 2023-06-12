@@ -6,7 +6,7 @@ return {
 		opts = { setup = {} },
 		config = function(_, opts)
 			require("setup.plugins.lspconfig").setup()
-			require("setup.plugins.lspconfig").diagnostics()
+			require("setup.plugins.lspconfig").ui()
 			local servers = require("setup.plugins.lspconfig.server")
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())

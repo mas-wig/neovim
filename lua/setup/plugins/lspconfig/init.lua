@@ -10,10 +10,19 @@ M.on_attach = function(on_attach)
 	})
 end
 
-M.diagnostics = function()
+M.ui = function()
 	for type, icon in pairs(require("setup.ui.icons").diagnostics) do
 		local hl = "DiagnosticSign" .. type
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+	end
+
+	-- :h vim.lsp.util.open_floating_preview
+	local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+		opts = opts or {}
+		opts.border = opts.border or "single"
+		opts.max_width = opts.max_width or 90
+		return orig_util_open_floating_preview(contents, syntax, opts, ...)
 	end
 end
 
