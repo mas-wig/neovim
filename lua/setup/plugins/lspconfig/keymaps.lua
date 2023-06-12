@@ -21,7 +21,10 @@ function M.get()
 			{
 				"<c-k>",
 				function()
-					vim.lsp.buf.signature_help()
+					vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+						border = "rounded",
+					})
+					return vim.lsp.buf.signature_help()
 				end,
 				mode = "i",
 				desc = "⚡️ Signature Help",
@@ -29,7 +32,10 @@ function M.get()
 			{
 				"K",
 				function()
-					vim.lsp.buf.hover()
+					vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+						border = "rounded",
+					})
+					return vim.lsp.buf.hover()
 				end,
 				desc = "⚡️ Hover",
 			},
