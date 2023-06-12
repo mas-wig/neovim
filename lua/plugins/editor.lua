@@ -166,30 +166,6 @@ return {
 	},
 
 	{
-		"epwalsh/obsidian.nvim",
-		ft = { "md" },
-		cmd = {
-			"ObsidianBacklinks",
-			"ObsidianToday",
-			"ObsidianYesterday",
-			"ObsidianOpen",
-			"ObsidianNew",
-			"ObsidianSearch",
-			"ObsidianQuickSwitch",
-			"ObsidianLink",
-			"ObsidianLinkNew",
-			"ObsidianFollowLink",
-			"ObsidianTemplate",
-		},
-		dependencies = { "dhruvasagar/vim-table-mode", cmd = { "TableAddFormula", "Tableize", "TableModeToggle" } },
-		init = function()
-			require("setup.plugins.obsidian").init()
-		end,
-		config = function()
-			require("setup.plugins.obsidian").setup()
-		end,
-	},
-	{
 		"jake-stewart/jfind.nvim",
 		keys = {
 			{
@@ -217,5 +193,21 @@ return {
 		"andrewferrier/wrapping.nvim",
 		cmd = { "HardWrapMode", "SoftWrapMode", "ToggleWrapMode" },
 		opts = { create_commands = true },
+	},
+
+	{
+		"jakewvincent/mkdnflow.nvim",
+		cmd = require("setup.plugins.note-taking").cmd_mkdnflow,
+		config = function()
+			require("setup.plugins.note-taking").mkdnflow_setup()
+		end,
+	},
+	{
+		"epwalsh/obsidian.nvim",
+		cmd = require("setup.plugins.note-taking").cmd_obsidian,
+		keys = require("setup.plugins.note-taking").obsidian_expl,
+		config = function()
+			require("setup.plugins.note-taking").setup_obsidian()
+		end,
 	},
 }

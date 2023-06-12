@@ -105,12 +105,4 @@ return {
 			require("indent_blankline").setup(opts)
 		end,
 	},
-
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		config = function()
-			require("setup.plugins.noice")
-		end,
-	},
 }

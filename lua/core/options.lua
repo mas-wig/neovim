@@ -21,12 +21,13 @@ local opts = {
 	confirm = true,
 	cursorline = true,
 	expandtab = true,
-	-- formatoptions = "jcroqlnt",
+	formatoptions = "jcroqlnt",
 	grepformat = "%f:%l:%c:%m",
 	grepprg = "rg , --vimgrep",
 	ignorecase = true,
 	inccommand = "nosplit",
 	laststatus = 3,
+	cmdheight = 0,
 	list = true,
 	listchars = require("setup.ui.icons").listchars,
 	mouse = "a",
@@ -76,10 +77,4 @@ opt.iskeyword:append("-")
 opt.nrformats:append("unsigned")
 opt.nrformats:remove({ "bin", "hex" })
 
--- Create folders for our backups, undos, swaps and sessions if they don't exist
-vim.cmd("silent call mkdir(stdpath('data').'/backups', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/undos', 'p', '0700')")
-vim.cmd("silent call mkdir(stdpath('data').'/swaps', 'p', '0700')")
 vim.cmd([[au FileType * if index(['wipe', 'delete'], &bufhidden) >= 0 | set nobuflisted | endif]])
-
-vim.g.table_mode_corner = "|"
