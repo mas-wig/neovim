@@ -20,6 +20,7 @@ return {
 			}
 		end,
 	},
+
 	{
 		"rcarriga/nvim-notify",
 		init = function()

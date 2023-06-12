@@ -113,8 +113,8 @@ M.mkdnflow_setup = function()
 			update = false,
 		},
 		wrap = false,
+		default_path = nil,
 		bib = {
-			default_path = nil,
 			find_in_root = true,
 		},
 		silent = false,
@@ -224,6 +224,7 @@ M.note_keys = function()
 				{ "<leader>iR", "<cmd>MkdnTableNewRowAbove<cr>", desc = "Table new row above" },
 				{ "<leader>ic", "<cmd>MkdnTableNewColAfter<cr>", desc = "Table new coloumn after" },
 				{ "<leader>iC", "<cmd>MkdnTableNewColBefore<cr>", desc = "Table new coloumn before" },
+				{ "<CR>", "<cmd>MkdnNewListItem<cr>", desc = "New list item", mode = { "i" } },
 			},
 		},
 	})
