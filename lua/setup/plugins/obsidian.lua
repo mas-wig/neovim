@@ -43,19 +43,19 @@ M.init = function()
 			icon = "🔭",
 			keymaps = {
 				{
-					"<leader>fn",
+					"<leader>nn",
 					function()
-						vim.ui.input({ prompt = " Note Name" }, function(name)
-							if name ~= nil then
-								vim.cmd("ObsidianLinkNew " .. name)
-							end
-						end)
+						local suffix = ""
+						for _ = 1, 4 do
+							suffix = suffix .. string.char(math.random(65, 90))
+						end
+						vim.cmd("ObsidianLinkNew " .. suffix)
 					end,
 					desc = "Create new Notes with name",
 					mode = { "v" },
 				},
 				{
-					"<leader>n",
+					"<A-n>",
 					function()
 						require("neo-tree.command").execute({
 							toggle = true,
@@ -67,9 +67,19 @@ M.init = function()
 					desc = "Explorer NeoTree (root dir)",
 				},
 				{
-					"<leader>fl",
+					"<leader>nl",
 					"<cmd>ObsidianFollowLink<CR>",
 					desc = "Obsidian Folow Link",
+				},
+				{
+					"<leader>nc",
+					"<cmd>ObsidianNew<cr>",
+					desc = "Create new note",
+				},
+				{
+					"<leader>nd",
+					"<cmd>ObsidianToday<cr>",
+					desc = "Create dailies note",
 				},
 			},
 		},
