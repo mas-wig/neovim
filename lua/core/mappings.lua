@@ -172,3 +172,24 @@ map("n", "<leader>S.", function()
 end, { desc = "Load current directory session" })
 
 map("n", "<leader>gp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true, desc = "Reselect Paste Text" })
+
+map("n", "<Leader>1", "1gt", { desc = "Go to tab 1" })
+map("n", "<Leader>2", "2gt", { desc = "Go to tab 2" })
+map("n", "<Leader>3", "3gt", { desc = "Go to tab 3" })
+map("n", "<Leader>4", "4gt", { desc = "Go to tab 4" })
+map("n", "<Leader>5", "5gt", { desc = "Go to tab 5" })
+map("n", "<Leader>6", "6gt", { desc = "Go to tab 6" })
+map("n", "<Leader>7", "7gt", { desc = "Go to tab 7" })
+map("n", "<Leader>8", "8gt", { desc = "Go to tab 8" })
+map("n", "<Leader>9", "9gt", { desc = "Go to tab 9" })
+map("n", "<Leader>0", ":tablast", { desc = "Go to last " })
+map("n", "<leader>tD", function()
+	local tabpages = vim.api.nvim_list_tabpages()
+	local current_tabpage = vim.api.nvim_get_current_tabpage()
+	for _, tabpage in ipairs(tabpages) do
+		if tabpage ~= current_tabpage then
+			vim.api.nvim_set_current_tabpage(tabpage)
+			vim.api.nvim_command("tabclose")
+		end
+	end
+end, { desc = "Delete all tabs", silent = true })
