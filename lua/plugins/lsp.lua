@@ -3,44 +3,8 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "williamboman/mason-lspconfig.nvim" },
-		opts = { setup = {} },
-		config = function(_, opts)
-			require("setup.plugins.lspconfig").setup()
-			require("setup.plugins.lspconfig").ui()
-			local servers = require("setup.plugins.lspconfig.server")
-			local capabilities =
-				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-			local function setup(server)
-				local server_opts =
-					vim.tbl_deep_extend("force", { capabilities = vim.deepcopy(capabilities) }, servers[server] or {})
-				if opts.setup[server] then
-					if opts.setup[server](server, server_opts) then
-						return
-					end
-				elseif opts.setup["*"] then
-					if opts.setup["*"](server, server_opts) then
-						return
-					end
-				end
-				require("lspconfig")[server].setup(server_opts)
-			end
-			local have_mason, mlsp = pcall(require, "mason-lspconfig")
-			local available = have_mason and mlsp.get_available_servers() or {}
-			local ensure_installed = {}
-			for server, server_opts in pairs(servers) do
-				if server_opts then
-					server_opts = server_opts == true and {} or server_opts
-					if server_opts.mason == false or not vim.tbl_contains(available, server) then
-						setup(server)
-					else
-						ensure_installed[#ensure_installed + 1] = server
-					end
-				end
-			end
-			if have_mason then
-				mlsp.setup({ ensure_installed = ensure_installed, automatic_installation = true })
-				mlsp.setup_handlers({ setup })
-			end
+		config = function()
+			require("setup.plugins.lsp").setup()
 		end,
 	},
 
@@ -51,27 +15,6 @@ return {
 		build = ":MasonUpdate",
 		config = function()
 			require("setup.plugins.mason")()
-		end,
-	},
-
-	{
-		"ray-x/navigator.lua",
-		branch = "master",
-		event = { "BufReadPre", "BufNewFile" },
-		lazy = true,
-		init = function()
-			if vim.o.ft == "clap_input" and vim.o.ft == "guihua" and vim.o.ft == "guihua_rust" then
-				require("cmp").setup.buffer({ completion = { enable = false } })
-			end
-		end,
-		dependencies = {
-			"ray-x/guihua.lua",
-			branch = "master",
-			lazy = true,
-			build = "cd lua/fzy && make",
-		},
-		config = function()
-			return require("setup.plugins.navigator")
 		end,
 	},
 }

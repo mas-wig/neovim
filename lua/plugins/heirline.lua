@@ -1,7 +1,6 @@
 return {
 	"rebelot/heirline.nvim",
 	event = { "UiEnter" },
-	dependencies = { "tiagovla/scope.nvim", config = true },
 	config = function()
 		require("heirline").setup({
 			statusline = require("setup.plugins.heirline.statusline"),
@@ -12,7 +11,6 @@ return {
 				disable_winbar_cb = require("setup.plugins.heirline.winbar").disable_winbar_cb,
 			},
 		})
-
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			callback = function()
 				require("heirline.utils").on_colorscheme(require("setup.ui.colors"))

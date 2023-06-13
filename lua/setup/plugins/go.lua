@@ -27,7 +27,12 @@ return {
 			goimport = "goimports",
 			fillstruct = "fillstruct",
 			gocoverage_sign = "█",
-			lsp_cfg = { capabilities = capabilities },
+			lsp_cfg = {
+				capabilities = capabilities,
+				on_attach = function(client, bufnr)
+					require("setup.plugins.lsp").mappings(client, bufnr)
+				end,
+			},
 			lsp_document_formatting = true,
 			lsp_inlay_hints = { enable = false },
 			luasnip = true,
