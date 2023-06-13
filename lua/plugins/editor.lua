@@ -197,6 +197,8 @@ return {
 
 	{
 		"jakewvincent/mkdnflow.nvim",
+		lazy = true,
+		ft = "markdown",
 		cmd = require("setup.plugins.note-taking").cmd_mkdnflow,
 		config = function()
 			require("setup.plugins.note-taking").mkdnflow_setup()
@@ -204,6 +206,8 @@ return {
 	},
 	{
 		"epwalsh/obsidian.nvim",
+		lazy = true,
+		ft = "markdown",
 		cmd = require("setup.plugins.note-taking").cmd_obsidian,
 		keys = require("setup.plugins.note-taking").obsidian_expl,
 		config = function()

@@ -137,29 +137,29 @@ M.mkdnflow_setup = function()
 				return tostring(os.date("%d%m%Y")) .. "_" .. suffix
 			end,
 		},
-		new_file_template = {
-			use_template = false,
-			placeholders = {
-				before = {
-					title = "link_title",
-					date = "os_date",
-				},
-				after = {},
-			},
-			template = "# {{ title }}",
-		},
+		-- new_file_template = {
+		-- 	use_template = false,
+		-- 	placeholders = {
+		-- 		before = {
+		-- 			title = "link_title",
+		-- 			date = "os_date",
+		-- 		},
+		-- 		after = {},
+		-- 	},
+		-- 	template = "# {{ title }}",
+		-- },
 		to_do = {
-			symbols = { " ", "-", "X" },
+			symbols = { " ", "-", "v" },
 			update_parents = true,
 			not_started = " ",
 			in_progress = "-",
-			complete = "X",
+			complete = "v",
 		},
 		tables = {
 			trim_whitespace = true,
 			format_on_move = true,
-			auto_extend_rows = false,
-			auto_extend_cols = false,
+			auto_extend_rows = true,
+			auto_extend_cols = true,
 		},
 		yaml = {
 			bib = { override = false },
@@ -196,7 +196,7 @@ M.note_keys = function()
 						for _ = 1, 4 do
 							suffix = suffix .. string.char(math.random(65, 90))
 						end
-						vim.cmd("ObsidianLinkNew " .. suffix)
+						return vim.cmd("ObsidianLinkNew " .. suffix)
 					end,
 					desc = "Create new Notes with name",
 					mode = { "v" },
