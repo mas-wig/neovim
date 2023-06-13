@@ -3,12 +3,12 @@ return {
 	event = { "UiEnter" },
 	config = function()
 		require("heirline").setup({
-			statusline = require("setup.plugins.heirline.statusline"),
-			statuscolumn = require("setup.plugins.heirline.statuscolumn"),
-			winbar = require("setup.plugins.heirline.winbar").winbar,
+			statusline = require("setup.plugins.heirline").statusline(),
+			statuscolumn = require("setup.plugins.heirline").statuscol(),
+			winbar = require("setup.plugins.heirline").winbar().winbar,
 			opts = {
 				colors = require("setup.ui.colors"),
-				disable_winbar_cb = require("setup.plugins.heirline.winbar").disable_winbar_cb,
+				disable_winbar_cb = require("setup.plugins.heirline").winbar().disable_winbar_cb,
 			},
 		})
 		vim.api.nvim_create_autocmd("ColorScheme", {
