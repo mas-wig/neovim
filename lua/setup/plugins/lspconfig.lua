@@ -1,5 +1,31 @@
 local M = {}
 
+local function add_buffer_autocmd(augroup, bufnr, autocmds)
+	if not vim.tbl_islist(autocmds) then
+		autocmds = { autocmds }
+	end
+	local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+	if not cmds_found or vim.tbl_isempty(cmds) then
+		vim.api.nvim_create_augroup(augroup, { clear = false })
+		for _, autocmd in ipairs(autocmds) do
+			local events = autocmd.events
+			autocmd.events = nil
+			autocmd.group = augroup
+			autocmd.buffer = bufnr
+			vim.api.nvim_create_autocmd(events, autocmd)
+		end
+	end
+end
+
+local function del_buffer_autocmd(augroup, bufnr)
+	local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+	if cmds_found then
+		vim.tbl_map(function(cmd)
+			vim.api.nvim_del_autocmd(cmd.id)
+		end, cmds)
+	end
+end
+
 M.keys = function()
 	local function diagnostic_goto(next, severity)
 		local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
@@ -87,6 +113,15 @@ M.ui = function()
 	end
 end
 
+function M.has_capability(capability, filter)
+	for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
+		if client.supports_method(capability) then
+			return true
+		end
+	end
+	return false
+end
+
 M.buffer_attach = function()
 	local function set_attach(on_attach)
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -101,7 +136,30 @@ M.buffer_attach = function()
 	return set_attach(function(client, bufnr)
 		local lsp_exclude = { "html", "css", "jsonls" }
 		local opts = { bold = true, reverse = true }
-		local lsp_doc_hl = vim.api.nvim_create_augroup("lsp_document_highlight", {})
+
+		if client.supports_method("textDocument/documentHighlight") then
+			add_buffer_autocmd("lsp_document_highlight", bufnr, {
+				{
+					events = { "CursorHold", "CursorHoldI" },
+					desc = "highlight references when cursor holds",
+					callback = function()
+						if not M.has_capability("textDocument/documentHighlight", { bufnr = bufnr }) then
+							del_buffer_autocmd("lsp_document_highlight", bufnr)
+							return
+						end
+						vim.lsp.buf.document_highlight()
+					end,
+				},
+				{
+					events = { "CursorMoved", "CursorMovedI" },
+					desc = "clear references when cursor moves",
+					callback = function()
+						vim.lsp.buf.clear_references()
+					end,
+				},
+			})
+		end
+
 		for _, lsp_name in pairs(lsp_exclude) do
 			if client.name ~= lsp_name then
 				if client.server_capabilities.hoverProvider then -- in 8.0 - server_capabilities
@@ -109,18 +167,6 @@ M.buffer_attach = function()
 					vim.api.nvim_set_hl(0, "LspReferenceText", opts)
 					vim.api.nvim_set_hl(0, "LspReferenceWrite", opts)
 					vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", opts)
-					vim.api.nvim_create_autocmd("CursorHold", {
-						-- pattern = "*",
-						buffer = bufnr,
-						callback = vim.lsp.buf.document_highlight,
-						group = lsp_doc_hl,
-					})
-					vim.api.nvim_create_autocmd("CursorMoved", {
-						-- pattern = "*",
-						buffer = bufnr,
-						callback = vim.lsp.buf.clear_references,
-						group = lsp_doc_hl,
-					})
 				end
 			end
 			if client.server_capabilities.documentSymbolProvider then
