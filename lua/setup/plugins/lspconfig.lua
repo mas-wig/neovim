@@ -15,14 +15,15 @@ M.keys = function()
 		{
 			"gr",
 			function()
-				require("telescope.builtin").lsp_references(require("telescope.themes").get_ivy({
-					prompt_title = "",
-					layout_config = {
-						preview_width = 0.5,
-						height = 0.6,
-						prompt_position = "bottom",
-					},
-				}))
+				vim.lsp.handlers["textDocument/references"] =
+					require("telescope.builtin").lsp_references(require("telescope.themes").get_ivy({
+						prompt_title = "",
+						layout_config = {
+							preview_width = 0.5,
+							height = 0.6,
+							prompt_position = "bottom",
+						},
+					}))
 			end,
 			desc = "References",
 			has = "references",
