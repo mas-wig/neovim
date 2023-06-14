@@ -12,22 +12,7 @@ M.keys = function()
 	return {
 		{ "<leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
 		{ "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definition", has = "definition" },
-		{
-			"gr",
-			function()
-				vim.lsp.handlers["textDocument/references"] =
-					require("telescope.builtin").lsp_references(require("telescope.themes").get_ivy({
-						prompt_title = "",
-						layout_config = {
-							preview_width = 0.5,
-							height = 0.6,
-							prompt_position = "bottom",
-						},
-					}))
-			end,
-			desc = "References",
-			has = "references",
-		},
+		{ "gr", vim.lsp.buf.references, desc = "References", has = "references" },
 		{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
 		{ "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
 		{ "gy", vim.lsp.buf.definition, desc = "Goto T[y]pe Definition" },
