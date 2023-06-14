@@ -28,8 +28,9 @@ M.keys = function()
 			has = "references",
 		},
 		{ "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-		{ "gI", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
-		{ "gy", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto T[y]pe Definition" },
+		{ "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
+		{ "gy", vim.lsp.buf.definition, desc = "Goto T[y]pe Definition" },
+		{ "gt", vim.lsp.buf.type_definition, desc = "Type Definition" },
 		{ "K", vim.lsp.buf.hover, desc = "Hover" },
 		{ "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
 		{ "]d", diagnostic_goto(true), desc = "Next Diagnostic" },
@@ -39,6 +40,8 @@ M.keys = function()
 		{ "]w", diagnostic_goto(true, "WARN"), desc = "Next Warning" },
 		{ "[w", diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
 		{ "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+		{ "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
+		{ "<leader>rn", vim.lsp.buf.rename, desc = "Rename with lsp", has = "rename" },
 		{
 			"<leader>cA",
 			function()
