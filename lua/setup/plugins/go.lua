@@ -17,6 +17,17 @@ return {
 						end,
 						desc = "GoImpl ",
 					},
+					{
+						"<leader>Gd",
+						function()
+							vim.ui.input({ prompt = "GoDoc :", completion = "menu" }, function(name)
+								if name ~= nil then
+									vim.cmd("GoDoc " .. name)
+								end
+							end)
+						end,
+						desc = "GoDoc",
+					},
 				},
 			},
 		})

@@ -134,9 +134,6 @@ M.buffer_attach = function()
 	end
 
 	return set_attach(function(client, bufnr)
-		local lsp_exclude = { "html", "css", "jsonls" }
-		local opts = { bold = true, reverse = true }
-
 		if client.supports_method("textDocument/documentHighlight") then
 			add_buffer_autocmd("lsp_document_highlight", bufnr, {
 				{
@@ -160,6 +157,8 @@ M.buffer_attach = function()
 			})
 		end
 
+		local lsp_exclude = { "html", "css", "jsonls" }
+		local opts = { bold = true, reverse = true }
 		for _, lsp_name in pairs(lsp_exclude) do
 			if client.name ~= lsp_name then
 				if client.server_capabilities.hoverProvider then -- in 8.0 - server_capabilities

@@ -1,7 +1,7 @@
 local M = {}
 M.setup_obsidian = function()
 	return require("obsidian").setup({
-		daily_notes = { folder = "Dailies" },
+		daily_notes = { folder = "dailies" },
 		dir = "~/Public/NOTES/",
 		completion = { nvim_cmp = true },
 		note_id_func = function(title)
