@@ -204,14 +204,4 @@ return {
 			require("setup.plugins.note-taking").mkdnflow_setup()
 		end,
 	},
-	{
-		"epwalsh/obsidian.nvim",
-		lazy = true,
-		ft = "markdown",
-		cmd = require("setup.plugins.note-taking").cmd_obsidian,
-		keys = require("setup.plugins.note-taking").obsidian_expl,
-		config = function()
-			require("setup.plugins.note-taking").setup_obsidian()
-		end,
-	},
 }

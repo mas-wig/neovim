@@ -1,53 +1,4 @@
 local M = {}
-M.setup_obsidian = function()
-	return require("obsidian").setup({
-		daily_notes = { folder = "dailies" },
-		dir = "~/Public/NOTES/",
-		completion = { nvim_cmp = true },
-		note_id_func = function(title)
-			local suffix = ""
-			if title ~= nil then
-				suffix = title:gsub(" ", "_"):gsub("[^A-Za-z0-9-]", "")
-			else
-				for _ = 1, 4 do
-					suffix = suffix .. string.char(math.random(65, 90))
-				end
-			end
-			return tostring(os.date("%d%m%Y")) .. "_" .. suffix
-		end,
-		disable_frontmatter = false,
-		note_frontmatter_func = function(note)
-			local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
-			local modified = tostring((ftime > 0) and os.date("%x %X", ftime))
-			local out = { id = note.id, aliases = note.aliases, tags = note.tags, date = modified }
-			if note.metadata ~= nil and require("obsidian").util.table_length(note.metadata) > 0 then
-				for k, v in pairs(note.metadata) do
-					out[k] = v
-				end
-			end
-			return out
-		end,
-		templates = {
-			subdir = "templates",
-			date_format = "%Y-%m-%d-%a",
-			time_format = "%H:%M",
-		},
-	})
-end
-
-M.cmd_obsidian = {
-	"ObsidianBacklinks",
-	"ObsidianToday",
-	"ObsidianYesterday",
-	"ObsidianOpen",
-	"ObsidianNew",
-	"ObsidianSearch",
-	"ObsidianQuickSwitch",
-	"ObsidianLink",
-	"ObsidianLinkNew",
-	"ObsidianFollowLink",
-	"ObsidianTemplate",
-}
 
 M.cmd_mkdnflow = {
 	"MkdnEnter",
@@ -115,11 +66,11 @@ M.mkdnflow_setup = function()
 		wrap = false,
 		default_path = nil,
 		bib = {
-			find_in_root = true,
+			find_in_root = false,
 		},
 		silent = false,
 		links = {
-			style = "markdown",
+			style = "wiki",
 			name_is_source = false,
 			conceal = false,
 			context = 0,
@@ -164,6 +115,9 @@ M.mkdnflow_setup = function()
 		yaml = {
 			bib = { override = false },
 		},
+		mappings = {
+			MkdnUpdateNumbering = false,
+		},
 	})
 end
 
@@ -189,37 +143,9 @@ M.note_keys = function()
 			description = "Note me Daddy",
 			icon = "🚀 ",
 			keymaps = {
-				{
-					"<leader>nn",
-					function()
-						local suffix = ""
-						for _ = 1, 4 do
-							suffix = suffix .. string.char(math.random(65, 90))
-						end
-						return vim.cmd("ObsidianLinkNew " .. suffix)
-					end,
-					desc = "Create new Notes with name",
-					mode = { "v" },
-				},
-				{
-					"<leader>nl",
-					"<cmd>ObsidianFollowLink<CR>",
-					desc = "Obsidian Folow Link",
-				},
-				{
-					"<leader>nc",
-					"<cmd>ObsidianNew<cr>",
-					desc = "Create new note",
-				},
-				{
-					"<leader>nd",
-					"<cmd>ObsidianToday<cr>",
-					desc = "Create dailies note",
-				},
-
 				-- Mkdnflow keys --
-				{ "<Tab>", "<cmd>MkdnTableNextCell<cr>", desc = "Next cell tabel", mode = { "i" } },
-				{ "<S-Tab>", "<cmd>MkdnTablePrevCell<cr>", desc = "Prev cell table", mode = { "i" } },
+				-- { "<Tab>", "<cmd>MkdnTableNextCell<cr>", desc = "Next cell tabel", mode = { "i" } },
+				-- { "<S-Tab>", "<cmd>MkdnTablePrevCell<cr>", desc = "Prev cell table", mode = { "i" } },
 				{ "<leader>ir", "<cmd>MkdnTableNewRowBelow<cr>", desc = "Table new row below" },
 				{ "<leader>iR", "<cmd>MkdnTableNewRowAbove<cr>", desc = "Table new row above" },
 				{ "<leader>ic", "<cmd>MkdnTableNewColAfter<cr>", desc = "Table new coloumn after" },
