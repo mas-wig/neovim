@@ -30,6 +30,8 @@ M.miniai = function()
 			c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
 			m = ai.gen_spec.treesitter({ a = "@method.outer", i = "@method.inner" }),
 			p = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+			h = ai.gen_spec.treesitter({ a = "@attribute.outer", i = "@attribute.inner" }),
+			s = ai.gen_spec.treesitter({ a = "@scopename.outer", i = "@scopename.inner" }),
 		},
 	})
 
@@ -58,6 +60,8 @@ M.miniai = function()
 			o = "Block, conditional, loop",
 			q = "Quote `, \", '",
 			t = "Tag",
+			h = "Atribute",
+			s = "Scope Name",
 		}
 		local a = vim.deepcopy(i)
 		for k, v in pairs(a) do
@@ -77,4 +81,7 @@ M.miniai = function()
 		})
 	end
 end
+
+M.various_textobj = function() end
+
 return M

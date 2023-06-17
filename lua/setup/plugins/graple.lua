@@ -8,7 +8,7 @@ M.init = function()
 			icon = "🔭",
 			keymaps = {
 				{
-					"<leader>jm",
+					"<leader><leader>",
 					function()
 						vim.cmd("GrappleToggle")
 					end,
