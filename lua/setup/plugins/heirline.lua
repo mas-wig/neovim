@@ -65,7 +65,7 @@ M.winbar = function()
 						flexible = 3,
 						{
 							provider = function(self)
-								return "  " .. self.navic
+								return self.navic
 							end,
 						},
 						{

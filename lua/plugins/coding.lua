@@ -81,4 +81,17 @@ return {
 		end,
 		opts = { labeled_modes = "nx" },
 	},
+	{
+		"echasnovski/mini.ai",
+		event = "VeryLazy",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			init = function()
+				require("setup.plugins.text-object").treesitter()
+			end,
+		},
+		config = function()
+			require("setup.plugins.text-object").miniai()
+		end,
+	},
 }

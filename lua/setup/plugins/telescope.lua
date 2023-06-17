@@ -114,6 +114,8 @@ M.setup = function()
 				"%.log",
 				".repro/*",
 				".DS_Store",
+				"courses/*",
+				"media/*",
 			},
 			mappings = {
 				i = {

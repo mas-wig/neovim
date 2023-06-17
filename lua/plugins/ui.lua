@@ -17,6 +17,8 @@ return {
 				depth_limit = 5,
 				depth_limit_indicator = "  ",
 				icons = require("setup.ui.icons").kind,
+				safe_output = true,
+				click = true,
 			}
 		end,
 	},
