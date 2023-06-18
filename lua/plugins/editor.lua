@@ -191,11 +191,20 @@ return {
 
 	{
 		"jakewvincent/mkdnflow.nvim",
-		ft = "markdown",
+		ft = { "markdown" },
 		cmd = require("setup.plugins.note-taking").cmd_mkdnflow,
 		keys = require("setup.plugins.note-taking").mkdn_expl,
 		config = function()
 			require("setup.plugins.note-taking").mkdnflow_setup()
 		end,
+	},
+
+	{
+		"andrewferrier/wrapping.nvim",
+		cmd = { "HardWrapMode", "SoftWrapMode", "ToggleWrapMode" },
+		opts = {
+			create_commands = true,
+			create_keymappings = false,
+		},
 	},
 }

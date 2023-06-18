@@ -70,7 +70,37 @@ M.keys = function()
 		},
 		{
 			"<leader>cd",
-			vim.diagnostic.open_float,
+			function()
+				vim.diagnostic.open_float = (function(orig)
+					return function(opts)
+						local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+						local diagnostics = vim.diagnostic.get(opts.bufnr or 0, { lnum = lnum })
+						local max_severity = vim.diagnostic.severity.HINT
+						for _, d in ipairs(diagnostics) do
+							if d.severity < max_severity then
+								max_severity = d.severity
+							end
+						end
+						local border_color = ({
+							[vim.diagnostic.severity.HINT] = "NonText",
+							[vim.diagnostic.severity.INFO] = "Question",
+							[vim.diagnostic.severity.WARN] = "WarningMsg",
+							[vim.diagnostic.severity.ERROR] = "ErrorMsg",
+						})[max_severity]
+						opts.border = {
+							{ "╭", border_color },
+							{ "─", border_color },
+							{ "╮", border_color },
+							{ "│", border_color },
+							{ "╯", border_color },
+							{ "─", border_color },
+							{ "╰", border_color },
+							{ "│", border_color },
+						}
+						orig(opts)
+					end
+				end)(vim.diagnostic.open_float)
+			end,
 			desc = "Line Diagnostics",
 		},
 	}
@@ -105,50 +135,12 @@ M.ui = function()
 		local hl = "DiagnosticSign" .. type
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 	end
-
-	vim.diagnostic.open_float = (function(orig)
-		return function(opts)
-			local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
-			local diagnostics = vim.diagnostic.get(opts.bufnr or 0, { lnum = lnum })
-			local max_severity = vim.diagnostic.severity.HINT
-			for _, d in ipairs(diagnostics) do
-				if d.severity < max_severity then
-					max_severity = d.severity
-				end
-			end
-			local border_color = ({
-				[vim.diagnostic.severity.HINT] = "NonText",
-				[vim.diagnostic.severity.INFO] = "Question",
-				[vim.diagnostic.severity.WARN] = "WarningMsg",
-				[vim.diagnostic.severity.ERROR] = "ErrorMsg",
-			})[max_severity]
-			opts.border = {
-				{ "╭", border_color },
-				{ "─", border_color },
-				{ "╮", border_color },
-				{ "│", border_color },
-				{ "╯", border_color },
-				{ "─", border_color },
-				{ "╰", border_color },
-				{ "│", border_color },
-			}
-			orig(opts)
-		end
-	end)(vim.diagnostic.open_float)
-
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-		underline = true,
-		virtual_text = true,
-		signs = true,
-		update_in_insert = false,
-	})
-
 	local lsp_float = vim.lsp.util.open_floating_preview
 	vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
 		opts = opts or {}
-		opts.wrap = true
-		opts.max_width = opts.max_width or 90
 		opts.border = opts.border or "rounded"
+		opts.height = opts.height or 1
+
 		return lsp_float(contents, syntax, opts, ...)
 	end
 end
@@ -172,6 +164,7 @@ M.buffer_attach = function()
 			end,
 		})
 	end
+
 	return set_attach(function(client, bufnr)
 		if client.supports_method("textDocument/documentHighlight") then
 			add_buffer_autocmd("lsp_document_highlight", bufnr, {
