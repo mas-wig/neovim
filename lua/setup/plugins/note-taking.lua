@@ -21,8 +21,17 @@ tags:
 			end,
 		},
 		after = {
-			current_date = function()
-				return os.date("%d%m%Y")
+			current_folder = function()
+				local location = vim.fn.expand("%:h")
+				local pattern = "/home/user/Public/NOTES/"
+				if string.find(location, pattern) then
+					return string.gsub(location, pattern, "")
+				else
+					if location == "." then
+						location = "root"
+					end
+					return location
+				end
 			end,
 			target_dir = function()
 				local location = vim.fn.expand("%:h")
@@ -32,18 +41,8 @@ tags:
 				end
 				return location:match(".+/([^/]+)")
 			end,
-			current_folder = function()
-				local location = vim.fn.expand("%:h")
-				local pattern = "/home/user/Public/NOTES/"
-
-				if string.find(location, pattern) then
-					return string.gsub(location, pattern, "")
-				else
-					if location == "." then
-						location = "root"
-					end
-					return location
-				end
+			current_date = function()
+				return os.date("%d%m%Y")
 			end,
 		},
 	},
@@ -109,14 +108,12 @@ M.mkdnflow_setup = function()
 			priority = "current",
 			fallback = "current",
 			root_tell = false,
-			nvim_wd_heel = true,
+			nvim_wd_heel = false,
 			update = false,
 		},
 		wrap = false,
 		default_path = nil,
-		bib = {
-			find_in_root = false,
-		},
+		bib = { find_in_root = false },
 		silent = false,
 		links = {
 			style = "markdown",
@@ -158,9 +155,7 @@ M.mkdnflow_setup = function()
 			auto_extend_rows = true,
 			auto_extend_cols = true,
 		},
-		yaml = {
-			bib = { override = false },
-		},
+		yaml = { bib = { override = false } },
 		mappings = {
 			MkdnEnter = { { "n", "v" }, "<leader>nn", { desc = "Create New Note" } },
 			MkdnTab = { "n", "<leader>nt", { desc = "Tab" } },
