@@ -4,11 +4,11 @@ M.template = {
 ---
 id: "{{filename}}"
 date: "{{date}}"
+alias:
+  - "{{filename}}"
 tags:
   - "#{{current_folder}}"
   - "#{{target_dir}}/{{current_date}}"
-alias:
-  - "{{filename}}"
 ---
 ]],
 	placeholders = {
@@ -16,28 +16,34 @@ alias:
 			date = function()
 				return os.date("%A, %B %d, %Y") -- Wednesday, March 1, 2023
 			end,
-			current_folder = function()
-				local location = vim.fn.expand("%:h")
-				if tostring(location) == "." then
-					location = "root"
-				end
-				return tostring(location)
+			filename = function()
+				return vim.fn.expand("%:t:r")
 			end,
+		},
+		after = {
 			current_date = function()
 				return os.date("%d%m%Y")
 			end,
 			target_dir = function()
-				local fileDirectory = vim.fn.expand("%:h")
-				if tostring(fileDirectory) == "." then
-					fileDirectory = "root"
-					return tostring(fileDirectory)
+				local location = vim.fn.expand("%:h")
+				if tostring(location) == "." then
+					location = "root"
+					return tostring(location)
 				end
-				return string.match(fileDirectory, ".*/([^/]*)$")
+				return location:match(".+/([^/]+)")
 			end,
-		},
-		after = {
-			filename = function()
-				return vim.fn.expand("%:t:r")
+			current_folder = function()
+				local location = vim.fn.expand("%:h")
+				local pattern = "/home/user/Public/NOTES/"
+
+				if string.find(location, pattern) then
+					return string.gsub(location, pattern, "")
+				else
+					if location == "." then
+						location = "root"
+					end
+					return location
+				end
 			end,
 		},
 	},
