@@ -29,7 +29,6 @@ return {
 				vim.opt_local.wrapmargin = 0
 				vim.opt_local.shiftwidth = 2
 				vim.opt_local.tabstop = 2
-				require("setup.plugins.note-taking").note_keys()
 			end,
 			opts = { pattern = "markdown" },
 		},

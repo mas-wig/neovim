@@ -196,7 +196,6 @@ return {
 		keys = require("setup.plugins.note-taking").mkdn_expl,
 		config = function()
 			require("setup.plugins.note-taking").mkdnflow_setup()
-			require("setup.plugins.note-taking").note_keys()
 		end,
 	},
 }

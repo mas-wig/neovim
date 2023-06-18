@@ -5,13 +5,34 @@ M.template = {
 id: "{{filename}}"
 date: "{{date}}"
 tags:
+  - "#{{current_folder}}"
+  - "#{{target_dir}}/{{current_date}}"
 alias:
+  - "{{filename}}"
 ---
 ]],
 	placeholders = {
 		before = {
 			date = function()
 				return os.date("%A, %B %d, %Y") -- Wednesday, March 1, 2023
+			end,
+			current_folder = function()
+				local location = vim.fn.expand("%:h")
+				if tostring(location) == "." then
+					location = "root"
+				end
+				return tostring(location)
+			end,
+			current_date = function()
+				return os.date("%d%m%Y")
+			end,
+			target_dir = function()
+				local fileDirectory = vim.fn.expand("%:h")
+				if tostring(fileDirectory) == "." then
+					fileDirectory = "root"
+					return tostring(fileDirectory)
+				end
+				return string.match(fileDirectory, ".*/([^/]*)$")
 			end,
 		},
 		after = {
@@ -98,15 +119,15 @@ M.mkdnflow_setup = function()
 			context = 0,
 			implicit_extension = nil,
 			transform_implicit = false,
-			transform_explicit = function(title)
+			transform_explicit = function()
 				local suffix = ""
-				-- if title ~= nil then
-				-- 	suffix = title:gsub(" ", "_"):gsub("[^A-Za-z0-9-]", "")
-				-- else
 				for _ = 1, 4 do
 					suffix = suffix .. string.char(math.random(65, 90))
 				end
-				-- end
+
+				if string.len(suffix) > 4 then
+					string.lower(suffix:gsub(" ", "_"))
+				end
 				return tostring(os.date("%d%m%Y")) .. "_" .. suffix
 			end,
 		},
@@ -135,41 +156,42 @@ M.mkdnflow_setup = function()
 			bib = { override = false },
 		},
 		mappings = {
-			MkdnEnter = false,
-			MkdnTab = false,
-			MkdnSTab = false,
-			MkdnNextLink = false,
-			MkdnPrevLink = false,
-			MkdnNextHeading = false,
-			MkdnPrevHeading = false,
-			MkdnGoBack = false,
-			MkdnGoForward = false,
-			MkdnCreateLink = false,
-			MkdnCreateLinkFromClipboard = false,
-			MkdnFollowLink = false,
-			MkdnDestroyLink = false,
-			MkdnTagSpan = false,
-			MkdnMoveSource = false,
-			MkdnYankAnchorLink = false,
-			MkdnYankFileAnchorLink = false,
-			MkdnIncreaseHeading = false,
-			MkdnDecreaseHeading = false,
-			MkdnToggleToDo = false,
-			MkdnNewListItem = false,
-			MkdnNewListItemBelowInsert = false,
-			MkdnNewListItemAboveInsert = false,
-			MkdnExtendList = false,
-			MkdnUpdateNumbering = false,
-			MkdnTableNextCell = false,
-			MkdnTablePrevCell = false,
+			MkdnEnter = { { "n", "v" }, "<leader>nn", { desc = "Create New Note" } },
+			MkdnTab = { "n", "<leader>nt", { desc = "Tab" } },
+			MkdnSTab = { "n", "<leader>nT", { desc = "Shift + Tab" } },
+			MkdnNextLink = { "n", "<leader>nL", { desc = "Navigate to Next Link" } },
+			MkdnPrevLink = { "n", "<leader>nP", { desc = "Navigate to Previous Link" } },
+			MkdnNextHeading = { "n", "<leader>nh", { desc = "Navigate to Next Heading" } },
+			MkdnPrevHeading = { "n", "<leader>ng", { desc = "Navigate to Previous Heading" } },
+			MkdnGoBack = { "n", "<leader>nb", { desc = "Go Back" } },
+			MkdnGoForward = { "n", "<leader>nf", { desc = "Go Forward" } },
+			MkdnCreateLink = { { "n", "v" }, "<leader>ncl", { desc = "Create Link" } },
+			MkdnCreateLinkFromClipboard = { "n", "<leader>ncL", { desc = "Create Link from Clipboard" } },
+			MkdnFollowLink = { { "n", "v" }, "<leader>nl", { desc = "Follow Link" } },
+			MkdnDestroyLink = { "n", "<leader>nx", { desc = "Destroy Link" } },
+			MkdnTagSpan = { "n", "<leader>nt", { desc = "Tag Span" } },
+			MkdnMoveSource = { "n", "<leader>nm", { desc = "Move Source" } },
+			MkdnYankAnchorLink = { "n", "<leader>ny", { desc = "Yank Anchor Link" } },
+			MkdnYankFileAnchorLink = { "n", "<leader>nY", { desc = "Yank File Anchor Link" } },
+			MkdnIncreaseHeading = { "n", "<leader>ni", { desc = "Increase Heading Level" } },
+			MkdnDecreaseHeading = { "n", "<leader>nd", { desc = "Decrease Heading Level" } },
+			MkdnToggleToDo = { { "n", "v" }, "<leader>Nt", { desc = "Toggle Todo" } },
+			MkdnNewListItem = { "n", "<leader>ni", { desc = "New List Item" } },
+			MkdnNewListItemBelowInsert = { "n", "<leader>nbli", { desc = "New List Item Below and Insert" } },
+			MkdnNewListItemAboveInsert = { "n", "<leader>nai", { desc = "New List Item Above and Insert" } },
+			MkdnExtendList = { "n", "<leader>nel", { desc = "Extend List" } },
+			MkdnUpdateNumbering = { "n", "<leader>nu", { desc = "Update Numbering" } },
+			MkdnTableNextCell = { "n", "<leader>ntn", { desc = "Table Next Cell" } },
+			MkdnTablePrevCell = { "n", "<leader>ntp", { desc = "Table Previous Cell" } },
 			MkdnTableNextRow = false,
-			MkdnTablePrevRow = false,
-			MkdnTableNewRowBelow = false,
-			MkdnTableNewRowAbove = false,
-			MkdnTableNewColAfter = false,
-			MkdnTableNewColBefore = false,
-			MkdnFoldSection = false,
-			MkdnUnfoldSection = false,
+			MkdnTablePrevRow = { "n", "<leader>ntpr", { desc = "Table Previous Row" } },
+			MkdnTableNewRowBelow = { "n", "<leader>ntb", { desc = "Table New Row Below" } },
+			MkdnTableNewRowAbove = { "n", "<leader>nta", { desc = "Table New Row Above" } },
+			MkdnTableNewColAfter = { "n", "<leader>ntca", { desc = "Table New Column After" } },
+			MkdnTableNewColBefore = { "n", "<leader>ntcb", { desc = "Table New Column Before" } },
+			MkdnFoldSection = { "n", "<leader>nf", { desc = "Fold Section" } },
+			MkdnUnfoldSection = { "n", "<leader>nF", { desc = "Unfold Section" } },
+			Mkdnflow = { "n", "<leader>nN", { desc = "Flow" } },
 		},
 	})
 end
@@ -189,51 +211,4 @@ M.mkdn_expl = {
 	},
 }
 
-M.note_keys = function()
-	return require("legendary").keymaps({
-		{
-			itemgroup = "MKdnFlow Note Taking",
-			description = "Take a Note for me Daddy",
-			icon = "🚀 ",
-			keymaps = {
-				{ "<leader>nn", "<cmd>MkdnEnter<cr>", desc = "Create New Note" },
-				{ "<leader>nL", "<cmd>MkdnNextLink<cr>", desc = "Navigate to Next Link" },
-				{ "<leader>nP", "<cmd>MkdnPrevLink<cr>", desc = "Navigate to Previous Link" },
-				{ "<leader>nh", "<cmd>MkdnNextHeading<cr>", desc = "Navigate to Next Heading" },
-				{ "<leader>ng", "<cmd>MkdnPrevHeading<cr>", desc = "Navigate to Previous Heading" },
-				{ "<leader>nb", "<cmd>MkdnGoBack<cr>", desc = "Go Back" },
-				{ "<leader>nf", "<cmd>MkdnGoForward<cr>", desc = "Go Forward" },
-				{ "<leader>ncl", "<cmd>MkdnCreateLink<cr>", desc = "Create Link", mode = { "n", "v" } },
-				{ "<leader>ncL", "<cmd>MkdnCreateLinkFromClipboard<cr>", desc = "Create Link from Clipboard" },
-				{ "<leader>nl", "<cmd>MkdnFollowLink<cr>", desc = "Follow Link", mode = { "n", "v" } },
-				{ "<leader>nx", "<cmd>MkdnDestroyLink<cr>", desc = "Destroy Link" },
-				{ "<leader>nt", "<cmd>MkdnTagSpan<cr>", desc = "Tag Span" },
-				{ "<leader>nm", "<cmd>MkdnMoveSource<cr>", desc = "Move Source" },
-				{ "<leader>ny", "<cmd>MkdnYankAnchorLink<cr>", desc = "Yank Anchor Link" },
-				{ "<leader>nY", "<cmd>MkdnYankFileAnchorLink<cr>", desc = "Yank File Anchor Link" },
-				{ "<leader>ni", "<cmd>MkdnIncreaseHeading<cr>", desc = "Increase Heading Level" },
-				{ "<leader>nd", "<cmd>MkdnDecreaseHeading<cr>", desc = "Decrease Heading Level" },
-				{ "<leader>Nt", "<cmd>MkdnToggleToDo<cr>", desc = "Toggle Todo" },
-				{ "<leader>nu", "<cmd>MkdnUpdateNumbering<cr>", desc = "Update Numbering" },
-				{ "<leader>ni", "<cmd>MkdnNewListItem<cr>", desc = "New List Item" },
-				{ "<leader>nbli", "<cmd>MkdnNewListItemBelowInsert<cr>", desc = "New List Item Below and Insert" },
-				{ "<leader>nai", "<cmd>MkdnNewListItemAboveInsert<cr>", desc = "New List Item Above and Insert" },
-				{ "<leader>nel", "<cmd>MkdnExtendList<cr>", desc = "Extend List" },
-				{ "<leader>ntt", "<cmd>MkdnTable<cr>", desc = "Table" },
-				{ "<leader>ntf", "<cmd>MkdnTableFormat<cr>", desc = "Table Format" },
-				{ "<leader>ntn", "<cmd>MkdnTableNextCell<cr>", desc = "Table Next Cell" },
-				{ "<leader>ntp", "<cmd>MkdnTablePrevCell<cr>", desc = "Table Previous Cell" },
-				{ "<leader>ntb", "<cmd>MkdnTableNewRowBelow<cr>", desc = "Table New Row Below" },
-				{ "<leader>nta", "<cmd>MkdnTableNewRowAbove<cr>", desc = "Table New Row Above" },
-				{ "<leader>ntca", "<cmd>MkdnTableNewColAfter<cr>", desc = "Table New Column After" },
-				{ "<leader>ntcb", "<cmd>MkdnTableNewColBefore<cr>", desc = "Table New Column Before" },
-				{ "<leader>nt", "<cmd>MkdnTab<cr>", desc = "Tab" },
-				{ "<leader>nT", "<cmd>MkdnSTab<cr>", desc = "Shift + Tab" },
-				{ "<leader>nf", "<cmd>MkdnFoldSection<cr>", desc = "Fold Section" },
-				{ "<leader>nF", "<cmd>MkdnUnfoldSection<cr>", desc = "Unfold Section" },
-				{ "<leader>nN", "<cmd>Mkdnflow<cr>", desc = "Flow" },
-			},
-		},
-	})
-end
 return M
