@@ -100,10 +100,10 @@ M.mkdnflow_setup = function()
 		filetypes = { md = true, rmd = true, markdown = true },
 		create_dirs = true,
 		perspective = {
-			priority = "first",
+			priority = "current",
 			fallback = "current",
 			root_tell = false,
-			nvim_wd_heel = false,
+			nvim_wd_heel = true,
 			update = false,
 		},
 		wrap = false,

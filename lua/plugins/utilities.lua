@@ -27,9 +27,17 @@ return {
 				autocmds = require("core.autocmds"),
 				commands = {
 					{
-						":CopyCurrentPath",
+						":CopyCurrentPathFile",
 						function()
 							local path = vim.fn.expand("%:p:.")
+							vim.fn.setreg("+", path)
+							vim.notify('Copied "' .. path .. '" to the clipboard!')
+						end,
+					},
+					{
+						":CopyCurrentPathFolder",
+						function()
+							local path = vim.fn.expand("%:h")
 							vim.fn.setreg("+", path)
 							vim.notify('Copied "' .. path .. '" to the clipboard!')
 						end,
