@@ -190,18 +190,13 @@ return {
 	},
 
 	{
-		"andrewferrier/wrapping.nvim",
-		cmd = { "HardWrapMode", "SoftWrapMode", "ToggleWrapMode" },
-		opts = { create_commands = true },
-	},
-
-	{
 		"jakewvincent/mkdnflow.nvim",
-		lazy = true,
 		ft = "markdown",
 		cmd = require("setup.plugins.note-taking").cmd_mkdnflow,
+		keys = require("setup.plugins.note-taking").mkdn_expl,
 		config = function()
 			require("setup.plugins.note-taking").mkdnflow_setup()
+			require("setup.plugins.note-taking").note_keys()
 		end,
 	},
 }
