@@ -100,4 +100,21 @@ return {
 		end,
 		keys = require("setup.plugins.dap").keys,
 	},
+
+	{
+		"nvim-neotest/neotest",
+		dependencies = { "antoinemadec/FixCursorHold.nvim", "nvim-neotest/neotest-go" },
+		keys = require("setup.plugins.neotest").keys,
+		config = function()
+			require("setup.plugins.neotest").setup()
+		end,
+	},
+
+	{
+		"stevearc/overseer.nvim",
+		keys = require("setup.plugins.overseer").keys,
+		config = function()
+			require("setup.plugins.overseer").setup()
+		end,
+	},
 }

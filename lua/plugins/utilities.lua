@@ -85,10 +85,8 @@ return {
 	{
 		"cbochs/grapple.nvim",
 		event = { "BufRead", "BufNewFile" },
-		init = function()
-			require("setup.plugins.graple").init()
-		end,
 		config = function()
+			require("setup.plugins.graple").init()
 			require("setup.plugins.graple").setup()
 		end,
 	},

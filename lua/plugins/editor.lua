@@ -82,7 +82,7 @@ return {
 		"folke/trouble.nvim",
 		cmd = { "TroubleToggle", "Trouble" },
 		opts = { use_diagnostic_signs = true },
-		init = function()
+		config = function()
 			require("setup.plugins.trouble")
 		end,
 	},
