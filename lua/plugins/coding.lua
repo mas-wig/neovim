@@ -88,35 +88,16 @@ return {
 			require("nvim-surround").setup(opts)
 		end,
 	},
+
 	{
-		"phaazon/hop.nvim",
-		event = "VeryLazy",
-		keys = {
-			{
-				"f",
-				function()
-					require("hop").hint_char1({
-						direction = require("hop.hint").HintDirection.AFTER_CURSOR,
-						current_line_only = true,
-						hint_offset = 1,
-					})
-				end,
-				desc = "Jumps one character after",
-			},
-			{
-				"F",
-				function()
-					require("hop").hint_char1({
-						direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
-						current_line_only = true,
-						hint_offset = 1,
-					})
-				end,
-				desc = "Jumps one character before",
-			},
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			{ "rcarriga/nvim-dap-ui" },
+			{ "theHamsta/nvim-dap-virtual-text" },
 		},
 		config = function()
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+			require("setup.plugins.dap").setup()
 		end,
+		keys = require("setup.plugins.dap").keys,
 	},
 }

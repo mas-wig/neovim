@@ -71,7 +71,7 @@ return {
 		opts = {
 			max_time = 10,
 			max_count = 4,
-			disable_mouse = true,
+			disable_mouse = false,
 			hint = true,
 			allow_different_key = false,
 			resetting_keys = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "c", "d", "x", "X", "p", "P" },
