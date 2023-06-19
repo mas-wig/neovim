@@ -1,5 +1,23 @@
 local M = {}
 M.setup = function()
+	require("overseer").setup({
+		task_win = {
+			padding = 2,
+			border = "rounded",
+			win_opts = {
+				winblend = 0,
+			},
+		},
+		component_aliases = {
+			default_neotest = {
+				"on_output_summarize",
+				"on_exit_set_status",
+				"on_complete_dispose",
+			},
+		},
+		templates = {},
+	})
+
 	require("legendary").commands({
 		{
 			"OverseerRestartLast",
@@ -30,6 +48,22 @@ M.keys = {
 	{ "<leader>or", "<cmd>OverseerRun<cr>", desc = "Overseer Run" },
 	{ "<leader>os", "<cmd>OverseerSaveBundle<cr>", desc = "Overseer Save Bundle" },
 	{ "<leader>ot", "<cmd>OverseerToggle!<cr>", desc = "Overseer Toggle" },
+}
+
+M.cmd = {
+	"OverseerOpen",
+	"OverseerClose",
+	"OverseerToggle",
+	"OverseerSaveBundle",
+	"OverseerLoadBundle",
+	"OverseerDeleteBundle",
+	"OverseerRunCmd",
+	"OverseerRun",
+	"OverseerInfo",
+	"OverseerBuild",
+	"OverseerQuickAction",
+	"OverseerTaskAction",
+	"OverseerClearCache",
 }
 
 return M

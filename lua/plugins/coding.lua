@@ -112,9 +112,10 @@ return {
 
 	{
 		"stevearc/overseer.nvim",
-		keys = require("setup.plugins.overseer").keys,
+		cmd = require("setup.plugins.overseer").cmd,
 		config = function()
 			require("setup.plugins.overseer").setup()
 		end,
+		keys = require("setup.plugins.overseer").keys,
 	},
 }
