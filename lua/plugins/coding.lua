@@ -54,34 +54,6 @@ return {
 		},
 	},
 	{
-		"ggandor/leap.nvim",
-		keys = {
-			{ "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
-			{ "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
-			{ "gs", mode = { "n", "x", "o" }, desc = "Leap from windows" },
-		},
-		config = function(_, opts)
-			local leap = require("leap")
-			for k, v in pairs(opts) do
-				leap.opts[k] = v
-			end
-			leap.add_default_mappings(true)
-			vim.keymap.del({ "x", "o" }, "x")
-			vim.keymap.del({ "x", "o" }, "X")
-		end,
-	},
-	{
-		"ggandor/flit.nvim",
-		keys = function()
-			local ret = {}
-			for _, key in ipairs({ "f", "F", "t", "T" }) do
-				ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
-			end
-			return ret
-		end,
-		opts = { labeled_modes = "nx" },
-	},
-	{
 		"echasnovski/mini.ai",
 		event = "VeryLazy",
 		dependencies = {
@@ -92,6 +64,59 @@ return {
 		},
 		config = function()
 			require("setup.plugins.text-object").miniai()
+		end,
+	},
+
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		opts = {
+			keymaps = {
+				insert = "<C-g>s",
+				insert_line = "<C-g>S",
+				normal = "ys",
+				normal_cur = "yss",
+				normal_line = "yS",
+				normal_cur_line = "ySS",
+				visual = "S",
+				visual_line = "gS",
+				delete = "ds",
+				change = "cs",
+			},
+		},
+		config = function(_, opts)
+			require("nvim-surround").setup(opts)
+		end,
+	},
+	{
+		"phaazon/hop.nvim",
+		event = "VeryLazy",
+		keys = {
+			{
+				"f",
+				function()
+					require("hop").hint_char1({
+						direction = require("hop.hint").HintDirection.AFTER_CURSOR,
+						current_line_only = true,
+						hint_offset = 1,
+					})
+				end,
+				desc = "Jumps one character after",
+			},
+			{
+				"F",
+				function()
+					require("hop").hint_char1({
+						direction = require("hop.hint").HintDirection.BEFORE_CURSOR,
+						current_line_only = true,
+						hint_offset = 1,
+					})
+				end,
+				desc = "Jumps one character before",
+			},
+		},
+		config = function()
+			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 		end,
 	},
 }
