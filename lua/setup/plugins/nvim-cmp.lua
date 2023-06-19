@@ -153,6 +153,61 @@ return function()
 	})
 
 	cmp.setup.filetype({ "go" }, {
+		--Note : https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
+		sources = cmp.config.sources({
+			{
+				name = "nvim_lsp",
+				entry_filter = function(entry, ctx)
+					local kind = entry:get_kind()
+					local line = ctx.cursor_line
+					local col = ctx.cursor.col
+					local charBeforeCusor = string.sub(line, col - 1, col - 1)
+
+					if charBeforeCusor == "." then
+						if kind == 2 or kind == 5 then
+							return true
+						else
+							return false
+						end
+					elseif string.match(line, "^%s*%w*$") then
+						if kind == 3 or kind == 6 then
+							return true
+						else
+							return false
+						end
+					end
+					return true
+				end,
+				priority = 100,
+				keyword_length = 3,
+				max_item_count = 10,
+				group_index = 1,
+			},
+			{
+				name = "buffer",
+				priority = 90,
+				max_item_count = 5,
+				group_index = 1,
+				option = {
+					keyword_length = 3,
+					indexing_interval = 200,
+					indexing_batch_size = 1500,
+					max_indexed_line_length = 1024 * 30, -- Size buffer pada kilo byte
+					get_bufnrs = function() -- jika file melebihi 1 mb maka indexing tidak akan dilakukan sepenuhnya
+						local buf = vim.api.nvim_get_current_buf()
+						local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+						if byte_size > 1024 * 100 then -- 1 Megabyte max
+							return {}
+						end
+						return { buf }
+					end,
+				},
+			},
+			{ name = "luasnip", priority = 80, max_item_count = 4, group_index = 1 },
+			{ name = "path", priority = 20, group_index = 2 },
+		}),
+
+		-- Golang defeult sorting e koyo wong edan,...
 		sorting = {
 			priority_weight = 2,
 			comparators = {
@@ -170,6 +225,7 @@ return function()
 	})
 
 	cmp.setup.filetype({ "sql", "mysql" }, {
-		{ experimental = { ghost_text = false }, window = { documentation = false } },
+		experimental = { ghost_text = false },
+		window = { documentation = false },
 	})
 end
