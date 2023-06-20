@@ -22,24 +22,18 @@ tags:
 		},
 		after = {
 			current_folder = function()
-				local location = vim.fn.expand("%:h")
-				local pattern = "/home/user/Public/NOTES/"
-				if string.find(location, pattern) then
-					return string.gsub(location, pattern, "")
-				else
-					if location == "." then
-						location = "root"
-					end
-					return location
+				local location = vim.fn.expand("%:p:h")
+				if location == "." then
+					location = "root"
 				end
+				return string.gsub(location, tostring(vim.fn.getcwd()) .. "/", "")
 			end,
 			target_dir = function()
-				local location = vim.fn.expand("%:h")
+				local location = vim.fn.expand("%:p:h")
 				if tostring(location) == "." then
 					location = "root"
-					return tostring(location)
 				end
-				return location:match(".+/([^/]+)")
+				return string.match(location, ".+/([^/]+)")
 			end,
 			current_date = function()
 				return os.date("%d%m%Y")
