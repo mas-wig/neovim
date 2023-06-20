@@ -26,11 +26,4 @@ return function()
 			end
 		end
 	end)
-
-	vim.api.nvim_create_autocmd("VimLeavePre", {
-		group = vim.api.nvim_create_augroup("CfgResession", { clear = true }),
-		callback = function()
-			resession.save("Last Session")
-		end,
-	})
 end

@@ -137,4 +137,14 @@ return {
 			end,
 		},
 	},
+	{
+		name = "CfgResession",
+		clear = true,
+		{
+			{ "VimLeavePre" },
+			function()
+				require("resession").save("Last Session")
+			end,
+		},
+	},
 }

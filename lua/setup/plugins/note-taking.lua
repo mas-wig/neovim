@@ -16,9 +16,6 @@ tags:
 			date = function()
 				return os.date("%A, %B %d, %Y") -- Wednesday, March 1, 2023
 			end,
-			filename = function()
-				return vim.fn.expand("%:t:r")
-			end,
 		},
 		after = {
 			current_folder = function()
@@ -34,6 +31,9 @@ tags:
 					location = "root"
 				end
 				return string.match(location, ".+/([^/]+)")
+			end,
+			filename = function()
+				return vim.fn.expand("%:t:r")
 			end,
 			current_date = function()
 				return os.date("%d%m%Y")

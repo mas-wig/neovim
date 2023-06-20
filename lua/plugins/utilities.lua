@@ -68,6 +68,7 @@ return {
 	},
 	{
 		"stevearc/resession.nvim",
+		enabled = true,
 		config = function()
 			require("setup.plugins.resession")()
 		end,
