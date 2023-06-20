@@ -9,9 +9,9 @@ return require("legendary").setup({
 			":OpenWithObsidian",
 			function()
 				local Job = require("plenary.job")
-				local uri = ("obsidian://open?path=%s&vault=%s"):format(
-					string.gsub(tostring(vim.api.nvim_buf_get_name(0)), "/", "%%2F"),
-					"NOTES"
+				local uri = ("obsidian://open?vault=%s&path=%s"):format(
+					"NOTES",
+					string.gsub(tostring(vim.api.nvim_buf_get_name(0)), "/", "%%2F")
 				)
 				Job:new({
 					command = "xdg-open",
