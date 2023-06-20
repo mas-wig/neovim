@@ -87,6 +87,7 @@ M.setup = function()
 	require("neotest").setup({
 		adapters = {
 			require("neotest-go"),
+			-- require("neotest-jest"),
 		},
 		consumers = {
 			overseer = require("neotest.consumers.overseer"),

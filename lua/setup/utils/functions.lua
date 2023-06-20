@@ -73,5 +73,14 @@ function fn.ConcealHTML(bufnr)
 		})
 	end
 end
-
+local char_to_hex = function(c)
+	return string.format("%%%02X", string.byte(c))
+end
+function fn.urlencode(str)
+	local url = str
+	url = url:gsub("\n", "\r\n")
+	url = url:gsub("([^%w _%%%-%.~])", char_to_hex)
+	url = url:gsub(" ", "%%20")
+	return url
+end
 return fn

@@ -359,12 +359,18 @@ M.statusline = function()
 			init = function(self)
 				self.overseer = require("overseer")
 				self.neotest = require("neotest")
-				-- NOTE: self.neotest.state.adapter_ids()[1] pada index 1 itu
-				-- golang jika kau ingin menambahkan yang lain seperti jest maka
-				-- rubah indexnya
-				self.ft_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
 				self.tasks = self.overseer.task_list
 				self.STATUS = self.overseer.constants.STATUS
+
+				local index_prov = 0
+				if vim.bo.filetype == "go" then
+					index_prov = 1
+				elseif vim.bo.filetype == "javascript" or "typescript" then
+					index_prov = 2
+				end
+
+				self.ft_test =
+					self.neotest.state.status_counts(self.neotest.state.adapter_ids()[index_prov], self.bufnr)
 			end,
 			static = {
 				symbols = {

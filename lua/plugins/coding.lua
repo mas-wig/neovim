@@ -103,7 +103,11 @@ return {
 
 	{
 		"nvim-neotest/neotest",
-		dependencies = { "antoinemadec/FixCursorHold.nvim", "nvim-neotest/neotest-go" },
+		dependencies = {
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-go",
+			-- "haydenmeade/neotest-jest",
+		},
 		keys = require("setup.plugins.neotest").keys,
 		config = function()
 			require("setup.plugins.neotest").setup()

@@ -19,31 +19,7 @@ return {
 			})
 		end,
 		config = function()
-			require("legendary").setup({
-				select_prompt = "Legendary",
-				include_builtin = false,
-				include_legendary_cmds = false,
-				which_key = { auto_register = false },
-				autocmds = require("core.autocmds"),
-				commands = {
-					{
-						":CopyCurrentPathFile",
-						function()
-							local path = vim.fn.expand("%:p:.")
-							vim.fn.setreg("+", path)
-							vim.notify('Copied "' .. path .. '" to the clipboard!')
-						end,
-					},
-					{
-						":CopyCurrentPathFolder",
-						function()
-							local path = vim.fn.expand("%:h")
-							vim.fn.setreg("+", path)
-							vim.notify('Copied "' .. path .. '" to the clipboard!')
-						end,
-					},
-				},
-			})
+			require("setup.plugins.legendary")
 		end,
 	},
 	{

@@ -14,38 +14,9 @@ return {
 				end
 			end
 		end,
-		keys = {
-			{
-				"<C-n>",
-				function()
-					require("neo-tree.command").execute({
-						toggle = true,
-						dir = os.getenv("PWD"),
-						position = "current",
-						action = "focus",
-						source = "filesystem",
-						reveal = true,
-					})
-				end,
-				desc = "Explorer NeoTree (root dir)",
-			},
-			{
-				"<leader>N",
-				function()
-					require("neo-tree.command").execute({
-						toggle = true,
-						dir = os.getenv("PWD"),
-						position = "current",
-						action = "focus",
-						source = "git_status",
-						reveal = true,
-					})
-				end,
-				desc = "Explorer NeoTree (Git)",
-			},
-		},
+		keys = require("setup.plugins.neotree").keys,
 		config = function()
-			require("setup.plugins.neotree")
+			require("setup.plugins.neotree").setup()
 		end,
 	},
 
