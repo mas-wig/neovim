@@ -359,7 +359,10 @@ M.statusline = function()
 			init = function(self)
 				self.overseer = require("overseer")
 				self.neotest = require("neotest")
-				self.go_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
+				-- NOTE: self.neotest.state.adapter_ids()[1] pada index 1 itu
+				-- golang jika kau ingin menambahkan yang lain seperti jest maka
+				-- rubah indexnya
+				self.ft_test = self.neotest.state.status_counts(self.neotest.state.adapter_ids()[1], self.bufnr)
 				self.tasks = self.overseer.task_list
 				self.STATUS = self.overseer.constants.STATUS
 			end,
@@ -397,8 +400,8 @@ M.statusline = function()
 					local success_tasks =
 						self.tasks.list_tasks({ recent_first = true, unique = true, status = self.STATUS.SUCCESS })
 					if success_tasks then
-						if self.go_test then
-							success_count = self.go_test["passed"]
+						if self.ft_test then
+							success_count = self.ft_test["passed"]
 						else
 							success_count = #success_tasks
 						end
@@ -419,8 +422,8 @@ M.statusline = function()
 					local failed_count = 0
 					local failed_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.FAILURE })
 					if failed_tasks then
-						if self.go_test then
-							failed_count = self.go_test["failed"]
+						if self.ft_test then
+							failed_count = self.ft_test["failed"]
 						else
 							failed_count = #failed_tasks
 						end
@@ -441,8 +444,8 @@ M.statusline = function()
 					local running_count = 0
 					local running_tasks = self.tasks.list_tasks({ unique = true, status = self.STATUS.RUNNING })
 					if running_tasks then
-						if self.go_test then
-							running_count = self.go_test["running"]
+						if self.ft_test then
+							running_count = self.ft_test["running"]
 						else
 							running_count = #running_tasks
 						end
@@ -611,235 +614,231 @@ M.statuscol = function()
 			end,
 			handlers = {},
 		},
+		init = function(self)
+			self.signs = {}
+			self.handlers.signs = function(args)
+				return vim.schedule(vim.diagnostic.open_float)
+			end
+			self.handlers.line_number = function(args)
+				local dap_avail, dap = pcall(require, "dap")
+				if dap_avail then
+					vim.schedule(dap.toggle_breakpoint)
+				end
+			end
+
+			self.handlers.git_signs = function(args)
+				if gitsigns_avail then
+					vim.schedule(gitsigns.preview_hunk)
+				end
+			end
+
+			self.handlers.fold = function(args)
+				local lnum = args.mousepos.line
+				if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then
+					return
+				end
+				vim.cmd.execute("'" .. lnum .. "fold" .. (vim.fn.foldclosed(lnum) == -1 and "close" or "open") .. "'")
+			end
+		end,
+		-----------------------------------------------------
+		-- Sign
+		-----------------------------------------------------
 		{
+			-- condition = function() return conditions.has_diagnostics() end,
 			init = function(self)
-				self.signs = {}
-				self.handlers.signs = function(args)
-					return vim.schedule(vim.diagnostic.open_float)
-				end
-				self.handlers.line_number = function(args)
-					local dap_avail, dap = pcall(require, "dap")
-					if dap_avail then
-						vim.schedule(dap.toggle_breakpoint)
-					end
+				local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
+					group = "*",
+					lnum = vim.v.lnum,
+				})
+
+				if #signs == 0 or signs[1].signs == nil then
+					self.sign = nil
+					self.has_sign = false
+					return
 				end
 
-				self.handlers.git_signs = function(args)
-					if gitsigns_avail then
-						vim.schedule(gitsigns.preview_hunk)
-					end
+				-- Filter out git signs
+				signs = vim.tbl_filter(function(sign)
+					return not vim.startswith(sign.group, "gitsigns")
+				end, signs[1].signs)
+
+				if #signs == 0 then
+					self.sign = nil
+				else
+					self.sign = signs[1]
 				end
 
-				self.handlers.fold = function(args)
-					local lnum = args.mousepos.line
-					if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then
-						return
+				self.has_sign = self.sign ~= nil
+			end,
+			provider = function(self)
+				if self.has_sign then
+					return vim.fn.sign_getdefined(self.sign.name)[1].text
+				end
+				return " "
+			end,
+
+			hl = function(self)
+				if self.has_sign then
+					if self.sign.group == "neotest-status" then
+						if self.sign.name == "neotest_running" then
+							return "NeotestRunning"
+						end
+						if self.sign.name == "neotest_failed" then
+							return "NeotestFailed"
+						end
+						if self.sign.name == "neotest_passed" then
+							return "NeotestPassed"
+						end
+						return "NeotestSkipped"
 					end
-					vim.cmd.execute(
-						"'" .. lnum .. "fold" .. (vim.fn.foldclosed(lnum) == -1 and "close" or "open") .. "'"
-					)
+
+					-- Everything else
+					local hl = self.sign.name
+					return (vim.fn.hlexists(hl) ~= 0 and hl)
 				end
 			end,
-			-----------------------------------------------------
-			-- Sign
-			-----------------------------------------------------
+			on_click = {
+				name = "sign_click",
+				callback = function(self, ...)
+					if self.handlers.signs then
+						self.handlers.signs(self.click_args(self, ...))
+					end
+				end,
+			},
+		},
+		-----------------------------------------------------
+		align,
+		-----------------------------------------------------
+		-- Line number
+		-----------------------------------------------------
+		{
+			provider = function()
+				if vim.v.virtnum ~= 0 then
+					return ""
+				end
+
+				if vim.v.relnum == 0 then
+					return vim.v.lnum
+				end
+
+				return vim.v.relnum
+			end,
+			on_click = {
+				name = "line_number_click",
+				callback = function(self, ...)
+					if self.handlers.line_number then
+						self.handlers.line_number(self.click_args(self, ...))
+					end
+				end,
+			},
+		},
+		spacer,
+		-----------------------------------------------------
+		-- Gitsign
+		-----------------------------------------------------
+		{
 			{
-				-- condition = function() return conditions.has_diagnostics() end,
+				condition = function()
+					if not conditions.is_git_repo() or vim.v.virtnum ~= 0 then
+						return
+					end
+				end,
+			},
+			{
+				condition = function()
+					return conditions.is_git_repo() and vim.v.virtnum == 0
+				end,
 				init = function(self)
 					local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
-						group = "*",
+						group = "gitsigns_vimfn_signs_",
+						id = vim.v.lnum,
 						lnum = vim.v.lnum,
 					})
 
-					if #signs == 0 or signs[1].signs == nil then
-						self.sign = nil
-						self.has_sign = false
-						return
-					end
-
-					-- Filter out git signs
-					signs = vim.tbl_filter(function(sign)
-						return not vim.startswith(sign.group, "gitsigns")
-					end, signs[1].signs)
-
-					if #signs == 0 then
+					if
+						#signs == 0
+						or signs[1].signs == nil
+						or #signs[1].signs == 0
+						or signs[1].signs[1].name == nil
+					then
 						self.sign = nil
 					else
-						self.sign = signs[1]
+						self.sign = signs[1].signs[1]
 					end
 
 					self.has_sign = self.sign ~= nil
 				end,
 				provider = function(self)
 					if self.has_sign then
-						return vim.fn.sign_getdefined(self.sign.name)[1].text
+						return "󰧞"
+					else
+						return " "
 					end
-					return " "
 				end,
-
 				hl = function(self)
 					if self.has_sign then
-						if self.sign.group == "neotest-status" then
-							if self.sign.name == "neotest_running" then
-								return "NeotestRunning"
-							end
-							if self.sign.name == "neotest_failed" then
-								return "NeotestFailed"
-							end
-							if self.sign.name == "neotest_passed" then
-								return "NeotestPassed"
-							end
-							return "NeotestSkipped"
-						end
-
-						-- Everything else
-						local hl = self.sign.name
-						return (vim.fn.hlexists(hl) ~= 0 and hl)
+						return self.sign.name
 					end
+					return "HeirlineStatusColumn"
 				end,
 				on_click = {
-					name = "sign_click",
+					name = "gitsigns_click",
 					callback = function(self, ...)
-						if self.handlers.signs then
-							self.handlers.signs(self.click_args(self, ...))
+						if self.handlers.git_signs then
+							self.handlers.git_signs(self.click_args(self, ...))
 						end
 					end,
 				},
 			},
-			-----------------------------------------------------
-			align,
-			-----------------------------------------------------
-			-- Line number
-			-----------------------------------------------------
-			{
-				provider = function()
-					if vim.v.virtnum ~= 0 then
-						return ""
-					end
-
-					if vim.v.relnum == 0 then
-						return vim.v.lnum
-					end
-
-					return vim.v.relnum
-				end,
-				on_click = {
-					name = "line_number_click",
-					callback = function(self, ...)
-						if self.handlers.line_number then
-							self.handlers.line_number(self.click_args(self, ...))
-						end
-					end,
-				},
-			},
-			spacer,
-			-----------------------------------------------------
-			-- Gitsign
-			-----------------------------------------------------
-			{
-				{
-					condition = function()
-						if not conditions.is_git_repo() or vim.v.virtnum ~= 0 then
-							return
-						end
-					end,
-				},
-				{
-					condition = function()
-						return conditions.is_git_repo() and vim.v.virtnum == 0
-					end,
-					init = function(self)
-						local signs = vim.fn.sign_getplaced(vim.api.nvim_get_current_buf(), {
-							group = "gitsigns_vimfn_signs_",
-							id = vim.v.lnum,
-							lnum = vim.v.lnum,
-						})
-
-						if
-							#signs == 0
-							or signs[1].signs == nil
-							or #signs[1].signs == 0
-							or signs[1].signs[1].name == nil
-						then
-							self.sign = nil
-						else
-							self.sign = signs[1].signs[1]
-						end
-
-						self.has_sign = self.sign ~= nil
-					end,
-					provider = function(self)
-						if self.has_sign then
-							return "󰧞"
-						else
-							return " "
-						end
-					end,
-					hl = function(self)
-						if self.has_sign then
-							return self.sign.name
-						end
-						return "HeirlineStatusColumn"
-					end,
-					on_click = {
-						name = "gitsigns_click",
-						callback = function(self, ...)
-							if self.handlers.git_signs then
-								self.handlers.git_signs(self.click_args(self, ...))
-							end
-						end,
-					},
-				},
-			},
-			spacer,
-			-----------------------------------------------------
-			-- Fold
-			-----------------------------------------------------
-			{
-				condition = function()
-					return vim.v.virtnum == 0
-				end,
-				init = function(self)
-					self.lnum = vim.v.lnum
-					self.folded = vim.fn.foldlevel(self.lnum) > vim.fn.foldlevel(self.lnum - 1)
-				end,
-				{
-					condition = function(self)
-						return self.folded
-					end,
-					{
-						provider = function(self)
-							if vim.fn.foldclosed(self.lnum) == -1 then
-								return ""
-							end
-						end,
-					},
-					{
-						provider = function(self)
-							if vim.fn.foldclosed(self.lnum) ~= -1 then
-								return ""
-							end
-						end,
-					},
-				},
-				hl = { fg = "comment" },
-				{
-					condition = function(self)
-						return not self.folded
-					end,
-					provider = " ",
-				},
-				on_click = {
-					name = "fold_click",
-					callback = function(self, ...)
-						if self.handlers.fold then
-							self.handlers.fold(self.click_args(self, ...))
-						end
-					end,
-				},
-			},
-			spacer,
 		},
+		spacer,
+		-----------------------------------------------------
+		-- Fold
+		-----------------------------------------------------
+		{
+			condition = function()
+				return vim.v.virtnum == 0
+			end,
+			init = function(self)
+				self.lnum = vim.v.lnum
+				self.folded = vim.fn.foldlevel(self.lnum) > vim.fn.foldlevel(self.lnum - 1)
+			end,
+			{
+				condition = function(self)
+					return self.folded
+				end,
+				{
+					provider = function(self)
+						if vim.fn.foldclosed(self.lnum) == -1 then
+							return ""
+						end
+					end,
+				},
+				{
+					provider = function(self)
+						if vim.fn.foldclosed(self.lnum) ~= -1 then
+							return ""
+						end
+					end,
+				},
+			},
+			hl = { fg = "comment" },
+			{
+				condition = function(self)
+					return not self.folded
+				end,
+				provider = " ",
+			},
+			on_click = {
+				name = "fold_click",
+				callback = function(self, ...)
+					if self.handlers.fold then
+						self.handlers.fold(self.click_args(self, ...))
+					end
+				end,
+			},
+		},
+		spacer,
 	}
 end
 
