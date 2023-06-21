@@ -11,11 +11,11 @@ return function()
 		["<leader>x"] = { name = "+Trouble  " },
 		["<leader>u"] = { name = "+Toggle stuff  " },
 		["<leader>S"] = { name = "+Session  " },
-		["<leader>s"] = { name = "+Todo & Spectre 󰬲 " },
+		["<leader>r"] = { name = "+Rest & Spectre 󰬲 " },
 		["<leader>gh"] = { name = "+GitSign  " },
 		["<leader>b"] = { name = "+Buffer  " },
 		["<leader>j"] = { name = "+Grapple 󰙊 " },
-		["<A-t>"] = { name = "ToggleTerm  " },
+		["<leader>i"] = { name = "ToggleTerm  " },
 		["<C-g>"] = { name = "Grep word 󰈭 " },
 		["<leader><tab>"] = { name = "Tabs 󰓩 " },
 	})

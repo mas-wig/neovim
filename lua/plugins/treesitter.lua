@@ -21,40 +21,42 @@ return {
 		{ "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 3 } },
 	},
 	opts = {
-		ensure_installed = {
-			"javascript",
-			"typescript",
-			"regex", -- js patterns
-			"jsdoc", -- js annotations
-			"bash",
-			"css",
-			"scss",
-			"markdown",
-			"markdown_inline", -- fenced code blocks
-			"python",
-			"lua",
-			"luap", -- lua patterns
-			"luadoc", -- lua annotations
-			"gitignore",
-			"gitcommit",
-			"rust",
-			"java",
-			"diff",
-			"go",
-			"bibtex",
-			"vim",
-			"vimdoc", -- help files
-			"toml",
-			"ini",
-			"yaml",
-			"json",
-			"jsonc",
-			"sql",
-			"solidity",
-			"html",
-			"query", -- treesitter query language
-			"http", -- http requests as format, used for rest.nvim
-		},
+		ensure_installed = "all",
+		--{
+		-- 	"javascript",
+		-- 	"typescript",
+		-- 	"regex", -- js patterns
+		-- 	"jsdoc", -- js annotations
+		-- 	"bash",
+		-- 	"css",
+		-- 	"scss",
+		-- 	"markdown",
+		-- 	"markdown_inline", -- fenced code blocks
+		-- 	"python",
+		-- 	"lua",
+		-- 	"luap", -- lua patterns
+		-- 	"luadoc", -- lua annotations
+		-- 	"gitignore",
+		-- 	"gitcommit",
+		-- 	"rust",
+		-- 	"java",
+		-- 	"diff",
+		-- 	"http",
+		-- 	"go",
+		-- 	"bibtex",
+		-- 	"vim",
+		-- 	"vimdoc", -- help files
+		-- 	"toml",
+		-- 	"ini",
+		-- 	"yaml",
+		-- 	"json",
+		-- 	"jsonc",
+		-- 	"sql",
+		-- 	"solidity",
+		-- 	"html",
+		-- 	"query", -- treesitter query language
+		-- 	"http", -- http requests as format, used for rest.nvim
+		-- },
 		sync_install = false,
 		highlight = {
 			enable = true,

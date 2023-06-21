@@ -161,7 +161,7 @@ M.keys = {
 		desc = "Telescope List Commands",
 	},
 	{
-		"<leader>ft",
+		"<leader>fp",
 		function()
 			require("telescope.builtin").tags()
 		end,

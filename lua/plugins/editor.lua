@@ -106,8 +106,8 @@ return {
 			},
 			{ "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
 			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-			{ "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-			{ "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+			{ "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+			{ "<leader>fT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
 		},
 	},
 	{
@@ -115,14 +115,14 @@ return {
 		config = true,
 		keys = {
 			{
-				"<leader>sr",
+				"<leader>rr",
 				function()
 					require("spectre").open()
 				end,
 				desc = "Replace in files (Spectre)",
 			},
 			{
-				"<leader>sw",
+				"<leader>rw",
 				function()
 					require("spectre").open_visual()
 				end,

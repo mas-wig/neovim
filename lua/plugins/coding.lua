@@ -131,4 +131,12 @@ return {
 			},
 		},
 	},
+
+	{
+		"rest-nvim/rest.nvim",
+		ft = { "http" },
+		config = function()
+			require("setup.plugins.rest")()
+		end,
+	},
 }
