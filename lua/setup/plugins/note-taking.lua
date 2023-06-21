@@ -10,6 +10,10 @@ tags:
   - "#{{current_folder}}"
   - "#{{target_dir}}/{{current_date}}"
 ---
+
+# Title
+
+**[Back to ToC]()**
 ]],
 	placeholders = {
 		before = {
