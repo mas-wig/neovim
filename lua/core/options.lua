@@ -7,10 +7,10 @@ if vim.version().minor >= 9 then
 end
 
 local opts = {
-	wrap = true,
+	wrap = false, -- nek arep wrap set true
 	breakindent = false,
 	linebreak = true,
-	textwidth = 80,
+	textwidth = 0, -- max with mu ki piro set ng kene
 	wrapmargin = 2,
 	showtabline = 0,
 	autowrite = true,

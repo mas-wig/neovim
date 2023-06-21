@@ -39,15 +39,6 @@ M.setup = function()
 	})
 end
 
-local run_cmd = {
-	go = "run",
-	javascript = "node",
-}
-
-local run_serve = {
-	go = "air main.go",
-}
-
 M.init = function()
 	require("legendary").keymaps({
 		{
@@ -56,7 +47,7 @@ M.init = function()
 			icon = "🔭",
 			keymaps = {
 				{
-					"<A-i>",
+					"<A-t>f",
 					{
 						n = "<cmd>ToggleTerm direction=float cwd='" .. os.getenv("PWD") .. "'<cr>",
 						t = "<cmd>ToggleTerm direction=float  cwd='" .. os.getenv("PWD") .. "'<cr>",
@@ -64,7 +55,7 @@ M.init = function()
 					desc = "Open Float Term",
 				},
 				{
-					"<A-v>",
+					"<A-t>v",
 					{
 						n = "<cmd>ToggleTerm direction=vertical cwd='" .. os.getenv("PWD") .. "'<cr>",
 						t = "<cmd>ToggleTerm direction=vertical  cwd='" .. os.getenv("PWD") .. "'<cr>",
@@ -72,7 +63,7 @@ M.init = function()
 					desc = "Open Vert Term",
 				},
 				{
-					"<A-h>",
+					"<A-t>h",
 					{
 						n = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
 						t = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
@@ -80,36 +71,12 @@ M.init = function()
 					desc = "Open Horz Term",
 				},
 				{
-					"<leader>rc",
-					function(ft)
-						ft = vim.bo.filetype
-						for lang, cmd in pairs(run_cmd) do
-							if ft == lang then
-								vim.cmd(
-									"TermExec direction=float cmd='"
-										.. tostring(lang)
-										.. " "
-										.. cmd
-										.. " "
-										.. tostring(vim.fn.expand("%:p:."))
-										.. "'"
-								)
-							end
-						end
-					end,
-					desc = "Run Code",
-				},
-				{
-					"<leader>rs",
-					function(ft)
-						ft = vim.bo.filetype
-						for lang, cmd in pairs(run_serve) do
-							if ft == lang then
-								vim.cmd("TermExec direction=float cmd='" .. cmd .. "' open=0")
-							end
-						end
-					end,
-					desc = "Run Serve",
+					"<A-t>t",
+					{
+						n = "<cmd>ToggleTerm direction=tab  cwd='" .. os.getenv("PWD") .. "'<cr>",
+						t = "<cmd>ToggleTerm direction=tab cwd='" .. os.getenv("PWD") .. "'<cr>",
+					},
+					desc = "Open Horz Term",
 				},
 			},
 		},
