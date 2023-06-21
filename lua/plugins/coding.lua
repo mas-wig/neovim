@@ -66,29 +66,6 @@ return {
 			require("setup.plugins.text-object").miniai()
 		end,
 	},
-
-	{
-		"kylechui/nvim-surround",
-		event = "VeryLazy",
-		opts = {
-			keymaps = {
-				insert = "<C-g>s",
-				insert_line = "<C-g>S",
-				normal = "ys",
-				normal_cur = "yss",
-				normal_line = "yS",
-				normal_cur_line = "ySS",
-				visual = "S",
-				visual_line = "gS",
-				delete = "ds",
-				change = "cs",
-			},
-		},
-		config = function(_, opts)
-			require("nvim-surround").setup(opts)
-		end,
-	},
-
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
@@ -121,5 +98,37 @@ return {
 			require("setup.plugins.overseer").setup()
 		end,
 		keys = require("setup.plugins.overseer").keys,
+	},
+
+	{
+		"echasnovski/mini.surround",
+		keys = function(_, keys)
+			local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
+			local opts = require("lazy.core.plugin").values(plugin, "opts", false)
+			local mappings = {
+				{ opts.mappings.add, desc = "Add surrounding", mode = { "n", "v" } },
+				{ opts.mappings.delete, desc = "Delete surrounding" },
+				{ opts.mappings.find, desc = "Find right surrounding" },
+				{ opts.mappings.find_left, desc = "Find left surrounding" },
+				{ opts.mappings.highlight, desc = "Highlight surrounding" },
+				{ opts.mappings.replace, desc = "Replace surrounding" },
+				{ opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
+			}
+			mappings = vim.tbl_filter(function(m)
+				return m[1] and #m[1] > 0
+			end, mappings)
+			return vim.list_extend(mappings, keys)
+		end,
+		opts = {
+			mappings = {
+				add = "gza", -- Add surrounding in Normal and Visual modes
+				delete = "gzd", -- Delete surrounding
+				find = "gzf", -- Find surrounding (to the right)
+				find_left = "gzF", -- Find surrounding (to the left)
+				highlight = "gzh", -- Highlight surrounding
+				replace = "gzr", -- Replace surrounding
+				update_n_lines = "gzn", -- Update `n_lines`
+			},
+		},
 	},
 }
