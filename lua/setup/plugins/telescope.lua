@@ -336,7 +336,7 @@ M.keys = {
 		desc = "Telescope Git Status",
 	},
 	{
-		"<leader>ft",
+		"<leader>fe",
 		function()
 			require("telescope.builtin").git_stash()
 		end,

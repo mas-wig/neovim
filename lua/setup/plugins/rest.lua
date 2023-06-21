@@ -12,7 +12,7 @@ return function()
 			timeout = 300,
 		},
 		result = {
-			show_url = true,
+			show_url = false,
 			show_curl_command = false,
 			show_http_info = true,
 			show_headers = true,
