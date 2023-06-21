@@ -1,7 +1,26 @@
 return function()
+	local wk = require("which-key")
 	vim.o.timeout = true
 	vim.o.timeoutlen = 300
-	return require("which-key").setup({
+
+	wk.register({
+		["<leader>f"] = { name = "+Telescope 󰭎 " },
+		["<leader>d"] = { name = "+Debugger  " },
+		["<leader>t"] = { name = "+Neotest 󰙨" },
+		["<leader>o"] = { name = "+Overseer  " },
+		["<leader>x"] = { name = "+Trouble  " },
+		["<leader>u"] = { name = "+Toggle stuff  " },
+		["<leader>S"] = { name = "+Session  " },
+		["<leader>s"] = { name = "+Todo & Spectre 󰬲 " },
+		["<leader>gh"] = { name = "+GitSign  " },
+		["<leader>b"] = { name = "+Buffer  " },
+		["<leader>j"] = { name = "+Grapple 󰙊 " },
+		["<A-t>"] = { name = "ToggleTerm  " },
+		["<C-g>"] = { name = "Grep word 󰈭 " },
+		["<leader><tab>"] = { name = "Tabs 󰓩 " },
+	})
+
+	return wk.setup({
 		icons = {
 			breadcrumb = " 🌐",
 			separator = " 🡆 ",

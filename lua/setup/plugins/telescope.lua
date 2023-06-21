@@ -118,21 +118,21 @@ M.keys = {
 		desc = "Telescope Find File",
 	},
 	{
-		"<C-g>",
+		"<C-g>g",
 		function()
 			require("telescope").extensions.live_grep_args.live_grep_args()
 		end,
 		desc = "Live Grep",
 	},
 	{
-		"<Leader>gw",
+		"<C-g>w",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
 		end,
 		desc = "Grep word under cursor",
 	},
 	{
-		"<leader>gw",
+		"<C-g>s",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_visual_selection()
 		end,
@@ -140,7 +140,7 @@ M.keys = {
 		mode = { "v" },
 	},
 	{
-		"<leader>fb",
+		"<leader>fB",
 		function()
 			require("telescope.builtin").buffers()
 		end,
@@ -273,7 +273,7 @@ M.keys = {
 		desc = "Telescope Keymaps",
 	},
 	{
-		"<leader>ff",
+		"<leader>fF",
 		function()
 			require("telescope.builtin").filetypes()
 		end,
@@ -308,39 +308,40 @@ M.keys = {
 		desc = "Telescope Resume Last Picker",
 	},
 	{
-		"<leader>fgc",
+		"<leader>fg",
 		function()
 			require("telescope.builtin").git_commits()
 		end,
 		desc = "Telescope Git Commits",
 	},
 	{
-		"<leader>fgb",
+		"<leader>fb",
 		function()
 			require("telescope.builtin").git_bcommits()
 		end,
 		desc = "Telescope Git Buffer Commits",
 	},
 	{
-		"<leader>fbb",
+		"<leader>fc",
 		function()
 			require("telescope.builtin").git_branches()
 		end,
 		desc = "Telescope Git Branches",
 	},
 	{
-		"<leader>fgs",
+		"<leader>fs",
 		function()
 			require("telescope.builtin").git_status()
 		end,
 		desc = "Telescope Git Status",
 	},
 	{
-		"<leader>fst",
+		"<leader>ft",
 		function()
 			require("telescope.builtin").git_stash()
 		end,
 		desc = "Telescope Git Stash",
 	},
 }
+
 return M

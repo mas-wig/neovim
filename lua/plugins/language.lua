@@ -4,9 +4,8 @@ return {
 		branch = "master",
 		ft = { "go", "gomod" },
 		build = ":GoInstallBinaries",
-		keys = require("setup.plugins.go").keys,
 		config = function()
-			require("setup.plugins.go").setup()
+			require("setup.plugins.go")()
 		end,
 	},
 }

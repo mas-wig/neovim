@@ -51,8 +51,8 @@ M.keys = function()
 		{ "]w", diagnostic_goto(true, "WARN"), desc = "Next Warning" },
 		{ "[w", diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
 		{ "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-		{ "<leader>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
-		{ "<leader>rn", vim.lsp.buf.rename, desc = "Rename with lsp", has = "rename" },
+		{ "<leadel>wa", vim.lsp.buf.add_workspace_folder, desc = "Add workspace folder" },
+		{ "<A-r>n", vim.lsp.buf.rename, desc = "Rename with lsp", has = "rename" },
 		{
 			"<leader>cA",
 			function()

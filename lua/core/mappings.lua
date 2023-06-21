@@ -120,23 +120,16 @@ end, { desc = "Enter Normal Mode" })
 
 map("t", "<esc>", termcodes("<c-\\><c-n>"), { desc = "Enter Normal Mode" })
 
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
-
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
 	map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 end
 
-map("n", "<leader>cF", function()
+map("n", "<leader>uf", function()
 	Util.ChangeFiletype()
 end, { desc = "Change FileType" })
 
--- windows
-map("n", "<leader>ww", "<C-W>p", { desc = "Other window" })
-map("n", "<leader>wd", "<C-W>c", { desc = "Delete window" })
--- map("n", "<leader>w-", "<C-W>s", {desc = "Split window below"})
--- map("n", "<leader>w|", "<C-W>v", {desc = "Split window right"})
+map("n", "<leader>bW", "<C-W>c", { desc = "Delete window" })
 map("n", "<leader>-", "<C-W>s", { desc = "Split window below" })
 map("n", "<leader>|", "<C-W>v", { desc = "Split window right" })
 
@@ -171,7 +164,7 @@ map("n", "<leader>S.", function()
 	require("resession").load(vim.fn.getcwd(), { dir = "dirsession" })
 end, { desc = "Load current directory session" })
 
-map("n", "<leader>gp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true, desc = "Reselect Paste Text" })
+map("n", "<leader>bp", "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true, desc = "Reselect Paste Text" })
 
 map("n", "<Leader>1", "1gt", { desc = "Go to tab 1" })
 map("n", "<Leader>2", "2gt", { desc = "Go to tab 2" })
@@ -183,7 +176,7 @@ map("n", "<Leader>7", "7gt", { desc = "Go to tab 7" })
 map("n", "<Leader>8", "8gt", { desc = "Go to tab 8" })
 map("n", "<Leader>9", "9gt", { desc = "Go to tab 9" })
 map("n", "<Leader>0", ":tablast", { desc = "Go to last " })
-map("n", "<leader>tD", function()
+map("n", "<leader>bT", function()
 	local tabpages = vim.api.nvim_list_tabpages()
 	local current_tabpage = vim.api.nvim_get_current_tabpage()
 	for _, tabpage in ipairs(tabpages) do

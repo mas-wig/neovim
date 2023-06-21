@@ -106,7 +106,7 @@ M.keys = {
 		desc = "Explorer NeoTree (root dir)",
 	},
 	{
-		"<leader>N",
+		"<leader>ghN",
 		function()
 			require("neo-tree.command").execute({
 				toggle = true,
