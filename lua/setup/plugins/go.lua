@@ -1,37 +1,28 @@
 return {
-	init = function()
-		require("legendary").keymaps({
-			{
-				itemgroup = "Golang Key",
-				description = "Write me Daddy",
-				icon = "🚀 ",
-				keymaps = {
-					{
-						"<leader>Gi",
-						function()
-							vim.ui.input({ prompt = "GoImpl 'reciver' 'interface'" }, function(name)
-								if name ~= nil then
-									vim.cmd("GoImpl " .. name)
-								end
-							end)
-						end,
-						desc = "GoImpl ",
-					},
-					{
-						"<leader>Gd",
-						function()
-							vim.ui.input({ prompt = "GoDoc :", completion = "menu" }, function(name)
-								if name ~= nil then
-									vim.cmd("GoDoc " .. name)
-								end
-							end)
-						end,
-						desc = "GoDoc",
-					},
-				},
-			},
-		})
-	end,
+	keys = {
+		{
+			"<leader>Gi",
+			function()
+				vim.ui.input({ prompt = "GoImpl 'reciver' 'interface'" }, function(name)
+					if name ~= nil then
+						vim.cmd("GoImpl " .. name)
+					end
+				end)
+			end,
+			desc = "GoImpl ",
+		},
+		{
+			"<leader>Gd",
+			function()
+				vim.ui.input({ prompt = "GoDoc :", completion = "menu" }, function(name)
+					if name ~= nil then
+						vim.cmd("GoDoc " .. name)
+					end
+				end)
+			end,
+			desc = "GoDoc",
+		},
+	},
 	setup = function()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 		return require("go").setup({

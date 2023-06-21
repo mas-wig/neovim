@@ -2,27 +2,6 @@ return {
 	{ "nvim-lua/plenary.nvim", lazy = true },
 
 	{
-		"mrjones2014/legendary.nvim",
-		lazy = false,
-		branch = "master",
-		priority = 900,
-		dependencies = { "kkharji/sqlite.lua" },
-		init = function()
-			require("legendary").keymaps({
-				{
-					"<leader>lg",
-					require("legendary").find,
-					hide = true,
-					desc = "Open Legendary",
-					mode = { "n", "v" },
-				},
-			})
-		end,
-		config = function()
-			require("setup.plugins.legendary")
-		end,
-	},
-	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		config = function()
@@ -32,9 +11,7 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		cmd = { "ToggleTerm", "TermExec", "TermSelect", "ToggleTermToggleAll" },
-		init = function()
-			require("setup.plugins.toggleterm").init()
-		end,
+		keys = require("setup.plugins.toggleterm").keys,
 		config = function()
 			require("setup.plugins.toggleterm").setup()
 		end,
@@ -61,8 +38,8 @@ return {
 	{
 		"cbochs/grapple.nvim",
 		event = { "BufRead", "BufNewFile" },
+		keys = require("setup.plugins.graple").keys,
 		config = function()
-			require("setup.plugins.graple").init()
 			require("setup.plugins.graple").setup()
 		end,
 	},

@@ -15,5 +15,7 @@ local function safeRequire(module)
 end
 
 safeRequire("core.options")
+safeRequire("core.autocmds")
+safeRequire("core.user")
 safeRequire("core.lazy")
 safeRequire("core.mappings")

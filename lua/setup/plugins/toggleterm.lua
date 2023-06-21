@@ -39,48 +39,30 @@ M.setup = function()
 	})
 end
 
-M.init = function()
-	require("legendary").keymaps({
-		{
-			itemgroup = "ToggleTerm",
-			description = "Term me Daddy",
-			icon = "🔭",
-			keymaps = {
-				{
-					"<A-t>f",
-					{
-						n = "<cmd>ToggleTerm direction=float cwd='" .. os.getenv("PWD") .. "'<cr>",
-						t = "<cmd>ToggleTerm direction=float  cwd='" .. os.getenv("PWD") .. "'<cr>",
-					},
-					desc = "Open Float Term",
-				},
-				{
-					"<A-t>v",
-					{
-						n = "<cmd>ToggleTerm direction=vertical cwd='" .. os.getenv("PWD") .. "'<cr>",
-						t = "<cmd>ToggleTerm direction=vertical  cwd='" .. os.getenv("PWD") .. "'<cr>",
-					},
-					desc = "Open Vert Term",
-				},
-				{
-					"<A-t>h",
-					{
-						n = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
-						t = "<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
-					},
-					desc = "Open Horz Term",
-				},
-				{
-					"<A-t>t",
-					{
-						n = "<cmd>ToggleTerm direction=tab  cwd='" .. os.getenv("PWD") .. "'<cr>",
-						t = "<cmd>ToggleTerm direction=tab cwd='" .. os.getenv("PWD") .. "'<cr>",
-					},
-					desc = "Open Horz Term",
-				},
-			},
-		},
-	})
-end
-
+M.keys = {
+	{
+		"<A-t>f",
+		"<cmd>ToggleTerm direction=float cwd='" .. os.getenv("PWD") .. "'<cr>",
+		desc = "Open Float Term",
+		mode = { "t", "n" },
+	},
+	{
+		"<A-t>v",
+		"<cmd>ToggleTerm direction=vertical cwd='" .. os.getenv("PWD") .. "'<cr>",
+		desc = "Open Vert Term",
+		mode = { "t", "n" },
+	},
+	{
+		"<A-t>h",
+		"<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
+		desc = "Open Horz Term",
+		mode = { "t", "n" },
+	},
+	{
+		"<A-t>t",
+		"<cmd>ToggleTerm direction=tab  cwd='" .. os.getenv("PWD") .. "'<cr>",
+		desc = "Open Horz Term",
+		mode = { "t", "n" },
+	},
+}
 return M

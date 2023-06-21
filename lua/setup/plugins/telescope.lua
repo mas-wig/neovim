@@ -1,69 +1,5 @@
 local M = {}
 
-M.init = function()
-	local t = require("legendary.toolbox")
-	require("legendary").keymaps({
-		{
-			itemgroup = "Telescope",
-			description = "Fuck me Daddy",
-			icon = "🔭",
-			keymaps = {
-				{
-					"<leader>bs",
-					"<cmd>Telescope current_buffer_fuzzy_find<cr>",
-					desc = "Buffer Search",
-				},
-				{
-					"<C-p>",
-					t.lazy_required_fn("telescope.builtin", "find_files", {
-						cwd = os.getenv("PWD"),
-					}),
-					description = "Find files",
-				},
-				{
-					"<C-g>",
-					function()
-						require("telescope").extensions.live_grep_args.live_grep_args()
-					end,
-					description = "Live Grep",
-				},
-				{
-					"<Leader>gw",
-					function()
-						require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
-					end,
-					description = "Grep word under cursor",
-				},
-				{
-					"<leader>gw",
-					function()
-						require("telescope-live-grep-args.shortcuts").grep_visual_selection()
-					end,
-					description = "Grep Word Visual Select",
-					mode = { "v" },
-				},
-
-				{
-					"<leader>fn",
-					t.lazy_required_fn("telescope.builtin", "find_files", {
-						cwd = vim.fn.expand("~") .. "/Public/NOTES",
-					}),
-					description = "Find notes",
-				},
-				{
-					"<Leader>gn",
-					t.lazy_required_fn("telescope.builtin", "live_grep", {
-						prompt_title = "Search Notes LG",
-						cwd = vim.fn.expand("~") .. "/Public/NOTES",
-						path_display = { "smart" },
-					}),
-					description = "Search LG Notes",
-				},
-			},
-		},
-	})
-end
-
 M.setup = function()
 	local ok, telescope = pcall(require, "telescope")
 	if not ok then
@@ -174,4 +110,238 @@ M.setup = function()
 	telescope.load_extension("lazygit")
 end
 
+M.keys = {
+	{
+		"<C-p>",
+		function()
+			require("telescope.builtin").find_files({ cwd = os.getenv("PWD") })
+		end,
+		desc = "Telescope Find File",
+	},
+	{
+		"<C-g>",
+		function()
+			require("telescope").extensions.live_grep_args.live_grep_args()
+		end,
+		desc = "Live Grep",
+	},
+	{
+		"<Leader>gw",
+		function()
+			require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
+		end,
+		desc = "Grep word under cursor",
+	},
+	{
+		"<leader>gw",
+		function()
+			require("telescope-live-grep-args.shortcuts").grep_visual_selection()
+		end,
+		desc = "Grep Word Visual Select",
+		mode = { "v" },
+	},
+	{
+		"<leader>fb",
+		function()
+			require("telescope.builtin").buffers()
+		end,
+		desc = "Telescope List Buffers",
+	},
+	{
+		"<leader>fo",
+		function()
+			require("telescope.builtin").oldfiles()
+		end,
+		desc = "Telescope Open Recent Files",
+	},
+	{
+		"<leader>fc",
+		function()
+			require("telescope.builtin").commands()
+		end,
+		desc = "Telescope List Commands",
+	},
+	{
+		"<leader>ft",
+		function()
+			require("telescope.builtin").tags()
+		end,
+		desc = "Telescope List Tags",
+	},
+	{
+		"<leader>fh",
+		function()
+			require("telescope.builtin").command_history()
+		end,
+		desc = "Telescope Command History",
+	},
+	{
+		"<leader>fs",
+		function()
+			require("telescope.builtin").search_history()
+		end,
+		desc = "Telescope Search History",
+	},
+	{
+		"<leader>fh",
+		function()
+			require("telescope.builtin").help_tags()
+		end,
+		desc = "Telescope Help Tags",
+	},
+	{
+		"<leader>fm",
+		function()
+			require("telescope.builtin").man_pages()
+		end,
+		desc = "Telescope Man Pages",
+	},
+	{
+		"<leader>fM",
+		function()
+			require("telescope.builtin").marks()
+		end,
+		desc = "Telescope List Marks",
+	},
+	{
+		"<leader>fs",
+		function()
+			require("telescope.builtin").colorscheme()
+		end,
+		desc = "Telescope Colorscheme",
+	},
+	{
+		"<leader>fq",
+		function()
+			require("telescope.builtin").quickfix()
+		end,
+		desc = "Telescope Quickfix List",
+	},
+	{
+		"<leader>fQ",
+		function()
+			require("telescope.builtin").quickfix_history()
+		end,
+		desc = "Telescope Quickfix History",
+	},
+	{
+		"<leader>fl",
+		function()
+			require("telescope.builtin").loclist()
+		end,
+		desc = "Telescope Location List",
+	},
+	{
+		"<leader>fj",
+		function()
+			require("telescope.builtin").jumplist()
+		end,
+		desc = "Telescope Jump List",
+	},
+	{
+		"<leader>fv",
+		function()
+			require("telescope.builtin").vim_options()
+		end,
+		desc = "Telescope Vim Options",
+	},
+	{
+		"<leader>fr",
+		function()
+			require("telescope.builtin").registers()
+		end,
+		desc = "Telescope List Registers",
+	},
+	{
+		"<leader>fa",
+		function()
+			require("telescope.builtin").autocommands()
+		end,
+		desc = "Telescope List Autocommands",
+	},
+	{
+		"<leader>fs",
+		function()
+			require("telescope.builtin").spell_suggest()
+		end,
+		desc = "Telescope Spell Suggestions",
+	},
+	{
+		"<leader>fk",
+		function()
+			require("telescope.builtin").keymaps()
+		end,
+		desc = "Telescope Keymaps",
+	},
+	{
+		"<leader>ff",
+		function()
+			require("telescope.builtin").filetypes()
+		end,
+		desc = "Telescope Filetypes",
+	},
+	{
+		"<leader>fh",
+		function()
+			require("telescope.builtin").highlights()
+		end,
+		desc = "Telescope Highlights",
+	},
+	{
+		"<leader>fcf",
+		function()
+			require("telescope.builtin").current_buffer_fuzzy_find()
+		end,
+		desc = "Telescope Fuzzy Find in Current Buffer",
+	},
+	{
+		"<leader>fct",
+		function()
+			require("telescope.builtin").current_buffer_tags()
+		end,
+		desc = "Telescope Tags in Current Buffer",
+	},
+	{
+		"<leader>fr",
+		function()
+			require("telescope.builtin").resume()
+		end,
+		desc = "Telescope Resume Last Picker",
+	},
+	{
+		"<leader>fgc",
+		function()
+			require("telescope.builtin").git_commits()
+		end,
+		desc = "Telescope Git Commits",
+	},
+	{
+		"<leader>fgb",
+		function()
+			require("telescope.builtin").git_bcommits()
+		end,
+		desc = "Telescope Git Buffer Commits",
+	},
+	{
+		"<leader>fbb",
+		function()
+			require("telescope.builtin").git_branches()
+		end,
+		desc = "Telescope Git Branches",
+	},
+	{
+		"<leader>fgs",
+		function()
+			require("telescope.builtin").git_status()
+		end,
+		desc = "Telescope Git Status",
+	},
+	{
+		"<leader>fst",
+		function()
+			require("telescope.builtin").git_stash()
+		end,
+		desc = "Telescope Git Stash",
+	},
+}
 return M

@@ -32,9 +32,7 @@ return {
 			},
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		},
-		init = function()
-			require("setup.plugins.telescope").init()
-		end,
+		keys = require("setup.plugins.telescope").keys,
 		config = function()
 			require("setup.plugins.telescope").setup()
 		end,
@@ -53,9 +51,7 @@ return {
 		"folke/trouble.nvim",
 		cmd = { "TroubleToggle", "Trouble" },
 		opts = { use_diagnostic_signs = true },
-		config = function()
-			require("setup.plugins.trouble")
-		end,
+		keys = require("setup.plugins.trouble"),
 	},
 
 	{
