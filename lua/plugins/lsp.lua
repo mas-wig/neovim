@@ -12,7 +12,7 @@ return {
 		"williamboman/mason.nvim",
 		cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonInstallAll" },
 		lazy = true,
-		build = ":MasonUpdate",
+		build = ":MasonInstallAll",
 		config = function()
 			require("setup.plugins.mason")()
 		end,

@@ -20,8 +20,4 @@ return function()
 		},
 		max_concurrent_installers = 10,
 	})
-	vim.api.nvim_create_user_command("MasonInstallAll", function()
-		vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
-	end, {})
-	vim.g.mason_binaries_list = ensure_installed
 end

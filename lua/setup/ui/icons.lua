@@ -1,7 +1,7 @@
 return {
 	kind = {
 		Namespace = " ",
-		Text = " ",
+		Text = "󰦨 ",
 		Method = "󰥤 ",
 		Function = "󰦬 ",
 		Constructor = " ",
