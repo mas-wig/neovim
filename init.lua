@@ -5,6 +5,7 @@ local function safeRequire(module)
 	if success then
 		return req
 	end
+
 	local msg = "Error loading " .. module
 	local notifyInstalled, notify = pcall(require, "notify")
 	if notifyInstalled then
