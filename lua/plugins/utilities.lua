@@ -32,4 +32,15 @@ return {
 			require("setup.plugins.resession")()
 		end,
 	},
+	{
+		"m4xshen/hardtime.nvim",
+		event = "VeryLazy",
+		opts = {
+			max_time = 10,
+			max_count = 2,
+			disable_mouse = true,
+			hint = true,
+			allow_different_key = false,
+		},
+	},
 }

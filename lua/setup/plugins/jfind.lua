@@ -21,5 +21,5 @@ require("jfind").setup({
 	maxHeight = 20,
 	tmux = true,
 	formatPaths = true,
-	key = "<leader>ff",
+	key = "<leader>fF",
 })

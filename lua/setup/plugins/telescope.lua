@@ -111,28 +111,28 @@ end
 
 M.keys = {
 	{
-		"<C-p>",
+		"<leader>ff",
 		function()
 			require("telescope.builtin").find_files({ cwd = os.getenv("PWD") })
 		end,
 		desc = "Telescope Find File",
 	},
 	{
-		"<C-g>g",
+		"<leader>fg",
 		function()
 			require("telescope").extensions.live_grep_args.live_grep_args()
 		end,
 		desc = "Live Grep",
 	},
 	{
-		"<C-g>w",
+		"<leader>fn",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
 		end,
 		desc = "Grep word under cursor",
 	},
 	{
-		"<C-g>s",
+		"<leader>fu",
 		function()
 			require("telescope-live-grep-args.shortcuts").grep_visual_selection()
 		end,
@@ -273,7 +273,7 @@ M.keys = {
 		desc = "Telescope Keymaps",
 	},
 	{
-		"<leader>fF",
+		"<leader>fi",
 		function()
 			require("telescope.builtin").filetypes()
 		end,
@@ -308,7 +308,7 @@ M.keys = {
 		desc = "Telescope Resume Last Picker",
 	},
 	{
-		"<leader>fg",
+		"<leader>fG",
 		function()
 			require("telescope.builtin").git_commits()
 		end,

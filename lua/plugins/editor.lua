@@ -136,7 +136,7 @@ return {
 		"jake-stewart/jfind.nvim",
 		keys = {
 			{
-				"<leader>ff",
+				"<leader>fF",
 				function()
 					local jfind = require("jfind")
 					jfind.findFile({
