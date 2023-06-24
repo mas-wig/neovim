@@ -2,7 +2,7 @@ local map = require("setup.utils").map
 
 local Util = require("setup.utils.functions")
 
--- better up/down
+-- -- better up/down
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
