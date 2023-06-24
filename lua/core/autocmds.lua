@@ -127,7 +127,7 @@ local function get_session_name()
 end
 
 autocmd("VimEnter", {
-	group = augroup("CfgResession", {}),
+	group = augroup("CfgResession", { clear = true }),
 	callback = function()
 		if vim.fn.argc(-1) == 0 then
 			require("resession").load(get_session_name(), { dir = "dirsession", silence_errors = true })
@@ -136,7 +136,7 @@ autocmd("VimEnter", {
 })
 
 autocmd("VimLeavePre", {
-	group = augroup("CfgResession", {}),
+	group = augroup("CfgResession", { clear = true }),
 	callback = function()
 		require("resession").save(get_session_name(), { dir = "dirsession", notify = false })
 	end,
