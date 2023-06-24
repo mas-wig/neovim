@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local config = {
+return require("lazy").setup({
 	defaults = {
 		lazy = true,
 		version = nil,
@@ -54,6 +54,4 @@ local config = {
 			},
 		},
 	},
-}
-
-return require("lazy").setup(config)
+})

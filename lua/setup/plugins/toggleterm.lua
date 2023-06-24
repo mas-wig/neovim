@@ -41,25 +41,25 @@ end
 
 M.keys = {
 	{
-		"<leader>if",
+		"<A-f>",
 		"<cmd>ToggleTerm direction=float cwd='" .. os.getenv("PWD") .. "'<cr>",
 		desc = "Open Float Term",
 		mode = { "t", "n" },
 	},
 	{
-		"<leader>iv",
+		"<A-v>",
 		"<cmd>ToggleTerm direction=vertical cwd='" .. os.getenv("PWD") .. "'<cr>",
 		desc = "Open Vert Term",
 		mode = { "t", "n" },
 	},
 	{
-		"<leader>ih",
+		"<A-h>",
 		"<cmd>ToggleTerm direction=horizontal  cwd='" .. os.getenv("PWD") .. "'<cr>",
 		desc = "Open Horz Term",
 		mode = { "t", "n" },
 	},
 	{
-		"<leader>it",
+		"<A-t>",
 		"<cmd>ToggleTerm direction=tab  cwd='" .. os.getenv("PWD") .. "'<cr>",
 		desc = "Open Horz Term",
 		mode = { "t", "n" },
