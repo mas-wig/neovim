@@ -10,9 +10,11 @@ M.setup = function()
 		},
 		component_aliases = {
 			default_neotest = {
+				"unique",
 				"on_output_summarize",
 				"on_exit_set_status",
 				"on_complete_dispose",
+				{ "on_complete_notify", system = "unfocused", on_change = true },
 			},
 		},
 		templates = {},
