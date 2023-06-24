@@ -116,10 +116,28 @@ autocmd("BufWritePost", {
 	end,
 })
 
+local function get_session_name()
+	local name = vim.fn.getcwd()
+	local branch = vim.fn.system("git branch --show-current")
+	if vim.v.shell_error == 0 then
+		return name .. branch
+	else
+		return name
+	end
+end
+
+autocmd("VimEnter", {
+	group = augroup("CfgResession", {}),
+	callback = function()
+		if vim.fn.argc(-1) == 0 then
+			require("resession").load(get_session_name(), { dir = "dirsession", silence_errors = true })
+		end
+	end,
+})
+
 autocmd("VimLeavePre", {
 	group = augroup("CfgResession", {}),
-	pattern = "*",
 	callback = function()
-		require("resession").save("Last Session")
+		require("resession").save(get_session_name(), { dir = "dirsession", notify = false })
 	end,
 })
