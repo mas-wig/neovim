@@ -1,20 +1,15 @@
 local M = {}
 M.template = {
-	template = [[
----
-id: "{{filename}}"
-date: "{{date}}"
-alias:
-  - "{{filename}}"
-tags:
-  - "#{{current_folder}}"
-  - "#{{target_dir}}/{{current_date}}"
----
-
-# Title
-
-**[Back to ToC]()**
-]],
+	template = "---\n"
+		.. 'id: "{{filename}}"\n'
+		.. 'date: "{{date}}"\n'
+		.. "alias:\n"
+		.. '  - "{{filename}}"\n'
+		.. "tags:\n"
+		.. '  - "#{{current_folder}}"\n'
+		.. '  - "#{{target_dir}}/{{current_date}}"\n'
+		.. "---\n"
+		.. "\n",
 	placeholders = {
 		before = {
 			date = function()
