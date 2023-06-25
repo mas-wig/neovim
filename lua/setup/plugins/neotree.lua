@@ -92,7 +92,7 @@ end
 
 M.keys = {
 	{
-		"<C-n>",
+		"<leader>e",
 		function()
 			require("neo-tree.command").execute({
 				toggle = true,

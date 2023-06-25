@@ -241,6 +241,7 @@ M.server = function()
 				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
 			end,
 		},
+		gopls = { require("go.lsp").config() },
 	}
 end
 

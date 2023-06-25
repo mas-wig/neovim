@@ -1,12 +1,9 @@
 return function()
-	local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 	return require("go").setup({
 		goimport = "goimports",
 		fillstruct = "fillstruct",
 		gocoverage_sign = "█",
-		lsp_cfg = {
-			capabilities = capabilities,
-		},
+		lsp_cfg = false,
 		lsp_document_formatting = true,
 		lsp_inlay_hints = { enable = false },
 		luasnip = true,
