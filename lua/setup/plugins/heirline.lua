@@ -556,9 +556,10 @@ M.statusline = function()
 				local ftime = vim.fn.getftime(vim.api.nvim_buf_get_name(0))
 				local modified = tostring((ftime > 0) and os.date("%x %X", ftime))
 				if not modified then
-					return false
+					return ""
+				else
+					return "[ " .. modified .. " ]"
 				end
-				return "[ " .. modified .. " ]"
 			end,
 			hl = function()
 				return { fg = "yellow" }

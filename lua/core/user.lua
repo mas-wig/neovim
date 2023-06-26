@@ -36,9 +36,3 @@ vim.api.nvim_create_user_command("OverseerRestartLast", function()
 		overseer.run_action(tasks[1], "restart")
 	end
 end, {})
-
-local ensure_installed = { "stylua", "prettier", "rustfmt", "php-cs-fixer", "goimports" }
-vim.api.nvim_create_user_command("MasonInstallAll", function()
-	vim.cmd("MasonInstall " .. table.concat(ensure_installed, " "))
-end, {})
-vim.g.mason_binaries_list = ensure_installed
