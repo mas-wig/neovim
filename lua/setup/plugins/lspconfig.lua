@@ -206,13 +206,24 @@ M.buffer_attach = function()
 					vim.api.nvim_set_hl(0, "LspReferenceWrite", opts)
 					vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", opts)
 				end
+				if not client.server_capabilities.semanticTokensProvider then
+					local semantic = client.config.capabilities.textDocument.semanticTokens
+					if semantic then
+						client.server_capabilities.semanticTokensProvider = {
+							full = true,
+							legend = {
+								tokenModifiers = semantic.tokenModifiers,
+								tokenTypes = semantic.tokenTypes,
+							},
+							range = true,
+						}
+					end
+				end
 			end
 			if client.server_capabilities.documentSymbolProvider then
 				require("nvim-navic").attach(client, bufnr)
 			end
 		end
-		client.server_capabilities.documentFormattingProvider = false
-		client.server_capabilities.documentRangeFormattingProvider = false
 		M.mappings(client, bufnr)
 	end)
 end
@@ -241,7 +252,55 @@ M.server = function()
 				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
 			end,
 		},
-		gopls = { require("go.lsp").config() },
+		-- gopls = { require("go.lsp").config() },
+		solidity_ls_nomicfoundation = {
+			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+			filetypes = { "solidity" },
+			root_dir = function(fname)
+				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
+			end,
+		},
+		gopls = {
+			filetypes = { "go", "gomod", "gohtmltmpl", "gotexttmpl" },
+			message_level = vim.lsp.protocol.MessageType.Error,
+			cmd = {
+				"gopls", -- share the gopls instance if there is one already
+				"-remote=auto", --[[ debug options ]] --
+				-- "-logfile=auto",
+				-- "-debug=:0",
+				"-remote.debug=:0",
+				-- "-rpc.trace",
+			},
+			flags = { allow_incremental_sync = true, debounce_text_changes = 1000 },
+			settings = {
+				gopls = {
+					-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+					-- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
+					-- not supported
+					analyses = { unusedparams = true, unreachable = false },
+					codelenses = {
+						generate = true, -- show the `go generate` lens.
+						gc_details = true, --  // Show a code lens toggling the display of gc's choices.
+						test = true,
+						tidy = true,
+					},
+					usePlaceholders = true,
+					completeUnimported = true,
+					staticcheck = true,
+					matcher = "fuzzy",
+					diagnosticsDelay = "500ms",
+					symbolMatcher = "fuzzy",
+					gofumpt = false, -- true, -- turn on for new repos, gofmpt is good but also create code turmoils
+					buildFlags = { "-tags", "integration" },
+					-- buildFlags = {"-tags", "functional"}
+					semanticTokens = true,
+				},
+			},
+			root_dir = function(fname)
+				return require("lspconfig").util.root_pattern(".git", "gomod")(fname)
+					or require("setup.utils").dirname(fname)
+			end,
+		},
 	}
 end
 

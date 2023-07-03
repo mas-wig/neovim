@@ -36,7 +36,7 @@ return {
 		"m4xshen/hardtime.nvim",
 		event = "VeryLazy",
 		opts = {
-			max_time = 10,
+			max_time = 5,
 			max_count = 2,
 			disable_mouse = true,
 			hint = true,

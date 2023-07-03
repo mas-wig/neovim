@@ -1,11 +1,11 @@
 return {
-	{
-		"ray-x/go.nvim",
-		branch = "master",
-		ft = { "go", "gomod" },
-		build = ":GoInstallBinaries",
-		config = function()
-			require("setup.plugins.go")()
-		end,
-	},
+	-- {
+	-- 	"ray-x/go.nvim",
+	-- 	ft = { "go", "gomod" },
+	--        enabled = false,
+	-- 	build = ":GoInstallBinaries",
+	-- 	config = function()
+	-- 		require("setup.plugins.go")()
+	-- 	end,
+	-- },
 }

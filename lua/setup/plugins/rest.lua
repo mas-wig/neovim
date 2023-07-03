@@ -4,7 +4,7 @@ return function()
 	map("n", "<leader>rv", "<Plug>RestNvimPreview<cr>", { desc = "Run HTTP test preview" })
 	map("n", "<leader>rl", "<Plug>RestNvimLast<cr>", { desc = "Run HTTP last test" })
 
-	require("rest-nvim").setup({
+	return require("rest-nvim").setup({
 		result_split_in_place = false,
 		encode_url = true,
 		highlight = {

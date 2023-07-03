@@ -6,7 +6,7 @@ return function()
 	})
 
 	-- require("luasnip.loaders.from_vscode").lazy_load({
-	-- 	paths = { "./after/snippets/" },
+	-- 	paths = { "./snippets" },
 	-- 	exclude = { "html", "css" },
 	-- })
 

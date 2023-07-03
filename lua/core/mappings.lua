@@ -178,9 +178,8 @@ map("n", "<Leader>9", "9gt", { desc = "Go to tab 9" })
 map("n", "<Leader>0", ":tablast", { desc = "Go to last " })
 map("n", "<leader>bT", function()
 	local tabpages = vim.api.nvim_list_tabpages()
-	local current_tabpage = vim.api.nvim_get_current_tabpage()
 	for _, tabpage in ipairs(tabpages) do
-		if tabpage ~= current_tabpage then
+		if tabpage ~= vim.api.nvim_get_current_tabpage() then
 			vim.api.nvim_set_current_tabpage(tabpage)
 			vim.api.nvim_command("tabclose")
 		end
