@@ -88,27 +88,10 @@ return {
 		"folke/todo-comments.nvim",
 		cmd = { "TodoTrouble", "TodoTelescope" },
 		event = { "BufReadPost", "BufNewFile" },
-		config = true,
-		keys = {
-			{
-				"]t",
-				function()
-					require("todo-comments").jump_next()
-				end,
-				desc = "Next todo comment",
-			},
-			{
-				"[t",
-				function()
-					require("todo-comments").jump_prev()
-				end,
-				desc = "Previous todo comment",
-			},
-			{ "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-			{ "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-			{ "<leader>fT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
-		},
+		keys = require("setup.plugins.others").todoComment().keys,
+		config = function()
+			require("setup.plugins.others").todoComment().setup()
+		end,
 	},
 	{
 		"nvim-pack/nvim-spectre",
@@ -134,25 +117,9 @@ return {
 
 	{
 		"jake-stewart/jfind.nvim",
-		keys = {
-			{
-				"<leader>fF",
-				function()
-					local jfind = require("jfind")
-					jfind.findFile({
-						formatPaths = true,
-						callback = {
-							[key.DEFAULT] = vim.cmd.edit,
-							[key.CTRL_S] = vim.cmd.split,
-							[key.CTRL_V] = vim.cmd.vsplit,
-						},
-					})
-				end,
-				desc = "Find File [<C-s> split] [<C-v> vert]",
-			},
-		},
+		keys = require("setup.plugins.jfind").keys,
 		config = function()
-			require("setup.plugins.jfind")
+			require("setup.plugins.jfind").setup()
 		end,
 	},
 
@@ -178,40 +145,9 @@ return {
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
-		opts = {
-			char = {
-				enabled = true,
-				keys = { "f", "F", "t", "T", ";", "," },
-				search = { wrap = false },
-				highlight = { backdrop = true },
-				jump = { register = false },
-			},
-		},
-		keys = {
-			{
-				"s",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Flash",
-			},
-			{
-				"S",
-				mode = { "n", "o", "x" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-		},
+		keys = require("setup.plugins.others").flash().keys,
+		config = function()
+			require("setup.plugins.others").flash().setup()
+		end,
 	},
 }

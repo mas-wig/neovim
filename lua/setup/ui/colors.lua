@@ -1,6 +1,7 @@
 return {
 	none = "NONE",
 	comment = "#565f89",
+	pure_white = "#ffffff",
 	white = "#c0caf5",
 	darker_black = "#16161e",
 	black = "#000000", --  nvim bg
@@ -22,7 +23,6 @@ return {
 	dark_purple = "#9d7cd8",
 	teal = "#1abc9c",
 	statusline_bg = "#1d1e29",
-
 	base00 = "#1a1b26",
 	base01 = "#16161e",
 	base02 = "#2f3549",
@@ -39,12 +39,6 @@ return {
 	base0D = "#2ac3de",
 	base0E = "#bb9af7",
 	base0F = "#f7768e",
-
-	fg = "#f8f8f8",
-	bg = "#262335",
-	alt_bg = "#241b2f",
-	currentline = "#463465",
-	selection = "#463465",
 	cyan = "#61E2FF",
 	green = "#00ff00",
 	orange = "#ff8b39",

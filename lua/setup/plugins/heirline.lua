@@ -157,7 +157,7 @@ M.winbar = function()
 				provider = function()
 					return "[   " .. string.gsub(vim.fn.expand("%:p:."), "/", " / ") .. " ]"
 				end,
-				hl = { fg = "yellow", bold = true },
+				hl = { fg = "other", bold = true },
 			},
 			spacer,
 		},
