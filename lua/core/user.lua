@@ -1,4 +1,6 @@
-vim.api.nvim_create_user_command("OpenWithObsidian", function()
+local usercmd = vim.api.nvim_create_user_command
+
+usercmd("OpenWithObsidian", function()
 	local Job = require("plenary.job")
 	local uri = ("obsidian://open?vault=%s&path=%s"):format(
 		"NOTES",
@@ -15,19 +17,19 @@ vim.api.nvim_create_user_command("OpenWithObsidian", function()
 	}):start()
 end, {})
 
-vim.api.nvim_create_user_command("CopyCurrentPathFile", function()
+usercmd("CopyCurrentPathFile", function()
 	local path = vim.fn.expand("%:p:.")
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
 
-vim.api.nvim_create_user_command("CopyCurrentPathFolder", function()
+usercmd("CopyCurrentPathFolder", function()
 	local path = vim.fn.expand("%:h")
 	vim.fn.setreg("+", path)
 	vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, {})
 
-vim.api.nvim_create_user_command("OverseerRestartLast", function()
+usercmd("OverseerRestartLast", function()
 	local overseer = require("overseer")
 	local tasks = overseer.list_tasks({ recent_first = true })
 	if vim.tbl_isempty(tasks) then
@@ -37,7 +39,7 @@ vim.api.nvim_create_user_command("OverseerRestartLast", function()
 	end
 end, {})
 
-vim.api.nvim_create_user_command("LspStopAll", function()
+usercmd("LspStopAll", function()
 	local bufnrs = vim.api.nvim_list_bufs()
 	for _, bufnr in ipairs(bufnrs) do
 		local clients = vim.lsp.buf_get_clients(bufnr)
