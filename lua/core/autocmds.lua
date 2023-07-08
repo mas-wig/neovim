@@ -122,3 +122,4 @@ autocmd("VimLeavePre", {
 		require("resession").save("Last Session : ")
 	end,
 })
+
