@@ -252,7 +252,6 @@ M.server = function()
 				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
 			end,
 		},
-		gopls = { require("go.lsp").config() },
 		solidity_ls_nomicfoundation = {
 			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
 			filetypes = { "solidity" },
@@ -260,45 +259,6 @@ M.server = function()
 				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
 			end,
 		},
-		-- gopls = {
-		-- 	filetypes = { "go", "gomod", "gohtmltmpl", "gotexttmpl" },
-		-- 	message_level = vim.lsp.protocol.MessageType.Error,
-		-- 	cmd = {
-		-- 		"gopls", -- share the gopls instance if there is one already
-		-- 		-- "-remote=auto", --[[ debug options ]] --
-		-- 		-- "-logfile=auto",
-		-- 		-- "-debug=:0",
-		-- 		-- "-remote.debug=:0",
-		-- 		-- "-rpc.trace",
-		-- 	},
-		-- 	flags = { allow_incremental_sync = true, debounce_text_changes = 1000 },
-		-- 	settings = {
-		-- 		gopls = {
-		-- 			-- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-		-- 			-- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
-		-- 			-- not supported
-		-- 			analyses = { unusedparams = true, unreachable = false },
-		-- 			codelenses = {
-		-- 				generate = true, -- show the `go generate` lens.
-		-- 				gc_details = true, --  // Show a code lens toggling the display of gc's choices.
-		-- 				test = true,
-		-- 				tidy = true,
-		-- 			},
-		-- 			usePlaceholders = true,
-		-- 			completeUnimported = true,
-		-- 			matcher = "fuzzy",
-		-- 			diagnosticsDelay = "1000ms",
-		-- 			symbolMatcher = "fuzzy",
-		-- 			-- buildFlags = { "-tags", "integration" },
-		-- 			-- buildFlags = {"-tags", "functional"}
-		-- 			semanticTokens = true,
-		-- 		},
-		-- 	},
-		-- 	root_dir = function(fname)
-		-- 		return require("lspconfig").util.root_pattern(".git", "gomod")(fname)
-		-- 			or require("setup.utils").dirname(fname)
-		-- 	end,
-		-- },
 	}
 end
 
