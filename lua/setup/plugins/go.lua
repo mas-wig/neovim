@@ -42,13 +42,14 @@ return function()
 				},
 			},
 		},
+		dap_debug = false,
+		dap_debug_keymap = false,
 		lsp_document_formatting = false,
 		lsp_inlay_hints = { enable = false },
 		luasnip = true,
 		gopls_remote_auto = false,
 		lsp_diag_update_in_insert = false,
 		lsp_keymaps = false,
-		dap_debug = false,
 		trouble = true,
 	})
 end

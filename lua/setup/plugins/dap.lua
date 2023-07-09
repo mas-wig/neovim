@@ -254,6 +254,8 @@ M.setup = function()
 	local dap, dapui = require("dap"), require("dapui")
 	require("nvim-dap-virtual-text").setup({
 		commented = true,
+		enabled_commands = true,
+		all_frames = true,
 	})
 	dapui.setup({
 		layouts = {
