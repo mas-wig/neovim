@@ -38,7 +38,7 @@ return {
 		opts = {
 			max_time = 5,
 			max_count = 2,
-			disable_mouse = true,
+			disable_mouse = false,
 			hint = true,
 			allow_different_key = false,
 		},

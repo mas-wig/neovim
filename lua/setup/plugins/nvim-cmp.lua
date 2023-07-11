@@ -85,6 +85,7 @@ return function()
 				local menu = entry.source.name
 				vim_item.dup = duplicates[menu] or duplicates_default
 				vim_item.kind = (cmp_kinds[vim_item.kind] or "") .. vim_item.kind
+				vim_item.abbr = string.sub(vim_item.abbr, 1, 20)
 				return vim_item
 			end,
 		},

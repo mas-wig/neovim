@@ -7,7 +7,7 @@ M.server = function()
 				type = "server",
 				port = "${port}",
 				executable = {
-					command = "dlv",
+					command = require("mason-registry").get_package("delve"):get_install_path() .. "/dlv",
 					args = { "dap", "-l", "127.0.0.1:${port}" },
 				},
 			},

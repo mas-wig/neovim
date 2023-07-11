@@ -238,26 +238,82 @@ M.server = function()
 				completion = { callSnippet = "Replace" },
 			},
 		},
-		tsserver = {
-			init_options = { hostInfo = "neovim" },
+		rust_analyzer = {
+			cmd = {
+				require("mason-registry").get_package("rust-analyzer"):get_install_path()
+					.. "/rust-analyzer-x86_64-unknown-linux-gnu",
+			},
 			root_dir = function(fname)
 				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
 			end,
-			single_file_support = true,
-		},
-		marksman = {
-			cmd = { "marksman", "server" },
-			filetypes = { "markdown" },
-			root_dir = function(fname)
-				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
-			end,
-		},
-		solidity_ls_nomicfoundation = {
-			cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-			filetypes = { "solidity" },
-			root_dir = function(fname)
-				return require("lspconfig").util.root_pattern(".git")(fname) or require("setup.utils").dirname(fname)
-			end,
+			filetypes = { "rust" },
+			message_level = vim.lsp.protocol.MessageType.error,
+			settings = {
+				["rust-analyzer"] = {
+					cargo = {
+						allFeatures = true,
+						loadOutDirsFromCheck = true,
+						runBuildScripts = true,
+					},
+					checkOnSave = {
+						allFeatures = true,
+						command = "clippy",
+						extraArgs = { "--no-deps" },
+					},
+					procMacro = {
+						enable = true,
+						ignored = {
+							["async-trait"] = { "async_trait" },
+							["napi-derive"] = { "napi" },
+							["async-recursion"] = { "async_recursion" },
+						},
+					},
+				},
+				flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
+			},
+			tsserver = {
+				init_options = { hostInfo = "neovim" },
+				root_dir = function(fname)
+					return require("lspconfig").util.root_pattern(".git")(fname)
+						or require("setup.utils").dirname(fname)
+				end,
+				settings = {
+					typescript = {
+						format = {
+							indentSize = vim.o.shiftwidth,
+							convertTabsToSpaces = vim.o.expandtab,
+							tabSize = vim.o.tabstop,
+						},
+					},
+					javascript = {
+						format = {
+							indentSize = vim.o.shiftwidth,
+							convertTabsToSpaces = vim.o.expandtab,
+							tabSize = vim.o.tabstop,
+						},
+					},
+					completions = {
+						completeFunctionCalls = true,
+					},
+				},
+				single_file_support = true,
+			},
+			marksman = {
+				cmd = { "marksman", "server" },
+				filetypes = { "markdown" },
+				root_dir = function(fname)
+					return require("lspconfig").util.root_pattern(".git")(fname)
+						or require("setup.utils").dirname(fname)
+				end,
+			},
+			solidity_ls_nomicfoundation = {
+				cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+				filetypes = { "solidity" },
+				root_dir = function(fname)
+					return require("lspconfig").util.root_pattern(".git")(fname)
+						or require("setup.utils").dirname(fname)
+				end,
+			},
 		},
 	}
 end

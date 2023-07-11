@@ -530,7 +530,7 @@ M.statusline = function()
 				local names = {}
 				for _, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
 					if server.name ~= 0 and server.name ~= "null-ls" then
-						table.insert(names, "[ LSP ON ]")
+						table.insert(names, "LSP")
 					end
 				end
 				return table.concat(names, " ")

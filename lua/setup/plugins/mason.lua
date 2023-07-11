@@ -1,5 +1,5 @@
 return function()
-	local ensure_installed = { "stylua", "prettier", "rustfmt", "php-cs-fixer", "goimports" }
+	local ensure_installed = { "delve", "stylua", "prettier", "rustfmt", "php-cs-fixer", "goimports" }
 	require("mason").setup({
 		PATH = "prepend",
 		ensure_installed = ensure_installed,
